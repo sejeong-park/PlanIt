@@ -1,11 +1,7 @@
----
-name: Custom issue template
-about: Describe this issue template's purpose here.
-title: ''
-labels: ''
-assignees: ''
 
----
+### 상세 내용
+
+
 
 ### Issue 타입 ('x' 로 표기)
 
@@ -20,8 +16,6 @@ assignees: ''
 - [ ] 🔁 CI
 - [ ] 📦 Chore (Release)
 - [ ] ⏩ Revert (Rollback)
-
-### 상세 내용
 
 
 ### 예상 소요 시간
