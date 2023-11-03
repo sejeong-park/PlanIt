@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
 	 * version 및 title: API의 버전 및 제목을 정의하는 문자열 변수입니다.
 	 */
 	private String version = "V1";
-	private String title = "Sungsu Member API : " + version;
+	private String title = "User API : " + version;
 	
 	@Bean
 	public Docket api() {
