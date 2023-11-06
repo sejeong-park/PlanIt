@@ -1,6 +1,7 @@
 package com.trip.planit.plan.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,10 @@ public class PlanServiceImpl implements PlanService{
 	@Override
 	public void writePlanByNotUser(PlanRegistTestDto planRegistTestDto) throws SQLException {
 		planMapper.insertPlanByNotUser(planRegistTestDto);
+	}
+
+	@Override
+	public List<PlanRegistTestDto> findAllPlan() throws SQLException {
+		return planMapper.selectAllPlan();
 	}
 }
