@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trip.planit.plan.model.mapper.PlanMapper">
+	<insert id="insertPlanByNotUser" parameterType="planRegistTestDto">
+		insert into trip_plans(plan_key, anonymous_password, start_date, end_Date)
+		values(#{planKey}, #{anonymousPassword}, "2023-11-06", "2023-11-06") 
+	</insert>
+</mapper>

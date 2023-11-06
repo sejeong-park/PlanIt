@@ -23,16 +23,18 @@ public class SwaggerConfiguration {
 	/**
 	 * version ?, title ?
 	 * version 및 title: API의 버전 및 제목을 정의하는 문자열 변수입니다.
-	 */
+	 * http://localhost/swagger-ui/index.html#
+	 * 	 
+	*/
 	private String version = "V1";
-	private String title = "Sungsu Member API : " + version;
+	private String title = "plan API : " + version;
 	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
-					.apis(RequestHandlerSelectors.basePackage("com.trip.planit.user.controller"))
-					.paths(regex("/user/.*")).build()
+					.apis(RequestHandlerSelectors.basePackage("com.trip.planit.plan.controller"))
+					.paths(regex("/plan/.*")).build()
 					.useDefaultResponseMessages(false);
 	}
 	
