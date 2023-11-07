@@ -32,14 +32,13 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
 					.apis(RequestHandlerSelectors.basePackage("com.trip.planit.user.controller"))
-					.paths(regex("/user/.*")).build()
+					.paths(regex("/users/.*")).build()
 					.useDefaultResponseMessages(false);
 	}
 	
 	private Set<String> getConsumeContentTypes() {
         Set<String> consumes = new HashSet<>();
         consumes.add("application/json;charset=UTF-8");
-//      consumes.add("application/xml;charset=UTF-8");
         consumes.add("application/x-www-form-urlencoded");
         return consumes;
     }

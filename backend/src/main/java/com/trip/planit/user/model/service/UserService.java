@@ -1,12 +1,15 @@
 package com.trip.planit.user.model.service;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import com.trip.planit.user.model.dto.UserDto;
+import com.trip.planit.user.model.dto.User;
 
 public interface UserService {
-	UserDto loginUser(UserDto userDto) throws SQLException;
-	List<UserDto> listUser() throws SQLException;
+	User loginUser(User user) throws Exception;
 
+	void registUser(User user) throws Exception;
+
+	void deleteUser(String userId) throws Exception;
+
+	User findByUserId(String userId) throws Exception;
+
+	void modifyUser(User user) throws Exception;
 }

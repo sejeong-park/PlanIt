@@ -1,44 +1,42 @@
 package com.trip.planit.user.model.service;
 
-import java.sql.SQLException;
-import java.util.List;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trip.planit.user.model.dto.UserDto;
+import com.trip.planit.user.model.dto.User;
 import com.trip.planit.user.model.mapper.UserMapper;
 
 @Service
-public class UserServiceImpl implements UserService{
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
 
 	private final UserMapper userMapper;
-	
-	public UserServiceImpl(UserMapper userMapper) {
-		super();
-		this.userMapper = userMapper;
-	}
-	
-	
 
 	@Override
-	public UserDto loginUser(UserDto userDto) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public User loginUser(User user) throws Exception {
+		return userMapper.selectByUser(user);
 	}
-
 
 
 	@Override
-	public List<UserDto> listUser() throws SQLException {
-		// TODO Auto-generated method stub
-		return userMapper.listUser();
+	public void registUser(User user) throws Exception {
+		userMapper.insertByUser(user);
 	}
 
-//	@Override
-//	public UserDto loginUser(UserDto userDto) throws SQLException {
-//		// TODO Auto-generated method stub
-//		return userMapper.selectByUser(userDto);
-//	}
+	@Override
+	public void deleteUser(String userId) throws Exception {
+		userMapper.deleteByUserId(userId);
+	}
+	@Override
+	public User findByUserId(String userId) throws Exception{
+		return userMapper.findByUserId(userId);
+	}
 
-	
+	@Override
+	public void modifyUser(User user) throws Exception {
+		userMapper.updateByUser(user);
+	}
+
+
 }
