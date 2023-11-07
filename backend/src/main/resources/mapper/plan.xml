@@ -3,11 +3,20 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.trip.planit.plan.model.mapper.PlanMapper">
+
+	<resultMap type="planRegistTestDto" id="testDto">
+		<result column="plan_key" property="planKey"/>
+		<result column="anonymous_password" property="anonymousPassword"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+	</resultMap>
+
 	<insert id="insertPlanByNotUser" parameterType="planRegistTestDto">
 		insert into trip_plans(plan_key, anonymous_password, start_date, end_Date)
 		values(#{planKey}, #{anonymousPassword}, "2023-11-06", "2023-11-06") 
 	</insert>
-	<select id="selectAllPlan" resultType="planRegistTestDto">
+	
+	<select id="selectAllPlan" resultMap="testDto">
 		select plan_key, anonymous_password, start_date, end_date from trip_plans;
 	</select>
 </mapper>

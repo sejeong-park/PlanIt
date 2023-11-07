@@ -39,7 +39,7 @@ public class PlanController {
 	public void plans(@RequestBody PlanRegistTestDto planRegistTestDto) {
 		try {
 			String planKey = UUID.randomUUID().toString();
-			System.out.println("planKey : " + planKey);
+//			System.out.println("planKey : " + planKey);
 			planRegistTestDto.setPlanKey(planKey);
 			planService.writePlanByNotUser(planRegistTestDto);
 		} catch (SQLException e) {

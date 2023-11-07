@@ -1,6 +1,7 @@
 package com.trip.planit.board.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,10 @@ public class BoardServiceImple implements BoardService{
 	@Override
 	public void writeArticle(BoardDto boardDto) throws SQLException {
 		boardMapper.insertArticle(boardDto);
+	}
+
+	@Override
+	public List<BoardDto> findAllArticles() throws SQLException {
+		return boardMapper.selectAllArticles();
 	}
 }

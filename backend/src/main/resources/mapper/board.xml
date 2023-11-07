@@ -6,4 +6,7 @@
 	<insert id="insertArticle" parameterType="boardDto">
 		insert into board(title, content) values(#{title}, #{content}) 
 	</insert>
+	<select id="selectAllArticles" resultType="boardDto">
+		select * from board;
+	</select>
 </mapper>
