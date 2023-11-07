@@ -1,6 +1,7 @@
 package com.trip.planit.plan.controller;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.trip.planit.plan.model.dto.PlanDto;
 import com.trip.planit.plan.model.dto.PlanRegistTestDto;
 import com.trip.planit.plan.model.service.PlanService;
@@ -30,16 +32,29 @@ import lombok.extern.slf4j.Slf4j;
 @Api(tags = {"plan 컨트롤러  API V1"})
 @Slf4j
 @RequiredArgsConstructor
+@JsonAutoDetect
 public class PlanController {
 
 	private final PlanService planService;
-	
-	@ApiOperation(value="계획 등록", notes = "사용자가 입력한 계획 저장")
+	/**
+	 * {
+  "anonymousPassword": "string",
+  "createAt": "2023-11-07T17:30:50",
+  "endDate": "2023-11-07",
+  "planKey": "string",
+  "startDate": "2023-11-07",
+  "updateAt": "2023-11-07T17:30:50"
+}
+	 * @param planRegistTestDto
+	 */
+	@ApiOperation(value="비 회원 계획 등록", notes = "비회원 사용자가 입력한 계획 저장")
 	@PostMapping("/plans")
 	public void plans(@RequestBody PlanRegistTestDto planRegistTestDto) {
 		try {
 			String planKey = UUID.randomUUID().toString();
-//			System.out.println("planKey : " + planKey);
+			
+//			System.out.println(createTimeToString);
+			
 			planRegistTestDto.setPlanKey(planKey);
 			planService.writePlanByNotUser(planRegistTestDto);
 		} catch (SQLException e) {
@@ -62,7 +77,6 @@ public class PlanController {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			return exceptionHandling(e);
 		}
 	}

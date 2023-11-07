@@ -12,8 +12,8 @@
 	</resultMap>
 
 	<insert id="insertPlanByNotUser" parameterType="planRegistTestDto">
-		insert into trip_plans(plan_key, anonymous_password, start_date, end_Date)
-		values(#{planKey}, #{anonymousPassword}, "2023-11-06", "2023-11-06") 
+		insert into trip_plans(plan_key, anonymous_password, start_date, end_Date, create_at, update_at)
+		values(#{planKey}, #{anonymousPassword}, "2023-11-06", "2023-11-06", #{createAt}, #{updateAt}) 
 	</insert>
 	
 	<select id="selectAllPlan" resultMap="testDto">
