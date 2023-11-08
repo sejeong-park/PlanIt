@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.trip.planit.plan.model.dto.PlanDetailDto;
 import com.trip.planit.plan.model.dto.PlanDto;
-import com.trip.planit.plan.model.dto.PlanRegistTestDto;
+import com.trip.planit.plan.model.dto.PlanRegistDto;
 
 @Mapper
 public interface PlanMapper {
-	void insertPlanByNotUser(PlanRegistTestDto planRegistTestDto) throws SQLException;
-	List<PlanRegistTestDto> selectAllPlan() throws SQLException;
+	void insertPlan(PlanRegistDto planRegistDto) throws SQLException;
+	void insertPlanDetail(List<PlanDetailDto> planDetailDtos) throws SQLException;
+	List<PlanRegistDto> selectAllPlan() throws SQLException;
 }

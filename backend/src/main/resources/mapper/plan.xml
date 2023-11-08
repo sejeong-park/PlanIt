@@ -4,19 +4,30 @@
 
 <mapper namespace="com.trip.planit.plan.model.mapper.PlanMapper">
 
-	<resultMap type="planRegistTestDto" id="testDto">
+	<resultMap type="planRegistDto" id="planRegistDto">
 		<result column="plan_key" property="planKey"/>
 		<result column="anonymous_password" property="anonymousPassword"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 	</resultMap>
 
-	<insert id="insertPlanByNotUser" parameterType="planRegistTestDto">
-		insert into trip_plans(plan_key, anonymous_password, start_date, end_Date, create_at, update_at)
-		values(#{planKey}, #{anonymousPassword}, "2023-11-06", "2023-11-06", #{createAt}, #{updateAt}) 
+	<insert id="insertPlan" parameterType="planRegistDto">
+		insert into trip_plans(plan_key, create_user, anonymous_password, start_date, end_date, create_at)
+		values(#{planKey},#{createUser} ,#{anonymousPassword}, "2023-11-08", "2023-11-08", #{createAt}) 
 	</insert>
 	
-	<select id="selectAllPlan" resultMap="testDto">
+	<insert id="insertPlanDetail" parameterType="list">
+	insert into trip_details(plan_date, plan_key, sequence, title, content, attraction_id)
+			values
+		<foreach collection="list" item="planDetailDto" separator=",">
+			(
+			#{planDetailDto.planDate}, #{planDetailDto.planKey}, #{planDetailDto.sequence}, 
+			#{planDetailDto.title}, #{planDetailDto.content}, #{planDetailDto.attractionId}
+			)
+		</foreach>
+	</insert>
+	
+	<select id="selectAllPlan" resultMap="planRegistDto">
 		select plan_key, anonymous_password, start_date, end_date from trip_plans;
 	</select>
 </mapper>

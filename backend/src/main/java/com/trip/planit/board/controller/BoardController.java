@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.planit.board.model.dto.BoardDto;
 import com.trip.planit.board.model.service.BoardService;
-import com.trip.planit.plan.model.dto.PlanRegistTestDto;
+import com.trip.planit.plan.model.dto.PlanRegistDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
