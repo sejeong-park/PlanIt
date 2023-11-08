@@ -1,19 +1,14 @@
 package com.trip.planit.jwt;
 
 import io.jsonwebtoken.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,7 +16,6 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class JwtProvider {
 
@@ -30,8 +24,6 @@ public class JwtProvider {
     private static final String jwtSecretKey = "BestPlanIsPlanit"; // secret key
     private final long expiration = 1000L * 60 * 60; // 만료 시간 : 1 hour
     private final long currentTime = System.currentTimeMillis(); // 현재 시간
-
-    private final UserDetailsService userDetailsService;
 
     public String createToken(String userId) throws Exception{
         // token 생성 로직

@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 @EnableWebSecurity
@@ -62,11 +63,6 @@ public class SecurityConfig {
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-                // [이건 무슨의미인지 알아봐야함]
-                .and()
-                .headers()
-                .frameOptions()
-                .sameOrigin()
                 // 세션을 사용하지 않기 때문에 STATELESS 설정
                 .and()
                 .sessionManagement()
@@ -75,7 +71,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()   // HttpServletRequest을 사용하는 요청들에 대해 접근 제한 설정
                 .antMatchers(PERMIT_URL_ARRAY).permitAll() // 접근제어 허용
-                .antMatchers().permitAll() // 인증 없이 접근 허용
+                .antMatchers("/swagger-ui.html/**","/swagger-resources/**","/v2/api-docs","/webjars/**").permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // cors preflight 허용 (front 배포 시)
                 .anyRequest().authenticated()                   // 나머지 인증 필요
                 .and().build();
     }

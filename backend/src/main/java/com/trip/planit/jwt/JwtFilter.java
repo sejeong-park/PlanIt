@@ -15,10 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 
-
-
-@Slf4j
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends GenericFilterBean {
 
     private static final String AUTHORIZATION_HEADER = "Authorization"; // token header
