@@ -3,8 +3,8 @@ package com.trip.planit.user.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.trip.planit.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +22,27 @@ import io.swagger.annotations.ApiOperation;
 public class UserController {
 
 	private final UserService userService;
+	private final JwtProvider jwtProvider;
+
+	@ApiOperation(value = "token확인", notes = "토큰 확인")
+	@GetMapping("/auth")
+	public ResponseEntity<Map<String, Object>> checkToken(String id) throws Exception {
+		// token 생성 확인을 위한 메서드 (api 테스트용)
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("token", jwtProvider.createToken(id));
+		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+	}
+
 
 	@ApiOperation(value = "로그인", notes = "로그인을 합니다.")
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser) throws Exception{
-
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.loginUser(requestUser); // 로그인
+
+		// token 발급
+		result.put("token",jwtProvider.createToken(user.getUserId())); // 서버에서 토큰을 헤더에 싣는 것으로 바꿔야 한다.
+
 		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 

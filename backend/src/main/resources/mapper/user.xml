@@ -5,26 +5,25 @@
 	<resultMap id="user" type="user">
 		<result column="user_id" property = "userId"/>
 		<result column="user_password" property = "userPassword"/>
-		<result column="user_name" property = "userName"/>
 	</resultMap>
 
 	<!-- 로그인하는 유저를 확인한다.-->
 	<select id="selectByUser" parameterType="user" resultMap = "user">
-		SELECT user_id, user_password, user_name
+		SELECT user_id, user_password
 		FROM users
 		WHERE user_id=#{userId} AND user_password=#{userPassword}
 	</select>
 
 	<select id = "findByUserId" parameterType="String" resultMap="user">
-		SELECT user_id, user_password, user_name
+		SELECT user_id, user_password
 		FROM users
 		WHERE user_id=#{userId}
 	</select>
 
 	<!--회원 가입을 한다.-->
 	<insert id = "insertByUser" parameterType="user">
-		INSERT INTO users(user_id, user_password, user_name)
-		VALUES (#{userId}, #{userPassword}, #{userName})
+		INSERT INTO users(user_id, user_password)
+		VALUES (#{userId}, #{userName})
 	</insert>
 
 	<!--회원 탈퇴를 한다.-->
@@ -37,8 +36,7 @@
 	<update id="updateByUser" parameterType="user">
 		UPDATE users
 		SET user_id = #{userId},
-		    user_password = #{userPassword},
-		    user_name = #{userName}
+		    user_password = #{userPassword}
 		WHERE user_id = #{userId}
 	</update>
 
