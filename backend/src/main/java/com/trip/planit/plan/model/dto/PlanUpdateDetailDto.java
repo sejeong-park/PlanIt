@@ -11,13 +11,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class PlanDetailDto {
-	private int detailId;
-	private Date planDate;
+public class PlanUpdateDetailDto {
 	private String planKey;
-	private int sequence;
 	private String title;
 	private String content;
+	private Date planDate;
+	private int sequence;
 	private int attractionId;
-	
 }

@@ -4,13 +4,36 @@
 
 <mapper namespace="com.trip.planit.plan.model.mapper.PlanMapper">
 
-	<resultMap type="planRegistDto" id="planRegistDto">
+	<resultMap type="planListDto" id="planListDto">
 		<result column="plan_key" property="planKey"/>
-		<result column="anonymous_password" property="anonymousPassword"/>
+		<result column="create_user" property="createUser"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="create_at" property="createAt"/>
+		<result column="title" property="title"/>
+	</resultMap>
+	
+	<resultMap type="planDetailDto" id="planDetailDto">
+		<result column="plan_key" property="planKey"/>
+		<result column="plan_date" property="planDate"/>
+		<result column="sequence" property="sequence"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="attraction_id" property="attractionId"/>
+	</resultMap>
+	<!-- 
+	<resultMap type="planUpdateDto" id="planUpdateDto">
+		<result column="plan_date" property="planDate"/>
+		<result column="sequence" property="sequence"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="attraction_id" property="attractionId"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 	</resultMap>
-
+	
+	 -->
+	
 	<insert id="insertPlan" parameterType="planRegistDto">
 		insert into trip_plans(plan_key, create_user, anonymous_password, start_date, end_date, create_at)
 		values(#{planKey},#{createUser} ,#{anonymousPassword}, "2023-11-08", "2023-11-08", #{createAt}) 
@@ -27,7 +50,27 @@
 		</foreach>
 	</insert>
 	
-	<select id="selectAllPlan" resultMap="planRegistDto">
+	<select id="selectAllPlan" resultMap="planListDto">
 		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans;
 	</select>
+	
+	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">
+		select * from trip_details where plan_key = #{planKey}
+	</select>
+	
+	
+	<!-- 외래키 제약조건으로 인해 detail 테이블에서 데이터를 먼저 삭제하고, plan 테이블에서 데이터를 삭제한다.
+	';'으로 쿼리문을 구분하기 때문에 두개의 쿼리문을 동시에 작성할 수 있다.
+	이러한 과정은 원자적(atomic)으로 실행되는 단일 트랜잭션이다. 마이베티스는 하나의 태그내부에서 단일 트랜잭션이 적용된다.
+	-->
+	<delete id="deletePlan" parameterType="String">
+    delete from trip_plans where plan_key = #{planKey}
+	</delete>
+	<delete id="deletePlanDetail" parameterType="String">
+	 delete from trip_details where plan_key = #{planKey}
+	</delete>
+	
+	<update id="updatePlan" parameterType="planUpdateDto">
+		update trip_plans set start_date = #{startDate}, end_date = #{endDate}, update_at = now() where plan_key = #{planKey}
+	</update>
 </mapper>
