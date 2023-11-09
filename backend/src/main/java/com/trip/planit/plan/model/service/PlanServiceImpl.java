@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.trip.planit.plan.model.dto.PlanDetailDto;
-import com.trip.planit.plan.model.dto.PlanDto;
+import com.trip.planit.plan.model.dto.PlanListDto;
 import com.trip.planit.plan.model.dto.PlanRegistDto;
 import com.trip.planit.plan.model.mapper.PlanMapper;
 
@@ -24,7 +24,7 @@ public class PlanServiceImpl implements PlanService{
 	}
 	
 	@Override
-	public List<PlanRegistDto> findAllPlan() throws SQLException {
+	public List<PlanListDto> findAllPlan() throws SQLException {
 		return planMapper.selectAllPlan();
 	}
 

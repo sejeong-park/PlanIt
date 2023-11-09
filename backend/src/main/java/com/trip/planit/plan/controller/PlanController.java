@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trip.planit.plan.model.dto.PlanDetailDto;
-import com.trip.planit.plan.model.dto.PlanDto;
+import com.trip.planit.plan.model.dto.PlanListDto;
 import com.trip.planit.plan.model.dto.PlanRegistDto;
 import com.trip.planit.plan.model.service.PlanService;
 
@@ -108,9 +108,10 @@ public class PlanController {
 	 * @param planDetailDtos
 	 * @param planKey
 	 */
+	
 	@ApiOperation(value="계획 디테일 등록", notes = "비회원 사용자가 입력한 계획 세부 일정 저장")
 	@PostMapping("/{planKey}")
-	public void planDetail(@RequestBody List<PlanDetailDto> planDetailDtos,
+	public ResponseEntity<?> planDetail(@RequestBody List<PlanDetailDto> planDetailDtos,
 			@PathVariable("planKey") String planKey) {
 		
 		try {
@@ -119,11 +120,12 @@ public class PlanController {
 			}
 			
 			planService.writePlanDetail(planDetailDtos);
-		
+			List<PlanListDto> list = planService.findAllPlan();
+			return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
 //			return new ResponseEntity<PlanDto>()
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return exceptionHandling(e);
 		}
 	}
 	
@@ -133,10 +135,10 @@ public class PlanController {
 	@GetMapping("/plans")
 	public ResponseEntity<?> plans(){
 		try {
-			List<PlanRegistDto> list =  planService.findAllPlan();
+			List<PlanListDto> list =  planService.findAllPlan();
 			System.out.println("list : " + list.toString());
 			if(list != null && !list.isEmpty()) {
-				return new ResponseEntity<List<PlanRegistDto>>(list, HttpStatus.OK);
+				return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
 			}else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}

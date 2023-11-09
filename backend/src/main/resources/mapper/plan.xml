@@ -28,6 +28,6 @@
 	</insert>
 	
 	<select id="selectAllPlan" resultMap="planRegistDto">
-		select plan_key, anonymous_password, start_date, end_date from trip_plans;
+		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans;
 	</select>
 </mapper>

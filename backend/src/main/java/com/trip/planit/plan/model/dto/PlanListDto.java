@@ -8,14 +8,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * s
+ * 
+ *
+ */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class PlanDto {
+public class PlanListDto {
 	private String planKey;
 	private String createUser;
-	private String anonymousPassword;
 	private Date startDate;
 	private Date endDate;
 	private Timestamp createAt;
