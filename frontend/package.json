@@ -1,0 +1,22 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "ant-design-vue": "^4.0.6",
+    "pinia": "^2.1.7",
+    "sass": "^1.69.5",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5",
+    "vuesax": "^4.0.1-alpha.25"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "vite": "^4.4.11"
+  }
+}
