@@ -1,6 +1,20 @@
+---
+name: "✅ Feature request"
+about: Feature 작업 사항을 입력해주세요
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+### Part
+- [ ] BE
+- [ ] FE
+- [ ] ETC
 
 ### 상세 내용
 
+### 참고사항
 
 
 ### Issue 타입 ('x' 로 표기)
@@ -25,5 +39,3 @@
 - [ ] `2h`
 - [ ] `2.5h`
 - [ ] `3h`
-
-### 참고사항
