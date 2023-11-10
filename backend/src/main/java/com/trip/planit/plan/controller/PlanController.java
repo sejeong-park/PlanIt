@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/plan")
+@RequestMapping("/plans")
 @CrossOrigin("*")
 @Api(tags = {"plan 컨트롤러  API V1"})
 @Slf4j
@@ -56,7 +56,7 @@ public class PlanController {
 	 * @throws JsonProcessingException 
 	 */
 	@ApiOperation(value="계획 등록", notes = "여행 계획 저장")
-	@PostMapping("/plans")
+	@PostMapping("/")
 	public ResponseEntity<String> plans(@RequestBody PlanRegistDto planRegistDto) throws JsonProcessingException {
 		try {
 			String planKey = UUID.randomUUID().toString();
@@ -199,7 +199,7 @@ public class PlanController {
 	@ApiOperation(value="여행 계획 전체 리스트", notes="저장된 계획 리스트 목록")
 	@ApiResponses({@ApiResponse(code = 200, message = "계획 목록 OK!!"), @ApiResponse(code = 404, message = "페이지를 찾을 수 없습니다"),
 		@ApiResponse(code = 500, message="서버 에러")})
-	@GetMapping("/plans")
+	@GetMapping("/")
 	public ResponseEntity<?> plans(){
 		try {
 			List<PlanListDto> list =  planService.findAllPlan();
