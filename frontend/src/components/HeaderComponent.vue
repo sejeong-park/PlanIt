@@ -68,8 +68,15 @@ const items = ref([
 </script>
 
 <template>
-  <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items" />
+  <a-menu class="header" v-model:selectedKeys="current" mode="horizontal" :items="items" />
 </template>
 
 
-<style scoped></style>
+<style scoped>
+/** 
+.header {
+  height: 70px;
+  display: flex;
+}
+*/
+</style>

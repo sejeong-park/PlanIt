@@ -13,6 +13,12 @@ const router = createRouter({
       path: '/plans',
       name: 'plans',
       component : () => import("@/views/PlanView.vue")
+    },
+    {
+      // 데이터까지 연결하면, {plan-key}로 라우터 변경할 예정
+      path: '/trip',
+      name : 'trip',
+      component : () => import("@/views/TripView.vue")
     }
 
   ]

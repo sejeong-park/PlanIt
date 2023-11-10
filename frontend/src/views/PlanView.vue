@@ -1,7 +1,15 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 const setSchedule = ref();
 console.log(setSchedule)
+
+// 플랜으로 이동
+const router = useRouter()
+const goTrip = function () { router.push({ name: 'trip' }) }
+
+
 </script>
 <template>
     <div>계획 짤거임</div>
@@ -11,6 +19,6 @@ console.log(setSchedule)
             <a-range-picker v-model:value="setSchedule" />
         </a-space>
     </div>
-    <a-button type="primary">계획 세우러 가자</a-button>
+    <a-button type="primary" @click="goTrip">계획 세우러 가자</a-button>
 </template>
 <style scoped></style>

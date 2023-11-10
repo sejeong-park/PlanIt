@@ -1,6 +1,5 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import HeaderComponent from '../components/HeaderComponent.vue';
 
 // 플랜으로 이동
 const router = useRouter()
