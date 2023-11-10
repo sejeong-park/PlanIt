@@ -9,7 +9,6 @@ import com.trip.planit.plan.model.dto.PlanDetailDto;
 import com.trip.planit.plan.model.dto.PlanListDto;
 import com.trip.planit.plan.model.dto.PlanRegistDto;
 import com.trip.planit.plan.model.dto.PlanUpdateDetailDto;
-import com.trip.planit.plan.model.dto.PlanUpdateDto;
 
 @Mapper
 public interface PlanMapper {
@@ -19,6 +18,5 @@ public interface PlanMapper {
 	List<PlanListDto> selectAllPlan() throws SQLException;
 	void deletePlan(String planKey) throws SQLException;
 	void deletePlanDetail(String planKey) throws SQLException;
-	void updatePlan(PlanUpdateDto planUpdateDto) throws SQLException;
-	void updateDetailPlan(List<PlanUpdateDetailDto> planUpdateDetailDtos) throws SQLException;
+	void updatePlanDetail(List<PlanUpdateDetailDto> updateDtos) throws SQLException; 
 }

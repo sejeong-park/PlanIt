@@ -9,7 +9,6 @@ import com.trip.planit.plan.model.dto.PlanDetailDto;
 import com.trip.planit.plan.model.dto.PlanListDto;
 import com.trip.planit.plan.model.dto.PlanRegistDto;
 import com.trip.planit.plan.model.dto.PlanUpdateDetailDto;
-import com.trip.planit.plan.model.dto.PlanUpdateDto;
 import com.trip.planit.plan.model.mapper.PlanMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -51,12 +50,7 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
-	public void updatePlan(PlanUpdateDto planUpdateDto) throws SQLException {
-		planMapper.updatePlan(planUpdateDto);
-	}
-
-	@Override
-	public void updateDetailPlan(List<PlanUpdateDetailDto> planUpdateDetailDtos) throws SQLException {
-		planMapper.updateDetailPlan(planUpdateDetailDtos);
+	public void updatePlanDetail(List<PlanUpdateDetailDto> updateDtos) throws SQLException {
+		planMapper.updatePlanDetail(updateDtos);
 	}
 }

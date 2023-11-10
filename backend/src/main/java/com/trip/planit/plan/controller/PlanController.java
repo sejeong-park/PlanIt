@@ -24,7 +24,6 @@ import com.trip.planit.plan.model.dto.PlanDetailDto;
 import com.trip.planit.plan.model.dto.PlanListDto;
 import com.trip.planit.plan.model.dto.PlanRegistDto;
 import com.trip.planit.plan.model.dto.PlanUpdateDetailDto;
-import com.trip.planit.plan.model.dto.PlanUpdateDto;
 import com.trip.planit.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
@@ -133,6 +132,7 @@ public class PlanController {
 	
 	/**
 	 * 여행 계획 상세 보기
+	 * 단일 여행 계획 수정 버튼을 눌렀을 때도 호출된다.
 	 * @param planKey
 	 * @return planKey에 해당하는 plan_detail 값들을 출력해준다.
 	 */
@@ -171,76 +171,47 @@ public class PlanController {
 		}
 	}
 	
-	
-//	/**
-//	 * 여행 계획 수정하기
-//	 * 모든 값을 수정할 것은 아니므로 PatchMapping 사용.
-//	 * 클라이언트로부터 넘겨 받는 데이터 : start_date, end_date
-//	 * 반환 : planKey를 넘겨준다.
-//	 * @param e
-//	 * @return
-//	 */
-//	@ApiOperation(value="단일 여행 계획 수정하기", notes="단일 여행 계획을 수정한다.")
-//	@PatchMapping("/{planKey}")
-//	public ResponseEntity<?> planUpdate(@RequestBody PlanUpdateDto planUpdateDto,
-//			@PathVariable("planKey") String planKey){
-//		try {
-//			planUpdateDto.setPlanKey(planKey);
-//			planService.updatePlan(planUpdateDto); // start_date, end_date 변경
-//			
-//			return new ResponseEntity<String>(planKey, HttpStatus.OK);
-//		} catch (SQLException e) {
-//			return exceptionHandling(e);
-//		}
-//	}
-//	
-//	/**
-//	 * 여행 계획 디테일 수정하기
-//	 * 클라이언트로부터 넘겨 받는 데이터 : List<PlanUpdateDto>
-//	 * 반환 : 
-//	 * @param e
-//	 * @return
-//	 */
-//	@ApiOperation(value="단일 여행 계획 수정하기", notes="단일 여행 계획을 수정한다.")
-//	@PatchMapping("/{planKey}")
-//	public void planUpdate(@RequestBody List<PlanUpdateDetailDto> planUpdateDetailDtos,
-//			@PathVariable("planKey") String planKey){
-//		try {
-//			for (PlanUpdateDetailDto updateDto : planUpdateDetailDtos) {
-//				updateDto.setPlanKey(planKey);
-//			}
-//			planService.updateDetailPlan(planUpdateDetailDtos); // start_date, end_date 변경
-//			
-////			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
-//		} catch (SQLException e) {
-////			return exceptionHandling(e);
-//			e.printStackTrace();
-//		}
-//	}
+	/**
+	 * 클라이언트로 넘겨 받는 데이터 : List<planKey, detailId,title, content, sequence, attraction_id>
+	 * 수정된 후에 다시 상세 페이지로 이동할 것이므로 List<PlanDetailDto> 반환 
+	 * @param planKey
+	 * @return
+	 */
+	@ApiOperation(value="단일 여행 계획 수정하기", notes="단일 여행 계획을 수정한다.")
+	@PatchMapping("/{planKey}")
+	public ResponseEntity<?> planUpdate(@PathVariable("planKey") String planKey, @RequestBody List<PlanUpdateDetailDto> updateDtos){
+		try {
+			planService.updatePlanDetail(updateDtos);
+			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return exceptionHandling(e);
+		}
+	}
+
 	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-//	@ApiOperation(value="여행 계획 리스트", notes="저장된 계획 리스트 목록")
-//	@ApiResponses({@ApiResponse(code = 200, message = "계획 목록 OK!!"), @ApiResponse(code = 404, message = "페이지를 찾을 수 없습니다"),
-//		@ApiResponse(code = 500, message="서버 에러")})
-//	@GetMapping("/plans")
-//	public ResponseEntity<?> plans(){
-//		try {
-//			List<PlanListDto> list =  planService.findAllPlan();
-//			System.out.println("list : " + list.toString());
-//			if(list != null && !list.isEmpty()) {
-//				return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
-//			}else {
-//				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//			}
-//			
-//		} catch (SQLException e) {
-//			return exceptionHandling(e);
-//		}
-//	}
-	
-	
+	@ApiOperation(value="여행 계획 전체 리스트", notes="저장된 계획 리스트 목록")
+	@ApiResponses({@ApiResponse(code = 200, message = "계획 목록 OK!!"), @ApiResponse(code = 404, message = "페이지를 찾을 수 없습니다"),
+		@ApiResponse(code = 500, message="서버 에러")})
+	@GetMapping("/plans")
+	public ResponseEntity<?> plans(){
+		try {
+			List<PlanListDto> list =  planService.findAllPlan();
+			System.out.println("list : " + list.toString());
+			if(list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+			
+		} catch (SQLException e) {
+			return exceptionHandling(e);
+		}
+	}
 }
