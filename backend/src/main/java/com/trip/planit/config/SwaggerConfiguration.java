@@ -31,8 +31,8 @@ public class SwaggerConfiguration {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
-					.apis(RequestHandlerSelectors.basePackage("com.trip.planit.user.controller"))
-					.paths(regex("/users/.*")).build()
+					.apis(RequestHandlerSelectors.basePackage("com.trip.planit.board.controller"))
+					.paths(regex("/boards/.*")).build()
 					.useDefaultResponseMessages(false);
 	}
 	
