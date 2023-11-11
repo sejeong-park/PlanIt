@@ -18,6 +18,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class BoardRegistDto {
+	private int boardId;
 	private String planKey;
 	private String title;
 	private String createUser;
