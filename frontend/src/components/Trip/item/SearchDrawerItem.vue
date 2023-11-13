@@ -1,20 +1,19 @@
-<script setup>
+<script setup set >
 
-import {defineProps, ref} from 'vue'; 
+import axios from 'axios';
+import region from '@/util/region';
+import {defineProps, ref, onMounted, defineEmit} from 'vue'; 
+const {VITE_OPEN_API_SERVICE_KEY, VITE_TRIP_INFO_KOR_API_URL} = import.meta.env;
 // 부모 컴포넌트로부터 버튼의 상태를 전달 받기 위함
 const props = defineProps({
     open : Boolean,
     drawerWidth : String
 })
-// sidoList는 값으로 [sido.value, gugun.value]로 구성된다. -> sidoList의 json은 value와 라벨로 구성되어 있으며, 이 포맷은 변경이 안된다.
-// api에서 변경해주거나, js에서 전처리 해야할듯
-// child depth에도 "전체" 값 넣어야 함
-const sidoList = ref([
-    {value : "전국", label : "전국"},
-    {value : "서울", label : "서울", children : [{ value : "노원", label : "노원"},{ value : "강남", label : "강남"},{ value : "용산", label : "용산"}, { value : "광진", label : "광진"}]},
-    {value : "강원", label : "강원", children : [{ value : "속초", label : "속초"},{ value : "강릉", label : "강릉"}]},
-    {value : "1", label : "부산", children : [{ value : "2", label : "메롱"},{ value : "3", label : "부산"},{ value : "용산", label : "용산"}, { value : "광진", label : "광진"}]},
-])
+
+// region 지역 나오는 정보
+const regionList = ref(region); // region.js에서 export 해온 값
+const regionResult = ref([]); // 사용자가 선택한 region의 값
+
 
 const searchList = ref([
             {
@@ -239,28 +238,24 @@ const searchList = ref([
             }
             ]);
 
-// 관광지 정보 리스트 임시
-// const data = [
-//     {
-//         title: 'Ant Design Title 1',
-//     },
-//     {
-//         title: 'Ant Design Title 2',
-//     },
-//     {
-//         title: 'Ant Design Title 3',
-//     },
-//     {
-//         title: 'Ant Design Title 4',
-//     },
-// ];
 
+// searchList에서 조회되는 데이터 묶음
+const moveMapLocation = (data) => {
+    // mapx, mapy 데이터 조회
+    console.log("mapx : ", data.mapx, "mapy : ", data.mapy);
+    emit('clickLocation', data); // 데이터 자체를 부모 컴포넌트에 올려버림
+};
+
+const emit = defineEmit(['clickLocation']); // 업데이트
 
 // 값 단순 확인용
 const logCheck = (value) => {
-    console.log(value)
+    // getSidoCode(); // 전체 시도 가져오기
+    console.log(regionResult.value);
 }
 
+onMounted(() => {
+});
 
 </script>
 <template>
@@ -287,14 +282,15 @@ const logCheck = (value) => {
             :closable="false"
             :bodyStyle = "{ paddingTop: '0px', marginTop : '2.5rem'}"
             placement="left">
-
+            
             <!-- 1. 지도에 위치값 표시할 값들 찾기 -->
             <a-space class = "search-form">
                 <!-- 시도 구군 -->
+                <!--@change : 값의 변경이 완료 된 후에 바뀜-->
                 <a-cascader size = "large" 
-                    v-model:value="sidoValue" 
+                    v-model:value="regionResult" 
                     bordered = "true"
-                    :options="sidoList" 
+                    :options="regionList" 
                     placeholder="Please select" 
                     @change = "logCheck"/>
 
@@ -317,38 +313,36 @@ const logCheck = (value) => {
                     <!---searchList.body.items.item-->
                     <template #renderItem="{item}">
                         <!-- 반복의 아이템 (밑에서부터 왼쪽)-->
-                        <a-list-item>
-                            <!-- 추가 버튼 -->
-                            <template #actions>
-                                <a-button type="primary" :size="large">
-                                    <template #icon>
-                                        추가
-                                        <DownloadOutlined />
-                                    </template>
-                                </a-button>
-                            </template>
+                        <a-list-item class = "list-item">
                             <!-- 맨 하단 디스크립션-->
-                            <a-list-item-meta
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            <a-list-item-meta class = "item-info"
+                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                style = "width : 80px;"
                             >
-                            <!-- 제목-->
-                            <template #title>
-                                <a href="https://www.antdv.com/">{{ item.title }}</a>
-                            </template> 
-                            <!--미리보기-->
-                            <template #avatar>
-                                <!--미리보기 -> 이미지 싱크 넣기-->
-                                <a-image
-                                    :width="200"
-                                    :preview = "false"
-                                    :src="item.firstimage"
-                                />
-                            </template>
+                                <!-- 제목-->
+                                <template #title>
+                                    <a class = "item-title" href="https://www.antdv.com/">
+                                        {{ item.title }}
+                                    </a>
+                                </template> 
+                                <!--미리보기-->
+                                <template #avatar>
+                                    <!--미리보기 -> 이미지 싱크 넣기-->
+                                    <a-image
+                                        :width="200"
+                                        :height="150"
+                                        :preview = "false"
+                                        :src="item.firstimage"
+                                    />
+                                </template>
                             </a-list-item-meta>
+                            <!--버튼을 클릭하면 카카오맵의 위치가 변경된다.-->
+                            <a-button type = "primary" @click = "moveMapLocation(item)">버튼</a-button>
                         </a-list-item>
                     </template>
                 </a-list>
             </div>
+            
 
 
         </a-drawer>
@@ -360,6 +354,22 @@ const logCheck = (value) => {
     display : flex;
     width : 100%;
     justify-content: center; /* 가운데 정렬 */
-    margin-bottom: 2rem;
+    margin: 1rem 0 2rem 0;
+}
+
+.list-item{
+    margin : 0.5rem;
+    
+
+    .item-title {
+        height : 3rem;
+    }
+    .item-info{
+        width  : 200px;
+    }
+
+    
+    /* 아이템 안에 타이틀 */
+
 }
 </style>

@@ -1,11 +1,15 @@
 <script setup>
 import { RouterView } from 'vue-router';
 import HeaderComponent from '@/components/layout/HeaderComponent.vue';
+
+
+
 </script>
 
-<template>
+<template >
     <div class="container">
-        <HeaderComponent />
+        <!-- <HeaderComponent v-if = "$route.path !== '/'"/> -->
+        <HeaderComponent/>
         <a-row class="content">
             <RouterView />
         </a-row>
