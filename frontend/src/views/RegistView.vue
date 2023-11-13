@@ -20,13 +20,18 @@
       <a-label for="email">이메일</a-label>
       <a-input id="email" name="email" type="email"> </a-input>
 
+      <a-label for="gender">성별 </a-label>
       <div class="gender">
-        <a-label for="gender">성별 </a-label>
         <a-label for="male">남</a-label>
-        <a-input id="male" name="male" type="radio" value="male"></a-input>
+        <a-input id="male" name="gender" type="radio" value="male"></a-input>
 
         <a-label for="female">여</a-label>
-        <a-input id="female" name="female" type="radio" value="female"></a-input>
+        <a-input
+          id="female"
+          name="gender"
+          type="radio"
+          value="female"
+        ></a-input>
       </div>
 
       <a-label for="birth">생일</a-label>
@@ -40,12 +45,12 @@
 <style lang="scss" scoped>
 .register-form {
   width: 27rem;
-  height: 30rem;
+  height: 45rem;
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  margin: 10rem auto; /* Center within the parent container */
+  margin: 3rem auto; /* Center within the parent container */
   border: 1px solid #20b2aa;
   border-radius: 2rem;
 
@@ -53,12 +58,10 @@
     color: gray;
     margin-top: 1rem;
     text-align: left;
-    color: gray;
   }
 
   button {
     margin-top: 1rem;
-
     border-radius: 2rem;
     width: 20rem;
     height: 2rem;
@@ -66,7 +69,7 @@
 
   img {
     width: 12rem;
-    height: 12rem;
+    height: 9rem;
   }
 
   p {
