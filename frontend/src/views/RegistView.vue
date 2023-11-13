@@ -20,12 +20,14 @@
       <a-label for="email">이메일</a-label>
       <a-input id="email" name="email" type="email"> </a-input>
 
-      <a-label for="gender">성별 </a-label>
-      <a-label for="male">남</a-label>
-      <a-input id="male" name="male" type="radio" value="male"></a-input>
+      <div class="gender">
+        <a-label for="gender">성별 </a-label>
+        <a-label for="male">남</a-label>
+        <a-input id="male" name="male" type="radio" value="male"></a-input>
 
-      <a-label for="female">여</a-label>
-      <a-input id="female" name="female" type="radio" value="female"></a-input>
+        <a-label for="female">여</a-label>
+        <a-input id="female" name="female" type="radio" value="female"></a-input>
+      </div>
 
       <a-label for="birth">생일</a-label>
       <a-input id="birth" name="birth" type="date"> </a-input>
@@ -70,5 +72,10 @@
   p {
     color: gray;
   }
+}
+
+.gender {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
 }
 </style>
