@@ -29,6 +29,12 @@ public class UserController {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.loginUser(requestUser); // 로그인
+		if(user != null) {
+			System.out.println("로그인 성공!!");
+		}else {
+			System.out.println("로그인 실패!!");
+			return new ResponseEntity<Map<String,Object>>(result, HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 

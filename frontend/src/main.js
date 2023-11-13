@@ -12,7 +12,6 @@ const app = createApp(App);
 
 // app.use(createPinia())
 app.use(router);
-
 app.use(Antd); // Ant-Design-Vue 적용
 
 app.mount("#app");

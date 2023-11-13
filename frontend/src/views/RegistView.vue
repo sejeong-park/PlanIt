@@ -1,18 +1,53 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+
+const userId = ref("");
+const userPassword = ref("");
+const userName = ref("");
+
+const regist = function () {
+  // console.log(userId.value, password.value, nickname.value);
+  // 변수명이 서버측 변수 명과 동일해야한다. 그렇지 않으면 데이터가 DB에 저장되지 않는다.
+  axios.post("http://localhost:/users/regist", {
+    userId: userId.value,
+    userPassword: userPassword.value,
+    userName: userName.value,
+  });
+
+  userId.value = "";
+  userPassword.value = "";
+  userName.value = "";
+};
+</script>
 
 <template>
   <div class="background">
     <a-form class="register-form">
       <img src="@\assets\img\PlanIt!.png" alt="logo" />
 
+      <!-- v-model:value = v-model -->
       <a-label for="userId">아이디 </a-label>
-      <a-input id="userId" name="userId" type="text"> </a-input>
+      <a-input id="userId" name="userId" v-model:value="userId" type="text">
+      </a-input>
 
       <a-label for="userPassword">패스워드 </a-label>
-      <a-input id="userPassword" name="userPassword" type="password"> </a-input>
+      <a-input
+        id="userPassword"
+        name="userPassword"
+        v-model:value="userPassword"
+        type="password"
+      >
+      </a-input>
 
-      <a-label for="nickname">닉네임 </a-label>
-      <a-input id="nickname" name="nickname" type="text"> </a-input>
+      <a-label for="userName">닉네임 </a-label>
+      <a-input
+        id="userName"
+        name="userName"
+        v-model:value="userName"
+        type="text"
+      >
+      </a-input>
 
       <a-label for="phone">핸드폰</a-label>
       <a-input id="phone" name="phone" type="text"> </a-input>
@@ -37,7 +72,7 @@
       <a-label for="birth">생일</a-label>
       <a-input id="birth" name="birth" type="date"> </a-input>
 
-      <a-button type="primary" htmlType="submit">회원가입</a-button>
+      <a-button type="primary" @click="regist()">회원가입</a-button>
     </a-form>
   </div>
 </template>
