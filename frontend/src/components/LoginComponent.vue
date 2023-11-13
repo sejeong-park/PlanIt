@@ -24,15 +24,15 @@ const onFinishFailed = (errorInfo) => {
     @finishFailed="onFinishFailed"
   >
     <a-form-item
-      label="Username"
-      name="username"
+      label="아이디"
+      name="id"
       :rules="[{ required: true, message: '아이디를 입력하세요' }]"
     >
       <a-input v-model:value="formState.username" />
     </a-form-item>
 
     <a-form-item
-      label="Password"
+      label="패스워드"
       name="password"
       :rules="[{ required: true, message: '비밀번호를 입력하세요!' }]"
     >
