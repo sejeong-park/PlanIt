@@ -1,12 +1,58 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.trip.planit.board.model.mapper.BoardMapper">
-	<insert id="insertArticle" parameterType="boardDto">
-		insert into board(title, content) values(#{title}, #{content}) 
+<mapper
+	namespace="com.trip.planit.board.model.mapper.BoardMapper">
+	<!-- private String planKey; private String title; private String createUser; 
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", 
+		timezone = "Asia/seoul") private Timestamp createAt; private Timestamp updateAt; 
+		private String contents; private int hits; -->
+	<resultMap type="boardListDto" id="boardListDto">
+		<result column="title" property="title" />
+		<result column="create_user" property="createUser" />
+		<result column="create_at" property="createAt" />
+		<result column="update_at" property="updateAt" />
+		<result column="contents" property="contents" />
+		<result column="hits" property="hits" />
+		<result column="plan_key" property="planKey" />
+		<result column="board_id" property="boardId" />
+	</resultMap>
+
+
+	<!--planKey, 게시글 title, create_user(유저 이름?),create_at, contents, hits -->
+	<insert id="insertBoard" parameterType="boardRegistDto">
+		insert into boards(plan_key, title, create_user, create_at, contents)
+		values(#{planKey}, #{title}, #{createUser}, now(), #{contents})
 	</insert>
-	<select id="selectAllArticles" resultType="boardDto">
-		select * from board;
+	
+	<select id="selectBoardId" resultType="int">
+		select max(board_id) from boards;
 	</select>
+
+	<insert id="insertFile" parameterType="fileInfoDto">
+		insert into
+		file_infos(board_id, user_id, save_folder, save_file, original_file)
+		values(#{boardId}, #{userId}, #{saveFolder}, #{saveFile},
+		#{originalFile})
+	</insert>
+
+	<select id="selectAllBoard" resultMap="boardListDto">
+		select * from boards;
+	</select>
+
+	<select id="selectBoard" parameterType="String"
+		resultMap="boardListDto">
+		select * from boards where board_id = #{boardId}
+	</select>
+
+	<delete id="deleteBoard" parameterType="String">
+		delete from boards where
+		board_id = #{boardId}
+	</delete>
+
+	<update id="updateBoard" parameterType="boardUpdateDto">
+		update boards set
+		title=#{title}, contents=#{contents}, update_at=now() where board_id =
+		#{boardId};
+	</update>
 </mapper>
