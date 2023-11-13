@@ -136,10 +136,12 @@ public class UserController {
 			@ApiResponse(code = 404, message = "사용자 정보 없음")
 	})
 	@AuthRequired // 인증이 필요
-	@DeleteMapping("/{userId}")
-	public ResponseEntity withdraw(@PathVariable String userId) throws Exception {
+	@DeleteMapping("/withdraw")
+	public ResponseEntity withdraw(HttpServletRequest request) throws Exception {
 
+		String userId = jwtUtil.getUserId(request.getHeader("Authorization"));
 		userService.deleteUser(userId);
+
 		return ResponseEntity.ok().build();
 	}
 
@@ -153,7 +155,7 @@ public class UserController {
 			@ApiResponse(code = 404, message = "사용자 정보 없음")
 	})
 	@AuthRequired // 인증 필요
-	@GetMapping("/{userId}")
+	@GetMapping("/mypage")
 	public ResponseEntity<Map<String, Object>> mypage(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -201,7 +203,7 @@ public class UserController {
 			@ApiResponse(code = 404, message = "사용자 정보 없음")
 	})
 	@AuthRequired // 인증 필요
-	@PutMapping("/{userId}")
+	@PutMapping("/modify")
 	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> requestMap, HttpServletRequest request) throws Exception{
 
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -210,7 +212,7 @@ public class UserController {
 		String accessTokenUserId = jwtUtil.getUserId(request.getHeader(("Authorization")));
 		String requestUserId = requestMap.get("id");
 
-		boolean isUpdated = userService.modifyUser(requestMap);
+		boolean isUpdated = userService.modify(requestMap);
 
 		// 검증
 		if (!isUpdated){

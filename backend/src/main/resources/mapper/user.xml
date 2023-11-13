@@ -8,6 +8,7 @@
 		<result column="user_name" property = "userName"/>
 	</resultMap>
 
+
 	<!-- 로그인하는 유저를 확인한다.-->
 	<select id="selectByUser" parameterType="user" resultMap = "user">
 		SELECT user_id, user_password, user_name
@@ -34,7 +35,7 @@
 	</delete>
 
 	<!--회원 정보 수정 한다-->
-	<update id="updateByUser" parameterType="user">
+	<update id="updateByUser" parameterType="hashMap">
 		UPDATE users
 		SET user_id = #{userId},
 		    user_password = #{userPassword},
