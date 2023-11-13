@@ -14,8 +14,11 @@
       <a-input id="id" name="id" type="text"> </a-input>
 
       <a-button type="primary" htmlType="submit">로그인</a-button>
-      <!-- <p>아직 회원이 아니세요?<a href="/users/regist">회원가입</a></p> -->
-      <p>아직 회원이 아니세요?<router-link to="/users/regist">회원가입</router-link></p>
+      <p>
+        아직 회원이 아니세요?<router-link to="/users/regist"
+          >회원가입</router-link
+        >
+      </p>
     </a-form>
   </div>
 </template>
@@ -28,7 +31,7 @@
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  margin: 10rem auto; /* Center within the parent container */
+  margin: 5rem auto; /* Center within the parent container */
   border: 1px solid #20b2aa;
   border-radius: 2rem;
 
