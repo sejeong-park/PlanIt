@@ -14,41 +14,49 @@ const onFinishFailed = (errorInfo) => {
 </script>
 
 <template>
-  <a-form
-    :model="formState"
-    name="basic"
-    :label-col="{ span: 8 }"
-    :wrapper-col="{ span: 16 }"
-    autocomplete="off"
-    @finish="onFinish"
-    @finishFailed="onFinishFailed"
-  >
-    <a-form-item
-      label="아이디"
-      name="id"
-      :rules="[{ required: true, message: '아이디를 입력하세요' }]"
-    >
-      <a-input v-model:value="formState.username" />
-    </a-form-item>
+  <div class="background">
+    <a-form class="login-form">
+      <div>
+        <img src="@\assets\img\PlanIt!.png" alt="logo" />
+      </div>
 
-    <a-form-item
-      label="패스워드"
-      name="password"
-      :rules="[{ required: true, message: '비밀번호를 입력하세요!' }]"
-    >
-      <a-input-password v-model:value="formState.password" />
-    </a-form-item>
+      <a-label for="id">아이디 </a-label>
+      <a-input id="id" name="id" type="text"> </a-input>
 
-    <!-- 
-        아이디 저장
-        <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
-      <a-checkbox v-model:checked="formState.remember">아이디 저장</a-checkbox>
-    </a-form-item> -->
+      <a-label for="id">패스워드 </a-label>
+      <a-input id="id" name="id" type="text"> </a-input>
 
-    <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-      <a-button type="primary" html-type="submit">로그인</a-button>
-    </a-form-item>
-  </a-form>
+      <a-button type="primary" htmlType="submit">로그인</a-button>
+    </a-form>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.login-form {
+  width: 30rem;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  margin: 10rem auto; /* Center within the parent container */
+  border: 1px solid #20b2aa;
+  border-radius: 2rem;
+
+  a-label {
+    margin-top: 2rem;
+    text-align: left;
+    color: gray;
+  }
+
+  button {
+    margin-top: 3rem;
+    width: 20rem;
+  }
+
+  img {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+</style>
