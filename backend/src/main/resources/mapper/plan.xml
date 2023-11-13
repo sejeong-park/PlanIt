@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trip.planit.plan.model.mapper.PlanMapper">
+
+	<resultMap type="planListDto" id="planListDto">
+		<result column="plan_key" property="planKey"/>
+		<result column="create_user" property="createUser"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="create_at" property="createAt"/>
+		<result column="title" property="title"/>
+	</resultMap>
+	
+	<resultMap type="planDetailDto" id="planDetailDto">
+		<result column="plan_key" property="planKey"/>
+		<result column="plan_date" property="planDate"/>
+		<result column="sequence" property="sequence"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="attraction_id" property="attractionId"/>
+	</resultMap>
+	<!-- 
+	<resultMap type="planUpdateDto" id="planUpdateDto">
+		<result column="plan_date" property="planDate"/>
+		<result column="sequence" property="sequence"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="attraction_id" property="attractionId"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+	</resultMap>
+	
+	 -->
+	
+	<insert id="insertPlan" parameterType="planRegistDto">
+		insert into trip_plans(plan_key, create_user, anonymous_password, start_date, end_date, create_at)
+		values(#{planKey},#{createUser} ,#{anonymousPassword}, "2023-11-08", "2023-11-08", #{createAt}) 
+	</insert>
+	
+	<insert id="insertPlanDetail" parameterType="list">
+	insert into trip_details(plan_date, plan_key, sequence, title, content, attraction_id)
+			values
+		<foreach collection="list" item="planDetailDto" separator=",">
+			(
+			#{planDetailDto.planDate}, #{planDetailDto.planKey}, #{planDetailDto.sequence}, 
+			#{planDetailDto.title}, #{planDetailDto.content}, #{planDetailDto.attractionId}
+			)
+		</foreach>
+	</insert>
+	
+	<select id="selectAllPlan" resultMap="planListDto">
+		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans;
+	</select>
+	
+	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">
+		select * from trip_details where plan_key = #{planKey}
+	</select>
+	
+	
+	<delete id="deletePlan" parameterType="String">
+    delete from trip_plans where plan_key = #{planKey}
+	</delete>
+	
+	<delete id="deletePlanDetail" parameterType="String">
+	 delete from trip_details where plan_key = #{planKey}
+	</delete>
+	
+	<update id="updatePlanDetail" parameterType="list">
+		<foreach collection="list" item="updateDto" separator=";"> 
+			update 
+			trip_details 
+			set 
+			title=#{updateDto.title}, 
+			content=#{updateDto.content}, 
+			sequence=#{updateDto.sequence}, 
+			attraction_id=#{updateDto.attractionId} 
+			where 
+			detail_id = #{updateDto.detailId}	
+		</foreach>
+	</update>
+	
+</mapper>
