@@ -10,12 +10,28 @@ const router = createRouter({
         {
           path: "regist",
           name: "regist",
-          component: () => import("../views/RegistView.vue"),
+          component: () => import("../views/UserRegistView.vue"),
         },
         {
           path: "login",
           name: "login",
           component: () => import("../views/LoginView.vue"),
+        },
+      ],
+    },
+    {
+      path: "/boards",
+      name: "board-list",
+      children: [
+        {
+          path: "",
+          name: "board-list",
+          component: () => import("../views/BoardListView.vue"),
+        },
+        {
+          path: "regist",
+          name: "regist",
+          component: () => import("../views/BoardRegistView.vue"),
         },
       ],
     },

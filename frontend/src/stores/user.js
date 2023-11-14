@@ -1,8 +1,13 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 
-export const useLoginStore = defineStore("login", () => {
-  const loginStatus = ref(false);
+export const useUserStore = defineStore(
+  "login",
+  () => {
+    const loginStatus = ref(false);
+    const userId = ref("");
 
-  return { loginStatus };
-});
+    return { loginStatus, userId };
+  },
+  { persist: { storage: localStorage } }
+);

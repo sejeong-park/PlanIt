@@ -28,7 +28,7 @@ const regist = function () {
 
       <!-- v-model:value = v-model -->
       <a-label for="userId">아이디 </a-label>
-      <a-input id="userId" name="userId" v-model:value="userId" type="text">
+      <a-input id="userId" name="userId" v-model:value="userId" type="text" style="width: 20rem">
       </a-input>
 
       <a-label for="userPassword">패스워드 </a-label>
@@ -37,6 +37,7 @@ const regist = function () {
         name="userPassword"
         v-model:value="userPassword"
         type="password"
+        style="width: 20rem"
       >
       </a-input>
 
@@ -46,31 +47,27 @@ const regist = function () {
         name="userName"
         v-model:value="userName"
         type="text"
+        style="width: 20rem"
       >
       </a-input>
 
-      <a-label for="phone">핸드폰</a-label>
-      <a-input id="phone" name="phone" type="text"> </a-input>
+      <!-- <a-label for="phone">핸드폰</a-label>
+      <a-input id="phone" name="phone" type="text"> </a-input> -->
 
       <a-label for="email">이메일</a-label>
-      <a-input id="email" name="email" type="email"> </a-input>
-
+      <a-input id="email" name="email" type="email" style="width: 20rem"> </a-input>
+      <!-- 
       <a-label for="gender">성별 </a-label>
       <div class="gender">
         <a-label for="male">남</a-label>
         <a-input id="male" name="gender" type="radio" value="male"></a-input>
 
         <a-label for="female">여</a-label>
-        <a-input
-          id="female"
-          name="gender"
-          type="radio"
-          value="female"
-        ></a-input>
-      </div>
-
+        <a-input id="female" name="gender" type="radio" value="female"></a-input>
+      </div> -->
+      <!-- 
       <a-label for="birth">생일</a-label>
-      <a-input id="birth" name="birth" type="date"> </a-input>
+      <a-input id="birth" name="birth" type="date"> </a-input> -->
 
       <a-button type="primary" @click="regist()">회원가입</a-button>
     </a-form>
@@ -80,7 +77,7 @@ const regist = function () {
 <style lang="scss" scoped>
 .register-form {
   width: 27rem;
-  height: 45rem;
+  height: 35rem;
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */

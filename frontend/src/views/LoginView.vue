@@ -2,9 +2,9 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useLoginStore } from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 
-const store = useLoginStore();
+const store = useUserStore();
 
 const userId = ref("");
 const userPassword = ref("");
@@ -24,8 +24,10 @@ const login = function () {
         alert("로그인 성공!!");
         // console.log(store.loginStatus);
         store.loginStatus = true;
+        store.userId = userId.value;
         router.replace({ path: "/" });
         // console.log(store.loginStatus);
+        // console.log(store.userId);
       } else {
         alert("로그인 실패!!");
       }
@@ -46,10 +48,11 @@ const login = function () {
       </div>
 
       <a-label for="id">아이디 </a-label>
-      <a-input id="id" name="id" v-model:value="userId" type="text"> </a-input>
+      <a-input id="id" name="id" v-model:value="userId" type="text" style="width: 20rem"> </a-input>
 
       <a-label for="id">패스워드 </a-label>
-      <a-input id="id" name="id" v-model:value="userPassword" type="text"> </a-input>
+      <a-input id="id" name="id" v-model:value="userPassword" type="text" style="width: 20rem">
+      </a-input>
 
       <a-button type="primary" @click="login()" htmlType="submit">로그인</a-button>
       <p>아직 회원이 아니세요?<router-link to="/users/regist">회원가입</router-link></p>
@@ -60,7 +63,7 @@ const login = function () {
 <style lang="scss" scoped>
 .login-form {
   width: 27rem;
-  height: 30rem;
+  height: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
@@ -85,7 +88,7 @@ const login = function () {
 
   img {
     width: 12rem;
-    height: 12rem;
+    height: 10rem;
   }
 
   p {

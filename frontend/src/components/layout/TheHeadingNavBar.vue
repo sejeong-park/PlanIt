@@ -1,7 +1,7 @@
 <script setup>
-import { useLoginStore } from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 
-const store = useLoginStore();
+const store = useUserStore();
 </script>
 <template>
   <nav>
@@ -18,18 +18,25 @@ const store = useLoginStore();
             marginLeft: 'auto',
           }"
         >
-          <div v-show="!store.loginStatus">
+          <div v-if="!store.loginStatus">
             <a-menu-item key="1"><router-link to="/users/login">로그인</router-link></a-menu-item>
             <a-menu-item key="2"
               ><router-link to="/users/regist">회원가입</router-link></a-menu-item
             >
+            <a-menu-item key="3"><router-link to="/boards">게시판</router-link></a-menu-item>
+            <a-menu-item key="4"><router-link to="/">계획 만들기</router-link></a-menu-item>
           </div>
-          <div v-show="store.loginStatus">
+          <div v-if="store.loginStatus">
             <a-menu-item key="1"
               ><router-link to="/users/logout">로그아웃</router-link></a-menu-item
             >
             <a-menu-item key="2"
-              ><router-link to="/users/myPage">마이페이지</router-link></a-menu-item
+              ><router-link to="/users/myPage">나의 계획</router-link></a-menu-item
+            >
+            <a-menu-item key="3"><router-link to="/boards">게시판</router-link></a-menu-item>
+            <a-menu-item key="4"><router-link to="/">계획 만들기</router-link></a-menu-item>
+            <a-menu-item key="5"
+              ><router-link to="/boards/regist">게시글 만들기</router-link></a-menu-item
             >
           </div>
         </a-menu>
