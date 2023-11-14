@@ -4,12 +4,17 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      name: "home",
+      component: () => import("../views/HomeView.vue"),
+    },
+    {
       path: "/users",
       name: "users",
       children: [
         {
           path: "regist",
-          name: "regist",
+          name: "user-regist",
           component: () => import("../views/UserRegistView.vue"),
         },
         {
@@ -21,7 +26,7 @@ const router = createRouter({
     },
     {
       path: "/boards",
-      name: "board-list",
+      name: "board",
       children: [
         {
           path: "",
@@ -30,16 +35,16 @@ const router = createRouter({
         },
         {
           path: "regist",
-          name: "regist",
+          name: "board-regist",
           component: () => import("../views/BoardRegistView.vue"),
+        },
+        {
+          path: "thumbnail",
+          name: "thumbnail",
+          component: () => import("../views/BoardThumbnailView.vue"),
         },
       ],
     },
-    // {
-    //   path: "/",
-    //   name: "main-page",
-    //   component: () => import("@/App.vue"),
-    // },
   ],
 });
 

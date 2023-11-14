@@ -2,11 +2,14 @@
 import axios from "axios";
 import { usePlanStore } from "@/stores/plan";
 import { useUserStore } from "@/stores/user";
+import { useRouter, useRoute } from "vue-router";
+import { reactive, ref } from "vue";
+
+const router = useRouter();
 
 /**
  * 유효성 검사.
  */
-import { reactive, ref } from "vue";
 const formRef = ref();
 const formState = reactive({
   title: "",
@@ -63,20 +66,23 @@ const planStore = usePlanStore();
 const userStore = useUserStore();
 
 const baseUrl = "http://localhost:/boards";
-const planKey = planStore.planKey; // 여기에 실제 동적인 값 대입
+const planKey = planStore.planKey; // 여기에 실제 동적인 값 대입\
 
 const planRegist = function () {
   if (formState.title.trim() !== "" && formState.content.trim() !== "") {
-    axios.post(`${baseUrl}/${planKey}`, {
-      userId: userStore.userId,
-      planKey: planStore.planKey,
-      title: formState.title,
-      content: formState.content,
-    });
-    console.log(baseUrl + planKey);
-    console.log(planKey);
-    console.log(formState.title);
-    console.log(formState.content);
+    axios
+      .post(`${baseUrl}/${planKey}`, {
+        userId: userStore.userId,
+        planKey: planStore.planKey,
+        title: formState.title,
+        content: formState.content,
+      })
+      .then((response) => {
+        console.log(response.data);
+        provide("boardId", response.data); // provide로 boardId를 형제 컴포넌트에게 전달
+      });
+
+    router.replace({ path: "/boards/thumbnail" });
   }
 };
 
