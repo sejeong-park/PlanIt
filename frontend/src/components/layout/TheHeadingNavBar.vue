@@ -1,11 +1,12 @@
-<script></script>
+<script setup>
+import { useLoginStore } from "@/stores/user";
+
+const store = useLoginStore();
+</script>
 <template>
   <nav>
     <a-layout>
-      <a-layout-header
-        class="header"
-        style="display: flex; justify-content: flex-end"
-      >
+      <a-layout-header class="header" style="display: flex; justify-content: flex-end">
         <a href="/"><img src="@\assets\img\PlanIt!.png" alt="logo" /></a>
         <a-menu
           v-model:selectedKeys="selectedKeys1"
@@ -17,12 +18,20 @@
             marginLeft: 'auto',
           }"
         >
-          <a-menu-item key="1"
-            ><router-link to="/users/login">로그인</router-link></a-menu-item
-          >
-          <a-menu-item key="2"
-            ><router-link to="/users/regist">회원가입</router-link></a-menu-item
-          >
+          <div v-show="!store.loginStatus">
+            <a-menu-item key="1"><router-link to="/users/login">로그인</router-link></a-menu-item>
+            <a-menu-item key="2"
+              ><router-link to="/users/regist">회원가입</router-link></a-menu-item
+            >
+          </div>
+          <div v-show="store.loginStatus">
+            <a-menu-item key="1"
+              ><router-link to="/users/logout">로그아웃</router-link></a-menu-item
+            >
+            <a-menu-item key="2"
+              ><router-link to="/users/myPage">마이페이지</router-link></a-menu-item
+            >
+          </div>
         </a-menu>
       </a-layout-header>
       <!-- <a-layout-footer style="text-align: center">

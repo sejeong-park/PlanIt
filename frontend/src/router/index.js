@@ -19,6 +19,11 @@ const router = createRouter({
         },
       ],
     },
+    // {
+    //   path: "/",
+    //   name: "main-page",
+    //   component: () => import("@/App.vue"),
+    // },
   ],
 });
 
