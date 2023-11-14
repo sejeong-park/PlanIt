@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import region from '@/util/region';
-import {defineProps, ref, onMounted, defineEmit} from 'vue'; 
+import {defineProps, ref, onMounted} from 'vue'; 
 const {VITE_OPEN_API_SERVICE_KEY, VITE_TRIP_INFO_KOR_API_URL} = import.meta.env;
 // 부모 컴포넌트로부터 버튼의 상태를 전달 받기 위함
 const props = defineProps({
