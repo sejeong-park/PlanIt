@@ -1,6 +1,4 @@
-<script setup>
-import TheHeadingNavBar from "../components/layout/TheHeadingNavBar.vue";
-</script>
+<script setup></script>
 
 <template>
   <h1>홈입니다</h1>

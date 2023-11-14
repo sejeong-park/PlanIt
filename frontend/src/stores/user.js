@@ -9,5 +9,6 @@ export const useUserStore = defineStore(
 
     return { loginStatus, userId };
   },
-  { persist: { storage: localStorage } }
+  // { persist: { storage: localStorage } }
+  { persist: { storage: sessionStorage } }
 );

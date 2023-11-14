@@ -2,7 +2,7 @@
 import axios from "axios";
 import { usePlanStore } from "@/stores/plan";
 import { useUserStore } from "@/stores/user";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { reactive, ref } from "vue";
 
 const router = useRouter();
@@ -79,7 +79,6 @@ const planRegist = function () {
       })
       .then((response) => {
         console.log(response.data);
-        provide("boardId", response.data); // provide로 boardId를 형제 컴포넌트에게 전달
       });
 
     router.replace({ path: "/boards/thumbnail" });
@@ -109,7 +108,9 @@ if (formState.title !== "" && formState.content !== "") {
       <a-textarea v-model:value="formState.content" autocomplete="off" />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" html-type="submit" @click="planRegist()">저장</a-button>
+      <a-button type="primary" html-type="submit" @click="planRegist()"
+        >저장</a-button
+      >
       <a-button style="margin-left: 10px" @click="resetForm">초기화</a-button>
     </a-form-item>
   </a-form>
