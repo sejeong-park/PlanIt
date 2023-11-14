@@ -2,14 +2,16 @@ package com.trip.planit.user.model.service;
 
 import com.trip.planit.user.model.dto.User;
 
+import java.util.Map;
+
 public interface UserService {
 	User loginUser(User user) throws Exception;
 
-	void registUser(User user) throws Exception;
+	int registUser(User user) throws Exception;
 
-	void deleteUser(String userId) throws Exception;
+	int deleteUser(String userId) throws Exception;
 
 	User findByUserId(String userId) throws Exception;
 
-	void modifyUser(User user) throws Exception;
+	boolean modify(Map<String, String> map) throws Exception;
 }

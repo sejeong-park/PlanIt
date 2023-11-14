@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.trip.planit.user.model.dto.User;
 import com.trip.planit.user.model.mapper.UserMapper;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -20,13 +22,13 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public void registUser(User user) throws Exception {
-		userMapper.insertByUser(user);
+	public int registUser(User user) throws Exception {
+		return userMapper.insertByUser(user);
 	}
 
 	@Override
-	public void deleteUser(String userId) throws Exception {
-		userMapper.deleteByUserId(userId);
+	public int deleteUser(String userId) throws Exception {
+		return userMapper.deleteByUserId(userId);
 	}
 	@Override
 	public User findByUserId(String userId) throws Exception{
@@ -34,8 +36,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void modifyUser(User user) throws Exception {
-		userMapper.updateByUser(user);
+	public boolean modify(Map<String, String> map) throws Exception {
+		int result = userMapper.updateByUser(map); // 수정
+		return result == 1 ? true : false;
 	}
 
 
