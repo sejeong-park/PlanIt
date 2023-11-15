@@ -19,11 +19,16 @@ const login = function () {
     })
     .then((response) => {
       // 로그인에 성공해서 200 status code를 응답 받았을 때
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("로그인 성공!!");
         // console.log(store.loginStatus);
         store.loginStatus = true;
         store.userId = userId.value;
+        const { accessToken } = response.data;
+        // console.log("accessTk : ", accessToken);
+
+        axios.defaults.headers.common["Authorization"] = accessToken;
+
         router.replace({ path: "/" });
         // console.log(store.loginStatus);
         // console.log(store.userId);
@@ -41,40 +46,21 @@ const login = function () {
 
 <template>
   <div class="background">
-    <a-form class="login-form">
+    <div class="login-form">
       <div>
         <img src="@\assets\img\PlanIt!.png" alt="logo" />
       </div>
 
       <a-label for="id">아이디 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userId"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
+      <a-input id="id" name="id" v-model:value="userId" type="text" style="width: 20rem"> </a-input>
 
       <a-label for="id">패스워드 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userPassword"
-        type="text"
-        style="width: 20rem"
-      >
+      <a-input id="id" name="id" v-model:value="userPassword" type="text" style="width: 20rem">
       </a-input>
 
-      <a-button type="primary" @click="login()" htmlType="submit"
-        >로그인</a-button
-      >
-      <p>
-        아직 회원이 아니세요?<router-link to="/users/regist"
-          >회원가입</router-link
-        >
-      </p>
-    </a-form>
+      <a-button type="primary" @click="login()" htmlType="submit">로그인</a-button>
+      <p>아직 회원이 아니세요?<router-link to="/users/regist">회원가입</router-link></p>
+    </div>
   </div>
 </template>
 

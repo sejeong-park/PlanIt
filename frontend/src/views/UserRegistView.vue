@@ -5,6 +5,7 @@ import axios from "axios";
 const userId = ref("");
 const userPassword = ref("");
 const userName = ref("");
+const email = ref("");
 
 const regist = function () {
   // console.log(userId.value, password.value, nickname.value);
@@ -13,11 +14,13 @@ const regist = function () {
     userId: userId.value,
     userPassword: userPassword.value,
     userName: userName.value,
+    email: email.value,
   });
 
   userId.value = "";
   userPassword.value = "";
   userName.value = "";
+  email.value = "";
 };
 </script>
 
@@ -41,7 +44,7 @@ const regist = function () {
       >
       </a-input>
 
-      <a-label for="userName">닉네임 </a-label>
+      <a-label for="userName">이름 </a-label>
       <a-input
         id="userName"
         name="userName"
@@ -55,7 +58,8 @@ const regist = function () {
       <a-input id="phone" name="phone" type="text"> </a-input> -->
 
       <a-label for="email">이메일</a-label>
-      <a-input id="email" name="email" type="email" style="width: 20rem"> </a-input>
+      <a-input id="email" name="email" v-model:value="email" type="email" style="width: 20rem">
+      </a-input>
       <!-- 
       <a-label for="gender">성별 </a-label>
       <div class="gender">
