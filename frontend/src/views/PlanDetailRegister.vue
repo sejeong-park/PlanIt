@@ -106,7 +106,7 @@ const showModal = () => {
     icon: createVNode(ExclamationCircleOutlined),
     content: createVNode(
       "div",
-      { style: "color:red;" },
+      { style: "color:blue;" },
       "확인을 누르면 게시글 작성 화면으로 이동합니다."
     ),
     onOk() {
