@@ -98,7 +98,7 @@ const showModal = () => {
    * confirm : 확인 일 때
    * 저장된 해당 plan 값들을 가져와서 modal 창에 뿌려준다(지도 컴포넌트, 스케줄 컴포넌트, 탭 컴포넌트, title, content입력창은 따로)
    *
-   * 취소 일 때 : 어디로 넘어가지?
+   * 취소 일 때 : 플랜 상세 페이지
    *
    */
   Modal.confirm({
@@ -107,7 +107,7 @@ const showModal = () => {
     content: createVNode(
       "div",
       { style: "color:blue;" },
-      "확인을 누르면 게시글 작성 화면으로 이동합니다."
+      "게시글로 등록 시 다른 유저에게 해당 글이 보여집니다."
     ),
     onOk() {
       open.value = true;
@@ -139,14 +139,22 @@ const handleOk = (e) => {
         @finishFailed="handleFinishFailed"
       >
         <a-form-item has-feedback label="title" name="title">
-          <a-input v-model:value="formState.title" type="text" autocomplete="off" />
+          <a-input
+            v-model:value="formState.title"
+            type="text"
+            autocomplete="off"
+          />
         </a-form-item>
         <a-form-item has-feedback label="content" name="content">
           <a-textarea v-model:value="formState.content" autocomplete="off" />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-          <a-button type="primary" html-type="submit" @click="planRegist()">저장</a-button>
-          <a-button style="margin-left: 10px" @click="resetForm">초기화</a-button>
+          <a-button type="primary" html-type="submit" @click="planRegist()"
+            >저장</a-button
+          >
+          <a-button style="margin-left: 10px" @click="resetForm"
+            >초기화</a-button
+          >
         </a-form-item>
       </a-form>
     </a-modal>

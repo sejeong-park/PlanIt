@@ -31,7 +31,13 @@ const regist = function () {
 
       <!-- v-model:value = v-model -->
       <a-label for="userId">아이디 </a-label>
-      <a-input id="userId" name="userId" v-model:value="userId" type="text" style="width: 20rem">
+      <a-input
+        id="userId"
+        name="userId"
+        v-model:value="userId"
+        type="text"
+        style="width: 20rem"
+      >
       </a-input>
 
       <a-label for="userPassword">패스워드 </a-label>
@@ -58,7 +64,13 @@ const regist = function () {
       <a-input id="phone" name="phone" type="text"> </a-input> -->
 
       <a-label for="email">이메일</a-label>
-      <a-input id="email" name="email" v-model:value="email" type="email" style="width: 20rem">
+      <a-input
+        id="email"
+        name="email"
+        v-model:value="email"
+        type="email"
+        style="width: 20rem"
+      >
       </a-input>
       <!-- 
       <a-label for="gender">성별 </a-label>

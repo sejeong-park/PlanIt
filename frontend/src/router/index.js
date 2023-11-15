@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import("../views/HomeView.vue"),
     },
     {
+      path: "/modal",
+      name: "modal-test",
+      component: () => import("@/components/modal/ParentComponent.vue"),
+    },
+    {
       path: "/plans",
       children: [
         {
@@ -21,37 +26,41 @@ const router = createRouter({
     {
       path: "/users",
       name: "users",
+      component: () => import("@/views/TheUserView.vue"),
       children: [
         {
           path: "regist",
           name: "user-regist",
-          component: () => import("../views/UserRegistView.vue"),
+          component: () => import("@/components/user/UserRegistComponent.vue"),
         },
         {
           path: "login",
           name: "login",
-          component: () => import("../views/LoginView.vue"),
+          component: () => import("@/components/user/UserLoginComponent.vue"),
         },
       ],
     },
     {
       path: "/boards",
       name: "board",
+      component: () => import("@/views/TheBoardView.vue"),
       children: [
         {
           path: "",
           name: "board-list",
-          component: () => import("../views/BoardListView.vue"),
+          component: () => import("@/components/board/BoardListComponent.vue"),
         },
-        // {
-        //   path: "regist",
-        //   name: "board-regist",
-        //   component: () => import("../views/BoardRegistViewModal.vue"),
-        // },
+        {
+          path: "regist",
+          name: "board-regist",
+          component: () =>
+            import("@/components/board/BoardRegistComponent.vue"),
+        },
         {
           path: "thumbnail",
           name: "thumbnail",
-          component: () => import("../views/BoardThumbnailView.vue"),
+          component: () =>
+            import("@/components/board/BoardThumbnailComponent.vue"),
         },
       ],
     },

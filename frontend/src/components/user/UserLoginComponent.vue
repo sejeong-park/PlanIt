@@ -52,14 +52,33 @@ const login = function () {
       </div>
 
       <a-label for="id">아이디 </a-label>
-      <a-input id="id" name="id" v-model:value="userId" type="text" style="width: 20rem"> </a-input>
-
-      <a-label for="id">패스워드 </a-label>
-      <a-input id="id" name="id" v-model:value="userPassword" type="text" style="width: 20rem">
+      <a-input
+        id="id"
+        name="id"
+        v-model:value="userId"
+        type="text"
+        style="width: 20rem"
+      >
       </a-input>
 
-      <a-button type="primary" @click="login()" htmlType="submit">로그인</a-button>
-      <p>아직 회원이 아니세요?<router-link to="/users/regist">회원가입</router-link></p>
+      <a-label for="id">패스워드 </a-label>
+      <a-input
+        id="id"
+        name="id"
+        v-model:value="userPassword"
+        type="text"
+        style="width: 20rem"
+      >
+      </a-input>
+
+      <a-button type="primary" @click="login()" htmlType="submit"
+        >로그인</a-button
+      >
+      <p>
+        아직 회원이 아니세요?<router-link to="/users/regist"
+          >회원가입</router-link
+        >
+      </p>
     </div>
   </div>
 </template>
