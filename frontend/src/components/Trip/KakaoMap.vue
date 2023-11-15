@@ -1,49 +1,145 @@
 <script setup>
-import { onMounted, ref } from "vue";
-const kakaoApiKey = "e9f5ba371379c691a4bf3a4ab3827564";
+import { onMounted, ref, watch } from "vue";
+import {useTripSearchStore} from '@/stores/trip';
 
-const markerPositions1 = ref([
-    [33.452278, 126.567803],
-    [33.452671, 126.574792],
-    [33.451744, 126.572441],
-]);
 
-const markerPositions2 = ref([
-    [37.499590490909185, 127.0263723554437],
-    [37.499427948430814, 127.02794423197847],
-    [37.498553760499505, 127.02882598822454],
-    [37.497625593121384, 127.02935713582038],
-    [37.49629291770947, 127.02587362608637],
-    [37.49754540521486, 127.02546694890695],
-    [37.49646391248451, 127.02675574250912],
-]);
-
+const map = ref(null);  // kakao map import 
+const positions = ref([]);
 const markers = ref([]);
-const infowindow = ref(null);
-let map = null;
 
+const tripSearchStore = useTripSearchStore();   // SearchDrawerItem에서 불러오는 데이터
+const focusLocation = ref(); // 버튼을 누른 값
+const searchLocationList = ref([]);
+
+// 조회 리스트 뽑아오기
+watch(
+    () => tripSearchStore.searchLocationList,
+    () => {
+        positions.value = []; // 초기화
+        tripSearchStore.searchLocationList.forEach((tripInfo) =>{
+            let obj = {};
+            obj.latlng = new kakao.maps.LatLng(tripInfo.mapy, tripInfo.mapx); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
+            obj.title = tripInfo.title;
+            positions.value.push(obj);
+        });
+        loadMarkers(); // 마커 로딩하기
+    },
+    {deep : true}
+);
+
+// 포커싱할 것 찾아오기
+watch(
+    () => tripSearchStore.focusLocation,
+    () => {
+        let moveLatLon = new kakao.maps.LatLng(tripSearchStore.focusLocation.mapy, tripSearchStore.focusLocation.mapx);
+        map.value.panTo(moveLatLon);
+    },
+    {deep : true}
+);
+
+
+// marker 화면 표시
+const loadMarkers = () => {
+    deleteMarkers();
+
+    // 마커 이미지 생성
+    // var imageSrc = `assets/img/marker_${ positions[i].contenttypeid }_color_round.png`; (색상 지정할 것)
+    const imgSrc = "src/assets/img/map/map-pin.png";
+    const imgSize = new kakao.maps.Size(48, 48);
+    const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
+
+    const content = '<div class ="label"><span class="left"></span><span class="center">카카오!</span><span class="right"></span></div>;'
+    
+    // 마커 값 표시
+    markers.value = [];
+    positions.value.forEach((pos) => {
+        // 각 포지션 for문 돌리기
+
+        const marker = new kakao.maps.Marker({
+            map : map.value,
+            position : pos.latlng,
+            title : pos.title,
+            clickable : true,
+            image : markerImage
+        });
+
+
+        markers.value.push(marker); // 전역에 넣기
+        // 이벤트 리스너 등록하기
+        const infowindow = new kakao.maps.InfoWindow({
+            content : pos.title
+        })
+
+        kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, "mouseout"), makeOutListener(infowindow);
+
+        // kakao.maps.event.addListener(marker, "mousemover", )
+        kakao.maps.event.addListener(marker, 'click', function() { 
+            console.log("클릭")
+            const overlay = new kakao.maps.CustomOverlay({
+                map : map.value,
+                position : marker.getPosition(),
+                content : content
+            });
+        })
+
+    });
+
+    // 지도를 이동시키기
+    const bounds = positions.value.reduce(
+        (bounds, position) => bounds.extend(position.latlng),
+        new kakao.maps.LatLngBounds()
+    );
+
+    map.value.setBounds(bounds);
+}
+
+
+// 이벤트 함수
+function makeOverListener(map, marker, infowindow) {
+    return function(){
+        infowindow.open(map, marker);
+    };
+}
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    }
+}
+
+// marker 초기화
+const deleteMarkers = () => {
+    if (markers.value.length > 0){
+        markers.value.forEach((marker) => marker.setMap(null));
+    }
+};
+
+
+// Kakao Map 초기화
 const initMap = () => {
     const container = document.getElementById("map");
     const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 5,
+        center : new kakao.maps.LatLng(33.450701, 126.570667),
+        level : 5
     };
-    map = new kakao.maps.Map(container, options);
+    map.value = new kakao.maps.Map(container, options);
 };
 
+// 화면이 켜지자 마자.
 onMounted(() => {
     if (window.kakao && window.kakao.maps) {
         initMap();
-    } else {
-    const script = document.createElement("script");
-    script.onload = () => kakao.maps.load(initMap);
-    script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=" +
-        kakaoApiKey +
-        "&libraries=clusterer,drawing,services";
+    } else{
+        const script = document.createElement("script");
+        script.onload = () => kakao.maps.load(initMap);
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+            import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+            }&libraries=services,clusterer`;
         document.head.appendChild(script);
     }
 });
+
+
 </script>
 
 <template>

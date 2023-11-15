@@ -1,16 +1,16 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import {usePlanStore} from '@/stores/plan';
+// import {usePlanStore} from '@/stores/plan';
 
 const activeKey = ref(['1']);
 const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
 
 
 // pinia 객체
-const store = usePlanStore();
+// const store = usePlanStore();
 
 const handleCollapseChange = (activeKey) => {
-    store.setCurrentCollapsePanel(activeKey)
+    // store.setCurrentCollapsePanel(activeKey)
 }
 
 

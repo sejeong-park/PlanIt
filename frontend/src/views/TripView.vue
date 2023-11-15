@@ -1,6 +1,6 @@
 <script setup>
 import KakaoMap from '@/components/Trip/KakaoMap.vue';
-import TripInfo from '@/components/Trip/TripInfo.vue';
+import TripInfo from '@/components/Trip/PlanInfo.vue';
 import ScheduleList from '@/components/Trip/ScheduleList.vue';
 import SearchDrawerItem from '../components/Trip/item/SearchDrawerItem.vue';
 
@@ -23,17 +23,18 @@ const handleShowLocation = (data) => {
 </script>
 <template>
     <!--Trip View 페이지-->
+    
     <a-row class="container">
         <!--1. 카카오맵 컴포넌트 확인 가능-->
         <a-col class="left-side" :span="19">
             <!--    카카오맵 지도   -->
             <KakaoMap 
             @clickLocation = "handleShowLocation"/>
-            <!--    Drawer 옵션 -->
+            <!--    Drawer 옵션
+                @update:open="handleDrawerOpen" -->
             <SearchDrawerItem
                 :open="drawerOpen"
                 :drawer-width="drawerWidth"
-                @update:open="handleDrawerOpen"
             />
             <!--맵 위에 떠있는 요소들
                 drawer가 열리면, css 효과로 버튼 바도 옆으로 밀린다.(transaction 적용)
@@ -79,7 +80,7 @@ const handleShowLocation = (data) => {
     </a-row>
 </template>
 
-<style scoped lnag = "sass">
+<style scoped lang = "scss">
 
 .container {
     height: 100%;
