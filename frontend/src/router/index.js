@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../views/HomeView.vue"),
+      component: () => import("@/views/HomeView.vue"),
     },
     {
       path: "/modal",
@@ -19,7 +19,7 @@ const router = createRouter({
         {
           path: "regist", // 일단 동적 라우팅 (/: planKey는 사용 하지 않겠음, )
           name: "plan-detail-regist",
-          component: () => import("../views/PlanDetailRegister.vue"),
+          component: () => import("@/views/PlanDetailRegister.vue"),
         },
       ],
     },
