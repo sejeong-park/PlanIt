@@ -108,9 +108,7 @@ if (formState.title !== "" && formState.content !== "") {
       <a-textarea v-model:value="formState.content" autocomplete="off" />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" html-type="submit" @click="planRegist()"
-        >저장</a-button
-      >
+      <a-button type="primary" html-type="submit" @click="planRegist()">저장</a-button>
       <a-button style="margin-left: 10px" @click="resetForm">초기화</a-button>
     </a-form-item>
   </a-form>

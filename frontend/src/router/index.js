@@ -9,6 +9,16 @@ const router = createRouter({
       component: () => import("../views/HomeView.vue"),
     },
     {
+      path: "/plans",
+      children: [
+        {
+          path: "regist", // 일단 동적 라우팅 (/: planKey는 사용 하지 않겠음, )
+          name: "plan-detail-regist",
+          component: () => import("../views/PlanDetailRegister.vue"),
+        },
+      ],
+    },
+    {
       path: "/users",
       name: "users",
       children: [
@@ -33,11 +43,11 @@ const router = createRouter({
           name: "board-list",
           component: () => import("../views/BoardListView.vue"),
         },
-        {
-          path: "regist",
-          name: "board-regist",
-          component: () => import("../views/BoardRegistView.vue"),
-        },
+        // {
+        //   path: "regist",
+        //   name: "board-regist",
+        //   component: () => import("../views/BoardRegistViewModal.vue"),
+        // },
         {
           path: "thumbnail",
           name: "thumbnail",

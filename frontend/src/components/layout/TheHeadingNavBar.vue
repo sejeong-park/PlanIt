@@ -44,10 +44,14 @@ const logout = function () {
               ><router-link to="/users/myPage">나의 계획</router-link></a-menu-item
             >
             <a-menu-item key="3"><router-link to="/boards">게시판</router-link></a-menu-item>
-            <a-menu-item key="4"><router-link to="/">계획 만들기</router-link></a-menu-item>
-            <a-menu-item key="5"
-              ><router-link to="/boards/regist">게시글 만들기</router-link></a-menu-item
+            <a-menu-item key="4"
+              ><router-link :to="{ name: 'plan-detail-regist' }"
+                >계획 상세 만들기</router-link
+              ></a-menu-item
             >
+            <!-- <a-menu-item key="5"
+              ><router-link to="/boards/regist">게시글 만들기</router-link></a-menu-item
+            > -->
           </div>
         </a-menu>
       </a-layout-header>
