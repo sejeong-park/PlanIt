@@ -123,8 +123,8 @@ public class PlanController {
 			}
 			
 			planService.writePlanDetail(planDetailDtos);
-			List<PlanListDto> list = planService.findAllPlan();
-			return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
+			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);
 		}
