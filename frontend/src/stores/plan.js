@@ -6,9 +6,10 @@ import { convertDateFormat, calculateDaysBetweenDates, getAllDatesBetween } from
 export const usePlanStore = defineStore(
     "plan", () =>{
 
-        // plan에서 계획을 설정
+        // plan에서 계획을 설정 (plan에서 계획 설정 시 startDate, endDate 등의 정보를 세부 일정 계획 페이지로 전달한다.)
         const tripScheduleInfo = ref();
 
+        // SchduleList에서 관리하기 편한 형태로 데이터를 호출한다.
         const setTripSchedule = (data, title) => { 
             console.log("tconsole 실행")
             // data option 만들기

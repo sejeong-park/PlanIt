@@ -1,7 +1,8 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import {usePlanStore} from '@/stores/plan';
 import {CaretRightOutlined, PlusOutlined, CheckCircleOutlined} from '@ant-design/icons-vue';
+
 
 // const props = defineProps({
 //     scheduleInfo : Object,
@@ -56,9 +57,16 @@ const DataTest = {
     }
 }
 
-
 const planStore = usePlanStore(); 
- // Plan 객체 선언
+
+
+ // 현재 선택한 Date에 대해 담아주는 변수
+const activeDate = ref(null);
+const setActiveDate = (currentDate) => {
+    activeDate.value = currentDate; // 현재 선택한 Date 넘기기
+    console.log(activeDate.value + " 를 선택했습니다.");
+}
+
 
 
 
@@ -67,6 +75,8 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 
 const handleCollapseChange = (activeKey) => {
     // store.setCurrentCollapsePanel(activeKey)
+    // console.log("activeKey 테스트")
+    // console.log(activeKey);
 }
 
 
@@ -84,6 +94,8 @@ const data = {
 <template>
     <div class = "schedule-list">
         <div class = "collapse-container">
+
+
             <a-collapse
                 class = "collapse"
                 v-model:activeKey="activeKey"
@@ -96,17 +108,22 @@ const data = {
                 </template>
 
 
+                <!--
+                    클릭 시 해당일자에 대해 정보 추가
+                -->
                 <a-collapse-panel
                     class = "collapse-title" 
                     v-for="(schedule, date, index) in DataTest.scheduleInfo"
+                    :class = "{'active-panel' : activeDate === date}"
                     :key="date" 
                     :header="`${date} (Day ${index + 1})`"
+                    @click="setActiveDate(date)"
                 >
                     <!-- 스케줄에 카드 정보 출력하기  -->
                     <div class = "card-list">
                         <div class="card"
                             v-for = "(scheduleDetail, date) in schedule"
-                            :key="detail"
+                            :key="scheduleDetail"
                         >
                             <div class = "card-content">{{ scheduleDetail.title }}</div>
                         </div>
@@ -166,7 +183,7 @@ const data = {
     }
 }
 
-/* 토글 버튼에 해당 하는 로직 */
+/* 토글 버튼에 해당 하는 스타일 */
 .collapse {
     width  : 100%;
     background: rgb(255, 255, 255);
@@ -183,10 +200,14 @@ const data = {
         font-weight: 500;
         color : var(--color-gray900)
     }
-
-
-
+    /* activeDate 기준으로 panel이 열린다. */
+    .active-panel {
+        background-color: var(--planit-pink);
+    }
 }
+
+
+
 
 
 .card {
