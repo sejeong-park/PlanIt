@@ -1,6 +1,9 @@
 import {ref, computed} from "vue";
 import {defineStore} from "pinia";
 
+// 다음 스토어는 "여행지(Attraction)"의 위치와 관련된 상태 Store
+
+
 // 내가 클릭한 호버의 위치가 어디있는 지 조회하는 스토어
 export const useTripSearchStore = defineStore(
     "trip", () =>{

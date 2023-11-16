@@ -3,12 +3,6 @@ import { ref } from 'vue';
 import {usePlanStore} from '@/stores/plan';
 import {CaretRightOutlined, PlusOutlined, CheckCircleOutlined} from '@ant-design/icons-vue';
 
-
-// const props = defineProps({
-//     scheduleInfo : Object,
-// })
-
-
 //  private int detailId;
 // private Date planDate;
 // private String planKey;
@@ -57,7 +51,9 @@ const DataTest = {
     }
 }
 
+// pinia에서 여행 계획 관리
 const planStore = usePlanStore(); 
+
 
 
  // 현재 선택한 Date에 대해 담아주는 변수
@@ -65,6 +61,9 @@ const activeDate = ref(null);
 const setActiveDate = (currentDate) => {
     activeDate.value = currentDate; // 현재 선택한 Date 넘기기
     console.log(activeDate.value + " 를 선택했습니다.");
+
+    // pinia의 값에 넣기
+    planStore.setClickedActiveDate(currentDate); // 현재 값 pinia 에 세팅한다.
 }
 
 

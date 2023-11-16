@@ -34,17 +34,13 @@ function getAllDatesBetween(startDate, endDate) {
     const dateObj = {};
     const currentDate = new Date(startDate);
     const maxDate = new Date(endDate);
-    let index = 1;
 
     while (currentDate <= maxDate) {
         const currentStr = convertDateFormat(currentDate.toISOString().split('T')[0], 'YYYY-MM-DD') ;
-        dateObj[currentStr] = {
-            "planDate" : currentStr,
-            "day" : index
-        };
+        dateObj[currentStr] = []; // 리스트로 일정에 대해 초기화 한다.
         currentDate.setDate(currentDate.getDate() + 1); // 다음날 추가
-        index++; // 일차 추가
     }
+
     console.log(dateObj);
 
     return dateObj;
