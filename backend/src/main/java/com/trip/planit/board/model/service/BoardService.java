@@ -9,10 +9,10 @@ import com.trip.planit.board.model.dto.BoardUpdateDto;
 import com.trip.planit.board.model.dto.FileInfoDto;
 
 public interface BoardService {
-	int writeBoard(BoardRegistDto boardRegistDto) throws SQLException;
-	void registFile(FileInfoDto fileInfoDto) throws Exception;
+	void writeBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	List<BoardListDto> findAllBoard() throws SQLException;
-	BoardListDto findBoard(String boardId) throws SQLException;
+	BoardListDto findBoard(int boardId) throws SQLException;
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
+	void registFile(FileInfoDto fileInfoDto) throws Exception;
 }
