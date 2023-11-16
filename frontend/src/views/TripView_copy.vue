@@ -1,8 +1,21 @@
 <script setup>
 import KakaoMap from '@/components/Trip/KakaoMap.vue';
-import SearchDrawerItem from '@/components/Trip/SearchDrawerItem.vue';
-import PlanDetail from "@/components/Trip/PlanDetail.vue"
-import {ref} from "vue";
+import TripInfo from '@/components/Trip/PlanInfo.vue';
+import ScheduleList from '@/components/Trip/ScheduleList.vue';
+import SearchDrawerItem from '../components/Trip/item/SearchDrawerItem.vue';
+import {onMounted, ref} from "vue";
+import {usePlanStore} from '@/stores/plan';
+
+// plan store를 가져온다.
+const scheduleInfo = ref();
+const planStore = usePlanStore(); 
+
+const getScheduleDate = () => {
+    scheduleInfo.value = planStore.tripScheduleInfo;
+    console.log("ttttttttttttt");
+    console.log(scheduleInfo.value);
+}
+
 
 // drawer를 여는 함수
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
@@ -16,6 +29,11 @@ const handleDrawerOpen = (open) =>{
 const handleShowLocation = (data) => {
 
 }
+
+onMounted(() => {
+    getScheduleDate();
+});
+
 
 </script>
 <template>
@@ -52,10 +70,27 @@ const handleShowLocation = (data) => {
                     <a-button type="primary" size="large" shape="circle">D</a-button>
                 </a-space>
             </div>
+
+
+
         </a-col>
         <a-col class="right-side" :span="5">
-            <!--우측 계획-->
-            <PlanDetail/>
+            
+            <!-- <a-col class="upper">
+                <TripInfo />
+            </a-col>
+            
+            <a-col class="main">
+                <ScheduleList />
+            </a-col>
+            
+            <a-col class="bottom">
+                <template #icon>
+                    <CheckCircleOutlined />
+                </template>
+                <a-button class="save-btn" type="primary" shape="round" size="large"
+                    style="width : 200px; height : 50px">저장하기</a-button>
+            </a-col> -->
         </a-col>
     </a-row>
 </template>
@@ -103,6 +138,51 @@ const handleShowLocation = (data) => {
     flex-direction: column;
     height: 100%;
     /*부모높이 */
+
+    .upper {
+        /* 위치 정렬 */
+        width: 100%;
+        height: 20%;
+        /* 백그라운드 이미지 */
+        background-image : url('@/assets/img/info/daniel-cartin-LgHNehAIcOs-unsplash.jpeg');
+        background-size : cover;
+        background-position: center center;
+        background-color : rgba(0,0,0,0.5);
+        /* background-color: aquamarine; */
+        display: flex;
+        /* 텍스트 중앙 정렬 */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        /*텍스트를 위한 여백 설정 */
+        /* padding: 10%; */
+    }
+
+    .main {
+        /*위치 정렬*/
+        width: 100%;
+        height: 70%;
+        /* background-color: blueviolet; */
+        /* 중앙 정렬 */
+        display: flex;
+        /* justify-content: center; */
+        /*중앙 정렬을 위한 여백과 설정 */
+        /* padding: 3rem 3rem 1rem 3rem; */
+        /*상우 하좌 */
+    }
+
+    .bottom {
+        /*위치 정렬 */
+        width: 100%;
+        height: 10%;
+        padding: 1rem 1.5rem 2rem;
+        /*상 하 (좌우) */
+        /*중앙 정렬 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }
 
 .shadow {

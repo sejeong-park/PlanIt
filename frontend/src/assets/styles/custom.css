@@ -1,0 +1,68 @@
+/* planit 테마에 맞는 컬러*/
+@font-face {
+    font-family: 'JalnanGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    /* font-weight: normal, 100, 200 ; */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-7ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+/*구글 폰트 - 아이콘 (antd vue에 없는 것들)*/
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+
+/* Planit 테마에 해당하는 색상 표*/
+:root {
+    --planit-base : #F2D8DC;
+    --planit-dark : #023373;
+    --planit-primary : #526AF2;
+    --planit-point-1 : #4BF2F2;
+    --planit-point-2 : #F28705;
+    --planit-pink : #FFB4E1;
+    --planit-deep-pink : #F984BC;
+
+    /* 그림자용 */
+    --color-gray: rgba(58,58,58,1);
+    --color-gray20: rgba(58,58,58,0.02);
+    --color-gray50: rgba(58,58,58,0.05);
+    --color-gray100: rgba(58,58,58,0.1);
+    --color-gray200: rgba(58,58,58,0.2);
+    --color-gray300: rgba(58,58,58,0.3);
+    --color-gray400: rgba(58,58,58,0.4);
+    --color-gray500: rgba(58,58,58,0.5);
+    --color-gray600: rgba(58,58,58,0.6);
+    --color-gray700: rgba(58,58,58,0.7);
+    --color-gray800: rgba(58,58,58,0.8);
+    --color-gray900: rgba(58,58,58,0.9);
+    --color-brightGray: rgba(239,239,239,1);
+
+    /* 나머지 변수들 */
+    --shadow-inset : rgba(149, 149, 149, 0.43) 0px 0px 20px 2px inset;
+        /* 그림자를 주는 효과 */
+    --shadow-over {
+        -webkit-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+        -moz-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+        -ms-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+        -o-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+        box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+    }
+}
+
+/*폰트 추가*/
+body {
+    font-family: 'S-CoreDream-3Light', sans-serif !important; 
+}
+
