@@ -22,10 +22,10 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	@Transactional
-	public void writeBoard(BoardRegistDto boardRegistDto) throws SQLException {
+	public int writeBoard(BoardRegistDto boardRegistDto) throws SQLException {
 //		System.out.println("글 입력 전 dto : " + boardRegistDto);
 		boardMapper.insertBoard(boardRegistDto);
-		System.out.println("글 입력 후 dto : " + boardRegistDto);
+//		System.out.println("글 입력 후 dto : " + boardRegistDto);
 		FileInfoDto fileInfo = boardRegistDto.getFileInfoDto();
 		if(fileInfo != null) {
 //			System.out.println(boardRegistDto.getFileInfoDto());
@@ -38,6 +38,8 @@ public class BoardServiceImpl implements BoardService{
 				e.printStackTrace();
 			}
 		}
+		
+		return boardMapper.selectBoardId();
 	}
 
 	@Override

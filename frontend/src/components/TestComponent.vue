@@ -12,7 +12,7 @@ const contents = ref('')
 const selectedFile = ref(null)
 
 const baseUrl = 'http://localhost:/boards'
-const planKey = '87690a6a-32a7-42e7-a175-8fea7e06038a'
+const planKey = '303e14f1-cc7b-49b5-9da4-fe392fdd2af9'
 
 const handleFileChange = (event) => {
   selectedFile.value = event.target.files[0]

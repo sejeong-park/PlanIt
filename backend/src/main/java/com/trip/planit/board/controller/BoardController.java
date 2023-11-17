@@ -86,10 +86,12 @@ public class BoardController {
 //				System.out.println(fileInfoDto);
 			}
 			
-			boardService.writeBoard(boardRegistDto);
+			int boardId = boardService.writeBoard(boardRegistDto);
 			
-			List<BoardListDto> boardListDtos = boardService.findAllBoard();
-			return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
+			BoardListDto board = boardService.findBoard(boardId);
+			
+			System.out.println(board);
+			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);
 		}

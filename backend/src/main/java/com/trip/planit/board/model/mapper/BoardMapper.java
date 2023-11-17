@@ -12,7 +12,7 @@ import com.trip.planit.board.model.dto.FileInfoDto;
 
 @Mapper
 public interface BoardMapper {
-	void insertBoard(BoardRegistDto boardRegistDto) throws SQLException;
+	int insertBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	void insertFile(FileInfoDto fileInfoDto) throws Exception;
 	int selectBoardId() throws SQLException;
 	List<BoardListDto> selectAllBoard() throws SQLException;
