@@ -23,11 +23,11 @@
 	<insert id="insertBoard" parameterType="boardRegistDto">
 		insert into boards(plan_key, title, create_user, create_at, contents)
 		values(#{planKey}, #{title}, #{createUser}, now(), #{contents})
+		<selectKey resultType="int" keyProperty="boardId"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
-	
-	<select id="selectBoardId" resultType="int">
-		select max(board_id) from boards;
-	</select>
 
 	<insert id="insertFile" parameterType="fileInfoDto">
 		insert into
@@ -36,11 +36,16 @@
 		#{originalFile})
 	</insert>
 
+	<select id="selectBoardId" resultType="int">
+		select max(board_id) from
+		boards;
+	</select>
+
 	<select id="selectAllBoard" resultMap="boardListDto">
 		select * from boards;
 	</select>
 
-	<select id="selectBoard" parameterType="String"
+	<select id="selectBoard" parameterType="int"
 		resultMap="boardListDto">
 		select * from boards where board_id = #{boardId}
 	</select>

@@ -6,6 +6,7 @@ package com.trip.planit.board.model.dto;
 
 import java.sql.Timestamp;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
@@ -26,4 +27,5 @@ public class BoardRegistDto {
 	private Timestamp createAt;
 	private String contents;
 	private int hits;
+	private FileInfoDto fileInfoDto;
 }
