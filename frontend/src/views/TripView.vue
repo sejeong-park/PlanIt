@@ -101,7 +101,7 @@ const handleShowLocation = (data) => {
 .right-side {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh; /* 스크롤을 위해 100vh로 고정 */
 }
 
 .shadow {

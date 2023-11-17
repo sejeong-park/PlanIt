@@ -34,8 +34,6 @@ export const usePlanStore = defineStore(
             tripScheduleInfo.value = scheduleObj; // 객체 넣기
         }
 
-
-        //TODO :: 여기 데이터 SchduleList에서 실시간으로 받는거 해야된다. (23.11.17)!! 
         // Drawer 에서 일정을 등록 할 시 스케줄을 추가한다.
         const addClickedAttractionInfo = (data) => {
             clickAttractionInfo.value = data;
@@ -64,6 +62,23 @@ export const usePlanStore = defineStore(
             console.log("plan pinia : 현재 선택한 날짜 : " + data);
         }
 
+        // Schdule Datail에서 Add Schedule 버튼을 클릭했을 때 생성되는 카드
+        // const addSchdeuleItem = (date) => {
+        //     console.log("addSchedule");
+        //     console.log(tripScheduleInfo.value);
+        //     console.log("new ", tripScheduleInfo.value.scheduleList);
+        //     console.log(date);
+        //     // TODO :: 사용자 생성 카드 데이터 어떤 값 넣을 건지 / post 요청할 땐 어떤 형태로 줄지 고민하기
+        //     tripScheduleInfo.value.scheduleList[date].push(
+        //         {
+        //             isNew : true,
+        //             title : ''
+        //         }
+        //     )
+
+        //     console.log(tripScheduleInfo.value)
+        // }
+
 
         return {
             tripScheduleInfo,
@@ -71,7 +86,8 @@ export const usePlanStore = defineStore(
             tripScheduleInfo,
             addClickedAttractionInfo,
             clickScheduleInfo,
-            setClickedActiveDate
+            setClickedActiveDate,
+            // addSchdeuleItem
         }
     },{
         persist : true          // stoarge : sessionStroate를 할 수도 있음
