@@ -22,15 +22,14 @@ const setActiveDate = (currentDate) => {
 const userAddCards = reactive({});
 
 // 메서드에서 스케줄 세부 정보 업데이트 
-function updateScheduleDetail(uniqueKey, userInputTitle) {
+function updateScheduleDetail(uniqueKey, newTitle) {
     console.log("사용자가 입력한 카드가 완료되어 planStore에 업데이트 한다.")
 
-    const [date, detailIdx] = uniqueKey.split('&');
-    const newTitle = '😊 ' + userInputTitle; // TODO :: 아이콘 셀렉트 박스로 하면 더 좋을 것 같다.. (차나 비행기 이런 이모티콘 넣게.)
+    const [date, detailIdx] = uniqueKey.split(',');
     // PiniaStore에 새 제목을 업데이트 한다.
-    if (planStore.tripScheduleInfo.scheduleList[activeDate.value]) {
-        planStore.tripScheduleInfo.scheduleList[activeDate.value][detailIdx].title = newTitle;
-        planStore.tripScheduleInfo.scheduleList[activeDate.value][detailIdx].isNew = false; // 비 활성화 하기
+    if (planStore.tripScheduleInfo.scheduleList[date]) {
+        planStore.tripScheduleInfo.scheduleList[date][detailIdx].title = newTitle;
+        planStore.tripScheduleInfo.scheduleList[date][detailIdx].isNew = false; // 비 활성화 하기
     }
     console.log("현재까지의 planPinia 결과 ", planStore.tripScheduleInfo);
 }
@@ -54,10 +53,19 @@ const addUserSchedule = (date) => {
 
     // 가장 최근 추가된 인덱스
     const detailIdx = planStore.tripScheduleInfo.scheduleList[date].length - 1; // 배열 인덱스
-    const uniqueKey = `${date}&${detailIdx}`;
+    const uniqueKey = `${date} ${detailIdx}`;
     userAddCards[uniqueKey] = ''; //  카드 index 값 초기화
 }
 
+
+const removeSchedule = (date, detailIdx) => {{
+    console.log("사용자가 삭제 버튼을 눌렀습니다. + ", date , "idx : ", detailIdx)
+    if (detailIdx !== -1) {
+        // 배열의 index 값 삭제한다.
+        planStore.tripScheduleInfo.scheduleList[date].splice(detailIdx, 1); // index 한개 삭제
+    }
+
+}}
 
 const activeKey = ref(['1']);
 const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
@@ -100,12 +108,15 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
                             v-for = "(scheduleDetail, detailIdx) in schedule"
                             :key="detailIdx"
                         >   
+                            <div class = "card-imoji">
+                                😋
+                            </div>
                             <div class = "card-content" v-if = "scheduleDetail.isNew">
                                 <div></div>
                                 <a-input 
                                     class = "card-form"
-                                    v-model:value.lazy="userAddCards[`${date}&${detailIdx}`]" 
-                                    @input.lazy="updateScheduleDetail(`${date}&${detailIdx}`, userAddCards[`${date}&${detailIdx}`])"
+                                    v-model:value.lazy="userAddCards[`${date},${detailIdx}`]"
+                                    @input.lazy="updateScheduleDetail(`${date},${detailIdx}`, userAddCards[`${date},${detailIdx}`])"
                                     placeholder = "일정을 등록해주세요" 
                                     :bordered = "false">
                                 </a-input>    
@@ -116,7 +127,7 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
                                 </div>
                             </div>
                             <div class = "card-remove-btn">
-                                <MinusCircleOutlined class = "dynamic-delete-button" />
+                                <MinusCircleOutlined class = "dynamic-delete-button" @click = "removeSchedule(date, detailIdx)"/>
                             </div>
                         </div>
 
@@ -201,8 +212,13 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 
         white-space: nowrap; 
         /* 카드에 적는 내용 */
+        .card-imoji  {
+            width : 10%;
+            /* min-height : 3rem; */
+            align-items : center;
+        }
         .card-content {
-            width : 90%;
+            width : 80%;
             min-height : 3rem;
             margin-right: 6px;
             align-items : center;
