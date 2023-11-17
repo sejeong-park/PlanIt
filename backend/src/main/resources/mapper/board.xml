@@ -40,7 +40,7 @@
 		select * from boards;
 	</select>
 
-	<select id="selectBoard" parameterType="String"
+	<select id="selectBoard" parameterType="int"
 		resultMap="boardListDto">
 		select * from boards where board_id = #{boardId}
 	</select>

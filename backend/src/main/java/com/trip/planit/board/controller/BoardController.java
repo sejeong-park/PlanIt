@@ -68,10 +68,11 @@ public class BoardController {
 
 	@ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
 	@PostMapping(value = "/{boardId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String boardId, @RequestPart MultipartFile file)
+	public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String boardIdVal, @RequestPart MultipartFile file)
 			{
 		if (!file.isEmpty() && file != null) {
 			try {
+				int boardId = Integer.parseInt(boardIdVal);
 				BoardListDto board = boardService.findBoard(boardId); // 해당 게시글 상세 정보를 조회해서 userId를 가져온다.
 				
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -91,7 +92,7 @@ public class BoardController {
 				}
 				
 				fileInfoDto.setUserId(board.getCreateUser());
-				fileInfoDto.setBoardId(Integer.parseInt(boardId));
+				fileInfoDto.setBoardId(boardId);
 				boardService.registFile(fileInfoDto);
 				
 				List<BoardListDto> boardListDtos = boardService.findAllBoard();
@@ -132,8 +133,9 @@ public class BoardController {
 	 */
 	@ApiOperation(value = "상세 게시글 조회", notes = "게시글 상세 조회")
 	@GetMapping("/{boardId}")
-	public ResponseEntity<?> detail(@PathVariable("boardId") String boardId) {
+	public ResponseEntity<?> detail(@PathVariable("boardId") String boardIdVal) {
 		try {
+			int boardId = Integer.parseInt(boardIdVal);
 			BoardListDto board = boardService.findBoard(boardId);
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
@@ -166,11 +168,11 @@ public class BoardController {
 	 */
 	@ApiOperation(value = "단일 게시글 수정", notes = "단일 게시글을 수정합니다")
 	@PatchMapping("/{boardId}")
-	public ResponseEntity<?> update(@PathVariable("boardId") String boardId,
+	public ResponseEntity<?> update(@PathVariable("boardId") String boardIdVal,
 			@RequestBody BoardUpdateDto boardUpdateDto) {
 		try {
-			int boardIdInt = Integer.parseInt(boardId);
-			boardUpdateDto.setBoardId(boardIdInt);
+			int boardId = Integer.parseInt(boardIdVal);
+			boardUpdateDto.setBoardId(boardId);
 			boardService.updateBoard(boardUpdateDto);
 			BoardListDto board = boardService.findBoard(boardId);
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);

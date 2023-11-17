@@ -16,7 +16,7 @@ public interface BoardMapper {
 	int selectBoardId() throws SQLException;
 	void insertFile(FileInfoDto fileInfoDto) throws Exception;
 	List<BoardListDto> selectAllBoard() throws SQLException;
-	BoardListDto selectBoard(String boardId) throws SQLException;
+	BoardListDto selectBoard(int boardId) throws SQLException;
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
 }

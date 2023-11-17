@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardListDto findBoard(String boardId) throws SQLException {
+	public BoardListDto findBoard(int boardId) throws SQLException {
 		return boardMapper.selectBoard(boardId);
 	}
 
