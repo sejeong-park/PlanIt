@@ -3,6 +3,7 @@ import region from '@/util/region';
 import { listTripAttraction } from "@/api/tripAttraction";
 import {defineProps, ref} from 'vue'; 
 import {useTripSearchStore} from '@/stores/trip';
+import {usePlanStore} from '@/stores/plan';
 
 // 부모 컴포넌트로부터 버튼의 상태를 전달 받기 위함
 const props = defineProps({
@@ -59,6 +60,18 @@ const moveMapLocation = (data) => {
     console.log("trip 갈 지역 버튼 클릭 : ", data);
     tripSearchStore.setFocusLocation(data); // 객체를 넣는다. 
 };
+
+
+
+
+// 일정 추가 Button을 클릭 했을 경우 SchduleList에 등록해주기 위한 데이터
+const planDetailStore = usePlanStore();
+
+// 선텍 시, 현재 클릭된 Schdule Date에 추가된다.
+const addAttractionToDail = (data) => {
+    console.log("Attraction : " + data.title + "선택 -> 일정에 저장");
+    planDetailStore.addClickedAttractionInfo(data);
+}
 
 </script>
 
@@ -154,7 +167,11 @@ const moveMapLocation = (data) => {
                             </a-list-item-meta>
 
                             <!--버튼을 클릭하면 카카오맵의 위치가 변경된다.-->
-                            <a-button type = "primary" @click = "moveMapLocation(item)">버튼</a-button>
+                            <!-- TODO :: UI 작업 안했기 때문에 그냥 쓴다 대신, 나중에 바꿔줘야돼-->
+                            <div style="display : flex; flex-direction: column; width : 80px;">
+                                <a-button type = "primary" @click = "moveMapLocation(item)">버튼</a-button>
+                                <a-button type = "primary" @click = "addAttractionToDail(item)" >일정 추가</a-button>
+                            </div>
                         </a-list-item>
                     </template>
                 </a-list>

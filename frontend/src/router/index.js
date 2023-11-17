@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainView from "@/views/MainView.vue";
+import PlanView from "@/views/PlanView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,7 @@ const router = createRouter({
     {
       path: '/plans',
       name: 'plans',
-      component : () => import("@/views/PlanView.vue")
+      component : PlanView
     },
     {
       // 데이터까지 연결하면, {plan-key}로 라우터 변경할 예정
