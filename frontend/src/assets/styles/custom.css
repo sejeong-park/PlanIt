@@ -21,9 +21,6 @@
 }
 
 
-/*구글 폰트 - 아이콘 (antd vue에 없는 것들)*/
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
-
 /* Planit 테마에 해당하는 색상 표*/
 :root {
     --planit-base : #F2D8DC;
