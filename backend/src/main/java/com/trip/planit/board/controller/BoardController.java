@@ -51,22 +51,22 @@ public class BoardController {
 	 * 게시글 등록 API 넘겨 받는 값 : planKey, 게시글 title, create_user(유저
 	 * 이름?),create_at,contents, hits 전체 게시글 리스트로 이동할 것이므로 게시글 전체 리스트를 반환
 	 * 반환 : 게시글 생성시 자동으로 생성된 boardId
+	 * 
 	 * @return
-	 * @throws IOException 
-	 * @throws IllegalStateException 
+	 * @throws IOException
+	 * @throws IllegalStateException
 	 */
 	@ApiOperation(value = "게시글을 등록합니다.", notes = "게시글을 등록합니다")
-	@PostMapping(value="/{planKey}")
+	@PostMapping(value = "/{planKey}")
 	public ResponseEntity<?> regist(
-			@PathVariable String planKey, 
+			@PathVariable String planKey,
 			@RequestPart BoardRegistDto boardRegistDto,
 			@RequestPart MultipartFile file) throws IllegalStateException, IOException {
 		try {
 			boardRegistDto.setPlanKey(planKey);
-//			System.out.println("board regist controller 호출!");
-			
-//			System.out.println(file.getOriginalFilename());
-			if(!file.isEmpty() && file != null) {
+
+			// System.out.println(file.getOriginalFilename());
+			if (!file.isEmpty() && file != null) {
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
 				String saveFolder = uploadPath + File.separator + today;
 				File folder = new File(saveFolder);
@@ -74,7 +74,7 @@ public class BoardController {
 					folder.mkdirs();
 				FileInfoDto fileInfoDto = new FileInfoDto();
 				String originalFileName = file.getOriginalFilename();
-				if(!originalFileName.isEmpty()) {
+				if (!originalFileName.isEmpty()) {
 					String saveFileName = UUID.randomUUID().toString()
 							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
 					fileInfoDto.setSaveFolder(today);
@@ -83,13 +83,13 @@ public class BoardController {
 					file.transferTo(new File(folder, saveFileName));
 				}
 				boardRegistDto.setFileInfoDto(fileInfoDto);
-//				System.out.println(fileInfoDto);
+				// System.out.println(fileInfoDto);
 			}
-			
+
 			int boardId = boardService.writeBoard(boardRegistDto);
-			
+
 			BoardListDto board = boardService.findBoard(boardId);
-			
+
 			System.out.println(board);
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
@@ -97,49 +97,54 @@ public class BoardController {
 		}
 	}
 
-//	@ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
-//	@PostMapping(value = "/{boardId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String boardIdVal, @RequestPart MultipartFile file)
-//			{
-//		int boardId = Integer.parseInt(boardIdVal);
-//		if (!file.isEmpty() && file != null) {
-//			try {
-//				BoardListDto board = boardService.findBoard(boardId); // 해당 게시글 상세 정보를 조회해서 userId를 가져온다.
-//				
-//				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-//				String saveFolder = uploadPath + File.separator + today;
-//				File folder = new File(saveFolder);
-//				if (!folder.exists())
-//					folder.mkdirs();
-//				FileInfoDto fileInfoDto = new FileInfoDto();
-//				String originalFileName = file.getOriginalFilename();
-//				if (!originalFileName.isEmpty()) {
-//					String saveFileName = UUID.randomUUID().toString()
-//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-//					fileInfoDto.setSaveFolder(today);
-//					fileInfoDto.setOriginalFile(originalFileName);
-//					fileInfoDto.setSaveFile(saveFileName);
-//					file.transferTo(new File(folder, saveFileName));
-//				}
-//				
-//				fileInfoDto.setUserId(board.getCreateUser());
-//				fileInfoDto.setBoardId(boardId);
-//				boardService.registFile(fileInfoDto);
-//				
-//				List<BoardListDto> boardListDtos = boardService.findAllBoard();
-//				return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
-//			} catch (Exception e) {
-//				return exceptionHandling(e);
-//			}
-//		}else {
-//			try {
-//				List<BoardListDto> boardListDtos = boardService.findAllBoard();
-//				return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
-//			} catch (Exception e) {
-//				return exceptionHandling(e);
-//			}
-//		}
-//	}
+	// @ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
+	// @PostMapping(value = "/{boardId}", consumes =
+	// MediaType.MULTIPART_FORM_DATA_VALUE)
+	// public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String
+	// boardIdVal, @RequestPart MultipartFile file)
+	// {
+	// int boardId = Integer.parseInt(boardIdVal);
+	// if (!file.isEmpty() && file != null) {
+	// try {
+	// BoardListDto board = boardService.findBoard(boardId); // 해당 게시글 상세 정보를 조회해서
+	// userId를 가져온다.
+	//
+	// String today = new SimpleDateFormat("yyMMdd").format(new Date());
+	// String saveFolder = uploadPath + File.separator + today;
+	// File folder = new File(saveFolder);
+	// if (!folder.exists())
+	// folder.mkdirs();
+	// FileInfoDto fileInfoDto = new FileInfoDto();
+	// String originalFileName = file.getOriginalFilename();
+	// if (!originalFileName.isEmpty()) {
+	// String saveFileName = UUID.randomUUID().toString()
+	// + originalFileName.substring(originalFileName.lastIndexOf('.'));
+	// fileInfoDto.setSaveFolder(today);
+	// fileInfoDto.setOriginalFile(originalFileName);
+	// fileInfoDto.setSaveFile(saveFileName);
+	// file.transferTo(new File(folder, saveFileName));
+	// }
+	//
+	// fileInfoDto.setUserId(board.getCreateUser());
+	// fileInfoDto.setBoardId(boardId);
+	// boardService.registFile(fileInfoDto);
+	//
+	// List<BoardListDto> boardListDtos = boardService.findAllBoard();
+	// return new ResponseEntity<List<BoardListDto>>(boardListDtos,
+	// HttpStatus.CREATED);
+	// } catch (Exception e) {
+	// return exceptionHandling(e);
+	// }
+	// }else {
+	// try {
+	// List<BoardListDto> boardListDtos = boardService.findAllBoard();
+	// return new ResponseEntity<List<BoardListDto>>(boardListDtos,
+	// HttpStatus.CREATED);
+	// } catch (Exception e) {
+	// return exceptionHandling(e);
+	// }
+	// }
+	// }
 
 	/**
 	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
