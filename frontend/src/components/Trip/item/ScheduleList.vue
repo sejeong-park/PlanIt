@@ -22,11 +22,11 @@ const setActiveDate = (currentDate) => {
 const userAddCards = reactive({});
 
 // 메서드에서 스케줄 세부 정보 업데이트 
-function updateScheduleDetail(uniqueKey, newTitle) {
+function updateScheduleDetail(uniqueKey, userInputTitle) {
     console.log("사용자가 입력한 카드가 완료되어 planStore에 업데이트 한다.")
 
     const [date, detailIdx] = uniqueKey.split('&');
-
+    const newTitle = '😊 ' + userInputTitle; // TODO :: 아이콘 셀렉트 박스로 하면 더 좋을 것 같다.. (차나 비행기 이런 이모티콘 넣게.)
     // PiniaStore에 새 제목을 업데이트 한다.
     if (planStore.tripScheduleInfo.scheduleList[activeDate.value]) {
         planStore.tripScheduleInfo.scheduleList[activeDate.value][detailIdx].title = newTitle;
@@ -101,7 +101,9 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
                             :key="detailIdx"
                         >   
                             <div class = "card-content" v-if = "scheduleDetail.isNew">
+                                <div></div>
                                 <a-input 
+                                    class = "card-form"
                                     v-model:value.lazy="userAddCards[`${date}&${detailIdx}`]" 
                                     @input.lazy="updateScheduleDetail(`${date}&${detailIdx}`, userAddCards[`${date}&${detailIdx}`])"
                                     placeholder = "일정을 등록해주세요" 
@@ -132,6 +134,13 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 </template>
 
 <style scoped lang = "scss">
+
+::v-deep .ant-input {
+    padding : 0;
+    height : 100%;
+    font-size : 17px;
+    color : var(--planit-primary);
+}
 
 .schedule-list {
     display : flex ;
