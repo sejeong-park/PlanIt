@@ -1,14 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import {usePlanStore} from '@/stores/plan';
-import {CaretRightOutlined, PlusOutlined, CheckCircleOutlined} from '@ant-design/icons-vue';
+import {CaretRightOutlined, PlusOutlined, MinusCircleOutlined} from '@ant-design/icons-vue';
 
 //  private int detailId;
+
 // private Date planDate;
 // private String planKey;
 // private int sequence;
 // private String title;
+
 // private String content;
+
 // private int attractionId;
 
 
@@ -55,7 +58,6 @@ const DataTest = {
 const planStore = usePlanStore(); 
 
 
-
  // 현재 선택한 Date에 대해 담아주는 변수
 const activeDate = ref(null);
 const setActiveDate = (currentDate) => {
@@ -65,8 +67,6 @@ const setActiveDate = (currentDate) => {
     // pinia의 값에 넣기
     planStore.setClickedActiveDate(currentDate); // 현재 값 pinia 에 세팅한다.
 }
-
-
 
 
 const activeKey = ref(['1']);
@@ -94,7 +94,6 @@ const data = {
     <div class = "schedule-list">
         <div class = "collapse-container">
 
-
             <a-collapse
                 class = "collapse"
                 v-model:activeKey="activeKey"
@@ -120,12 +119,22 @@ const data = {
                 >
                     <!-- 스케줄에 카드 정보 출력하기  -->
                     <div class = "card-list">
-                        <div class="card"
+                        <!-- <div class="card"
                             v-for = "(scheduleDetail, date) in schedule"
                             :key="scheduleDetail"
                         >
                             <div class = "card-content">{{ scheduleDetail.title }}</div>
+                        </div> -->
+
+
+                        <div class="card"
+                            v-for = "(scheduleDetail, detailIdx) in planStore.tripScheduleInfo.scheduleList[date]"
+                            :key="detailIdx"
+                        >
+                            <div>{{ scheduleDetail.title }}</div>
+                            <div><MinusCircleOutlined /></div>
                         </div>
+
                         <!--폼 추가를 위한 태그-->
                         <a-button type="dashed" style="width: 100%" @click="addDomain">
                                     <PlusOutlined />
@@ -136,17 +145,7 @@ const data = {
 
             </a-collapse>
         </div>
-        <!--하단의 저장 버튼-->
-        <div class = "save-section">
-            <a-col>
-                <template #icon>
-                    <CheckCircleOutlined />
-                </template>
-                <a-button class="save-btn" type="primary" shape="round" size="large"
-                    style="width : 200px; height : 50px">저장하기</a-button>
-            </a-col>
-        </div>
-</div>
+    </div>
 </template>
 
 <style scoped lang = "scss">
@@ -159,26 +158,13 @@ const data = {
     /* 열림 닫힘 리스트를 안고 있는 컨테이너 */
     .collapse-container{
         width : 75%;
-        height : 90%;
+        height : 100%;
         margin : 3rem auto 1rem auto;
         /* margin: 3rem 3rem 1rem 3rem; */
         overflow-y : scroll; /*만약 날짜가 너무 길어질 경우 스크롤로 대체한다. */
     }
     .collapse-container::-webkit-scrollbar {
-        display : none; /*스크롤 숨기기 */
-    }
-
-    /* 저장 로직 */
-    .save-section {
-        /*위치 정렬 */
-        width: 100%;
-        height: 10%;
-        padding: 1rem 1.5rem 2rem;
-        /*상 하 (좌우) */
-        /*중앙 정렬 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display : none; 
     }
 }
 
@@ -204,10 +190,6 @@ const data = {
         background-color: var(--planit-pink);
     }
 }
-
-
-
-
 
 .card {
         padding: 0.5rem 1rem;

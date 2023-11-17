@@ -102,7 +102,6 @@ const handleShowLocation = (data) => {
     display: flex;
     flex-direction: column;
     height: 100%;
-    /*부모높이 */
 }
 
 .shadow {

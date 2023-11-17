@@ -19,6 +19,7 @@ onMounted(() => {
 
 </script>
 <template>
+    <div class = "plan-detail-container">
         <!--여행 일정 정하기-->
         <a-col class="upper">
             <PlanInfo :scheduleInfo = "scheduleInfo"/>
@@ -27,9 +28,28 @@ onMounted(() => {
         <a-col class="main">
             <ScheduleList :scheduleInfo = "scheduleInfo" />
         </a-col>
+        <!--하단의 저장 버튼 ( 별도로 분리 )-->
+        <div class = "bottom">
+            <a-col>
+                <template #icon>
+                    <CheckCircleOutlined />
+                </template>
+                <a-button class="save-btn" type="primary" shape="round" size="large"
+                    style="width : 200px; height : 50px">저장하기</a-button>
+            </a-col>
+        </div>
+    </div>
 </template>
 <style scoped lang = "scss">
-.upper {
+
+.plan-detail-container {
+    height : 100vh;
+    width : 100%;
+    display  :flex;
+    flex-direction: column;
+
+
+    .upper {
         /* 위치 정렬 */
         width: 100%;
         height: 20%;
@@ -48,12 +68,27 @@ onMounted(() => {
         /* padding: 10%; */
     }
 
-.main {
-    /*위치 정렬*/
-    width: 100%;
-    height: 80%;
-    /* 중앙 정렬 */
-    display: flex;
+    .main {
+        /*위치 정렬*/
+        width: 100%;
+        height: 70%;
+        /* 중앙 정렬 */
+        display: flex;
+    }
+
+    .bottom {
+        /*위치 정렬 */
+        width: 100%;
+        height: 10%;
+        padding: 1rem 1.5rem 2rem 1.5rem;
+        /*상 하 (좌우) */
+        /*중앙 정렬 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
 }
 
 
