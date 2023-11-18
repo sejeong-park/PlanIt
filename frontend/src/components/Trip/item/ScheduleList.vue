@@ -146,7 +146,7 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 
 <style scoped lang = "scss">
 
-::v-deep .ant-input {
+:deep(.ant-input) {
     padding : 0;
     height : 100%;
     font-size : 17px;
