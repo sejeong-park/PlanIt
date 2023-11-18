@@ -18,6 +18,11 @@ const markers = ref([]); // marker를 로드하는 함수
 const focusMarkerIdx = ref(); // markers에서 변경해줄 markerIdx (인덱스에서 접근한다.)
 
 // 마커 이미지 만들기 
+const imgSrc = "src/assets/img/map/map-marker-primary.png";
+const clickSrc = "src/assets/img/map/map-marker-point-1.png";
+const originMarkerImg = ref();
+const clickMarkerImg = ref();
+
 function createMarkerImage(markerSize, imageOrigin) {
     const markerImage = new kakao.maps.MarkerImage(
         imageOrigin,
@@ -25,12 +30,6 @@ function createMarkerImage(markerSize, imageOrigin) {
     )
     return markerImage;
 }
-const imgSrc = "src/assets/img/map/map-marker-primary.png";
-const clickSrc = "src/assets/img/map/map-marker-point-1.png";
-const markerSize = ref();
-const originMarkerImg = ref();
-const clickMarkerImg = ref();
-
 
 // 조회 리스트 뽑아오기
 watch(
@@ -55,17 +54,16 @@ watch(
         // 입력받은 focus 확인
         if (focusLocation) {
             const newCenter = new kakao.maps.LatLng(focusLocation.data.mapy, focusLocation.data.mapx);
-            console.log("포커싱" , focusLocation);
             changeMarkerImg(focusLocation.index);
-            adjustMapCenter(newCenter);
+            adjustMapCenter(newCenter, isOpen);
 
-
-            map.value.panTo(newCenter);
+            // map.value.panTo(newCenter);
             
         }
     },
     {deep : true}
 );
+
 
 // 특정 marker의 index를 선택해서, 변경하는 마커
 const changeMarkerImg = (focusIndex) => {
@@ -86,7 +84,7 @@ const loadMarkers = () => {
     
     // 마커 값 표시
     markers.value = [];
-    positions.value.forEach((pos) => {
+    positions.value.forEach((pos, index) => {
         // 각 포지션 for문 돌리기
         console.log(pos);
         const marker = new kakao.maps.Marker({
@@ -109,6 +107,9 @@ const loadMarkers = () => {
         // kakao.maps.event.addListener(marker, "mousemover", )
         kakao.maps.event.addListener(marker, 'click', function() { 
             console.log("클릭")
+            changeMarkerImg(index); // 색상 변경
+            // map.value.panTo(map.getCenter);
+
             const overlay = new kakao.maps.CustomOverlay({
                 map : map.value,
                 position : marker.getPosition(),
@@ -148,15 +149,12 @@ const deleteMarkers = () => {
 };
 
 // 지도의 중심을 조정하는 함수
-const adjustMapCenter = (center) => {
-    console.log("원래값 : ", center.getLat(), center.getLng());
-
-
+const adjustMapCenter = (center, isOpen) => {
     if (!map.value) return;
 
     // drawerWidth 정수 추출
     const drawerWidth = parseInt(props.drawerWidth, 10); // 10진수 변환
-    const offsetX = props.open ? drawerWidth : 0;
+    const offsetX = props.open ? drawerWidth / 2: 0;
     
     const mapWidth = container.value.offsetWidth; // map의 너비
     const bounds  = map.value.getBounds();
@@ -165,7 +163,7 @@ const adjustMapCenter = (center) => {
     const lngOffset = lngPerPixel * offsetX;
     const newCenter = new kakao.maps.LatLng(
         center.getLat(),
-        center.getLng() + lngOffset
+        center.getLng() - lngOffset
     );
     map.value.panTo(newCenter);
 };
@@ -173,9 +171,8 @@ const adjustMapCenter = (center) => {
 
 // kakao map 객체가 생성되기 전에 객체를 부르는 경우 때문에 init 뒤에 초기화를 묶어주었다.
 const initKakaoObj = () => {
-    markerSize.value = new kakao.maps.Size(64, 64);
-    originMarkerImg.value = createMarkerImage(markerSize.value, imgSrc);
-    clickMarkerImg.value = createMarkerImage(markerSize.value, clickSrc);
+    originMarkerImg.value = createMarkerImage(new kakao.maps.Size(64, 64), imgSrc);
+    clickMarkerImg.value = createMarkerImage(new kakao.maps.Size(72, 72), clickSrc);
 }
 
 
