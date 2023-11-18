@@ -1,4 +1,4 @@
-import {ref, computed} from "vue";
+import {ref} from "vue";
 import {defineStore} from "pinia";
 import { convertDateFormat, calculateDaysBetweenDates, getAllDatesBetween } from "@/util/dateUtil";
 
@@ -65,7 +65,6 @@ export const usePlanStore = defineStore(
         return {
             tripScheduleInfo,
             setTripSchedule,
-            tripScheduleInfo,
             addClickedAttractionInfo,
             clickScheduleInfo,
             setClickedActiveDate,

@@ -48,14 +48,8 @@
 
     /* 나머지 변수들 */
     --shadow-inset : rgba(149, 149, 149, 0.43) 0px 0px 20px 2px inset;
+    --shadow : 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
         /* 그림자를 주는 효과 */
-    --shadow-over {
-        -webkit-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-        -moz-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-        -ms-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-        -o-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-        box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-    }
 }
 
 /*폰트 추가*/
