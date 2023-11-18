@@ -4,6 +4,7 @@ import PlanInfo from '@/components/Trip/item/PlanInfo.vue';
 import ScheduleList from '@/components/Trip/item/ScheduleList.vue';
 import {usePlanStore} from '@/stores/plan';
 import {onMounted, ref} from "vue";
+import {CheckCircleOutlined} from '@ant-design/icons-vue';
 
 const scheduleInfo = ref(); // 입력 받은 스케줄 객체 하위 컴포넌트로 넘기기
 

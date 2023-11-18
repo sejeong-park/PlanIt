@@ -17,7 +17,7 @@ const tripSearchStore = useTripSearchStore();
 // region 지역 나오는 정보
 const regionList = ref(region); // region.js에서 export 해온 값
 const regionResult = ref(['0']); // 사용자가 선택한 region의 값 (0은 전국 이라는 이름의 default)
-
+const searchKeyword = ref(''); // 사용자의 검색
 
 // 한국 관광공사 API를 이용해 리스트 불러오기
 // (크롤링 및 데이터 인입 시 수정 필요)
@@ -76,62 +76,49 @@ const addAttractionToDail = (data) => {
 </script>
 
 <template>
-        <!--Drawer 밀기
-            1. open 변수 -> 부모 컴포넌트로부터 열리고 닫힘의 T/F
-            2. width -> 부모 컴포넌트로 전달 받은 drawer의 넓이
-            3. get-container -> Header를 감싸느냐, 아니냐 (True 지정 시, 전체 height 100vh)
-            4. style : (:style="{ position: 'absolute', height : '100%' }" ) 다음 태그가 있었으나, 문제가 없어 생략함 (임시)
-            5. mask : drawer가 열리고도 나머지 배경이 mask가 씌워지느냐 안씌워지느냐
-            6. title -> 컴포넌트 제목
-            7. placement -> 어느쪽으로 열리느냐
-
-            <지운 옵션들>
-            title="여행지 찾기" 
-            :headerStyle="{padding : '5px'}"
-            :closable="true"
-            @update:open="value => $emit('update:open', value)"
-        -->
+        <!--좌측 검색 창 열기-->
         <a-drawer 
             :open="open"
             :width="drawerWidth"
             :get-container="false" 
             :mask="false"
             :closable="false"
-            :bodyStyle = "{ paddingTop: '0px', marginTop : '2.5rem'}"
+            :bodyStyle = "{ paddingTop: '0px'}"
             placement="left">
             
-
-            <!-- 1. 지도에 위치값 표시할 값들 찾기 -->
-            <a-space class = "search-form">
-
-
-                <!-- 시도 구군 -->
-                <!--@change : 값의 변경이 완료 된 후에 바뀜-->
-                <a-cascader size = "large" 
-                    v-model:value="regionResult" 
-                    bordered = "true"
-                    :options="regionList" 
-                    placeholder="Please select" 
-                    @change = "setSearchRegion"
-                />
-
-                <!--검색-->
-                <a-input v-model:value="value" size="large" placeholder="Basic usage" />
-
-                <!--서치 검색 버튼-->
-                <a-button
-                    danger 
-                    size="large" 
-                    @click = "search"
-                >
-                    일단 검색
-                </a-button>
-
-
-            </a-space>
+            <!-- Header : 지도에 표시할 값 찾기 -->
+            <template #title>
+                <div class = "search-section">
+                    <!-- 시도 구군 -->
+                    <!--@change : 값의 변경이 완료 된 후에 바뀜-->
+                    <div class ="region-form">
+                        <a-cascader size = "large" 
+                            v-model:value="regionResult" 
+                            :bordered = "true"
+                            :options="regionList" 
+                            placeholder="지역 선택" 
+                            @change = "setSearchRegion"
+                        />
+                    </div>
+                    <!--검색-->
+                    <div class = "search-form">
+                        <a-input v-model:value="searchKeyword" size="large" placeholder="검색어를 입력하세요" />
+                    </div>
+                    <div class = "search-btn">
+                        <!--서치 검색 버튼-->
+                        <a-button
+                            type = "primary" 
+                            size="large" 
+                            @click = "search"
+                        >
+                            검색
+                        </a-button>
+                    </div>
+                </div>
+            </template>
 
             <!-- 2. 서치한 값 기반 관광지 정보 -->
-            <div class = "attraction-information-list">
+            
                 <!--
                     data-source : 데이터 가져올 객체 변수명
                 -->
@@ -143,62 +130,112 @@ const addAttractionToDail = (data) => {
                     <template #renderItem="{item}">
                         <!-- 반복의 아이템 (밑에서부터 왼쪽)-->
                         <a-list-item class = "list-item">
-                            <!-- 맨 하단 디스크립션-->
-                            <a-list-item-meta class = "item-info"
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                                style = "width : 80px;"
-                            >
-                                <!-- 제목-->
-                                <template #title>
-                                    <a class = "item-title" href="https://www.antdv.com/">
-                                        {{ item.title }}
-                                    </a>
-                                </template> 
-                                <!--미리보기-->
-                                <template #avatar>
-                                    <!--미리보기 -> 이미지 싱크 넣기-->
-                                    <a-image
-                                        :width="200"
-                                        :height="150"
-                                        :preview = "false"
-                                        :src="item.firstimage"
-                                    />
-                                </template>
-                            </a-list-item-meta>
-
-                            <!--버튼을 클릭하면 카카오맵의 위치가 변경된다.-->
-                            <!-- TODO :: UI 작업 안했기 때문에 그냥 쓴다 대신, 나중에 바꿔줘야돼-->
-                            <div style="display : flex; flex-direction: column; width : 80px;">
-                                <a-button type = "primary" @click = "moveMapLocation(item)">버튼</a-button>
-                                <a-button type = "primary" @click = "addAttractionToDail(item)" >일정 추가</a-button>
+                            <div class = "card-div" @click = "moveMapLocation(item)">
+                                <div class = "card-section">
+                                    <div class = "card-img">
+                                        <img v-if="item.firstimage" class = "card-image-src" :src = "item.firstimage" alt="{{ item.title }}의 원본 사진 첨부"/>
+                                        <img v-else class = "card-image-src" src="@/assets/img/logo/planit-fullsize-primary.png" alt = "이미지가 존재하지 않습니다."/>
+                                    </div>
+                                    <div class = "card-content">
+                                        <div class = "card-title">
+                                            {{ item.title }}
+                                        </div>
+                                        <div class = "card-content">
+                                            {{ item.addr1 }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </a-list-item>
                     </template>
                 </a-list>
-            </div>
         </a-drawer>
 </template>
 <style scoped>
-.search-form{
-    display : flex;
-    width : 100%;
-    justify-content: center; /* 가운데 정렬 */
-    margin: 1rem 0 2rem 0;
+.ant-input { 
+    border : 1.5px solid var(--planit-primary);
+}
+:deep(.ant-select-selector) {
+    border : 1.5px solid var(--planit-primary) !important;
 }
 
+/* header 안 콘텐츠를 채운다. */
+.search-section{
+    width : 100%;
+    height : auto;
+    padding : 1rem 1rem 1rem 1rem;
+
+    display : flex;
+    justify-content: center; /* 가운데 정렬 */
+    .region-form {
+        padding-right : 1rem;
+        
+    }
+
+    .search-form {
+        padding-right : 1rem;
+    }
+
+}
+
+.a-list {
+    width : 100%;
+    box-sizing : border-box;
+}
+/* item list들의 section*/
 .list-item{
-    margin : 0.5rem;
-    
-
-    .item-title {
-        height : 3rem;
+    padding : 1rem;
+    /* Card Section */
+    .card-div {
+        width : 100%;
+        height : 100%;
+        padding : 1rem 0 1rem 1.5rem;
+        border-radius: 20px; 
     }
-    .item-info{
-        width  : 200px;
+    .card-div:hover {
+        background-color: rgba(var(--planit-base), 0.5);
+        box-shadow: 0 0 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+    }
+}
+
+.card-section {
+    box-sizing: border-box;
+    width :100%;
+    display : flex;
+    .card-img {
+        width : 35%;
+        margin-right : 0.5rem;
+        justify-content: end;
+        
+        .card-image-src {
+            width : 150px;
+            height : 150px;
+            border-radius: 20px;
+            box-shadow: 0 0 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
+        }
     }
 
-    
-    /* 아이템 안에 타이틀 */
+    .card-content {
+        width : 65%;
+        display : flex;
+        flex-direction: column;
 
+        .card-title {
+            padding : 0.5rem 0;
+            /* 글꼴 관련 속성 */
+            font-size : x-large;
+            font-weight: 900;
+            color : var(--planit-dark);
+            letter-spacing: 0.01px;
+        }
+        .card-content {
+            height : auto;
+            
+            /* 글꼴 내역 */
+            font-size : 16px;
+            font-weight : 500;
+
+        }
+    }
 }
 </style>

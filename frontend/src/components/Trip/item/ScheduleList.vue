@@ -58,14 +58,14 @@ const addUserSchedule = (date) => {
 }
 
 
-const removeSchedule = (date, detailIdx) => {{
+const removeSchedule = (date, detailIdx) => {
     console.log("사용자가 삭제 버튼을 눌렀습니다. + ", date , "idx : ", detailIdx)
     if (detailIdx !== -1) {
         // 배열의 index 값 삭제한다.
         planStore.tripScheduleInfo.scheduleList[date].splice(detailIdx, 1); // index 한개 삭제
     }
 
-}}
+}
 
 const activeKey = ref(['1']);
 const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
@@ -82,7 +82,6 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
                 class = "collapse"
                 v-model:activeKey="activeKey"
                 :bordered="false"
-                @change = "handleCollapseChange"
             >
 
                 <template #expandIcon="{ isActive }">

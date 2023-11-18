@@ -8,15 +8,6 @@ import {ref} from "vue";
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
 const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
 
-const handleDrawerOpen = (open) =>{
-    drawerOpen.value = open; // drawer Open 값 넣어준다.
-}
-
-// Drawer로부터 확인하고 싶은 값을 전달 받으면, KaKaoMap으로 define 전달
-const handleShowLocation = (data) => {
-
-}
-
 </script>
 <template>
     <!--Trip View 페이지-->
@@ -25,8 +16,10 @@ const handleShowLocation = (data) => {
         <!--1. 카카오맵 컴포넌트 확인 가능-->
         <a-col class="left-side" :span="19">
             <!--    카카오맵 지도   -->
-            <KakaoMap 
-            @clickLocation = "handleShowLocation"/>
+            <KakaoMap
+                :open="drawerOpen"
+                :drawer-width="drawerWidth"
+            />
             <!--    Drawer 옵션
                 @update:open="handleDrawerOpen" -->
             <SearchDrawerItem

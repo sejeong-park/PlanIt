@@ -35,7 +35,7 @@ const getFestivalList = () => {
 }
 
 onMounted(() => {
-    // getFestivalList(); //  해제 시키기
+    getFestivalList(); //  해제 시키기
     // 출력해줄 날짜 나타내기
     startStr.value = convertDateFormat(todayDate, 'YY.MM.DD');
     endStr.value = convertDateFormat(todayDate, 'YY.MM.DD');
