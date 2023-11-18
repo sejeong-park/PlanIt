@@ -56,12 +56,10 @@ const search = () => {
 }
 
 // searchList에서 조회되는 데이터 묶음
-const moveMapLocation = (data) => {
+const moveMapLocation = (data, index) => {
     console.log("trip 갈 지역 버튼 클릭 : ", data);
-    tripSearchStore.setFocusLocation(data); // 객체를 넣는다. 
+    tripSearchStore.setFocusLocation(data, index); // 객체를 넣는다. 
 };
-
-
 
 
 // 일정 추가 Button을 클릭 했을 경우 SchduleList에 등록해주기 위한 데이터
@@ -127,10 +125,10 @@ const addAttractionToDail = (data) => {
                     :data-source="searchList"
                 >
                     <!---searchList.body.items.item-->
-                    <template #renderItem="{item}">
+                    <template #renderItem="{item, index}">
                         <!-- 반복의 아이템 (밑에서부터 왼쪽)-->
                         <a-list-item class = "list-item">
-                            <div class = "card-div" @click = "moveMapLocation(item)">
+                            <div class = "card-div" @click = "moveMapLocation(item, index)">
                                 <div class = "card-section">
                                     <div class = "card-img">
                                         <img v-if="item.firstimage" class = "card-image-src" :src = "item.firstimage" alt="{{ item.title }}의 원본 사진 첨부"/>
@@ -140,7 +138,7 @@ const addAttractionToDail = (data) => {
                                         <div class = "card-title">
                                             {{ item.title }}
                                         </div>
-                                        <div class = "card-content">
+                                        <div class = "card-description">
                                             {{ item.addr1 }}
                                         </div>
                                     </div>
@@ -219,6 +217,7 @@ const addAttractionToDail = (data) => {
         width : 65%;
         display : flex;
         flex-direction: column;
+        padding-left : 0.5rem;
 
         .card-title {
             padding : 0.5rem 0;
@@ -228,7 +227,7 @@ const addAttractionToDail = (data) => {
             color : var(--planit-dark);
             letter-spacing: 0.01px;
         }
-        .card-content {
+        .card-description {
             height : auto;
             
             /* 글꼴 내역 */

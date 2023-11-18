@@ -11,9 +11,12 @@ export const useTripSearchStore = defineStore(
         const focusLocation = ref(); //
         const searchLocationList = ref([]); // 검색한 순간 카카오맵에 뿌려줄 전체 위치
 
-        const setFocusLocation = (data) => {
+        const setFocusLocation = (data, index) => {
             console.log("focus Location : ", data);
-            focusLocation.value = data;
+            const obj = {};
+            obj.index = index;
+            obj.data = data;
+            focusLocation.value = obj;
         };
 
         // kakaomap에 표시할 전체 데이터

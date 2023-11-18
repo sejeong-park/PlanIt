@@ -2,19 +2,35 @@
 import { onMounted, ref, watch, defineProps } from "vue";
 import {useTripSearchStore} from '@/stores/trip';
 
-
 const props = defineProps({
     open : Boolean, // drawer의 열려있음 여부
     drawerWidth : String // drawer의 너비
 })
 
-const map = ref(null);  // kakao map import 
-const positions = ref([]);
-const markers = ref([]);
-
 const tripSearchStore = useTripSearchStore();   // SearchDrawerItem에서 불러오는 데이터
-const focusLocation = ref(); // 버튼을 누른 값
-const searchLocationList = ref([]);
+
+// 카카오맵 자체
+const map = ref(null);  // kakao map import 
+const container = ref(null);
+// 지도 표시 할 것들
+const positions = ref([]);
+const markers = ref([]); // marker를 로드하는 함수
+const focusMarkerIdx = ref(); // markers에서 변경해줄 markerIdx (인덱스에서 접근한다.)
+
+// 마커 이미지 만들기 
+function createMarkerImage(markerSize, imageOrigin) {
+    const markerImage = new kakao.maps.MarkerImage(
+        imageOrigin,
+        markerSize
+    )
+    return markerImage;
+}
+const imgSrc = "src/assets/img/map/map-marker-primary.png";
+const clickSrc = "src/assets/img/map/map-marker-point-1.png";
+const markerSize = ref();
+const originMarkerImg = ref();
+const clickMarkerImg = ref();
+
 
 // 조회 리스트 뽑아오기
 watch(
@@ -34,33 +50,37 @@ watch(
 
 // 포커싱할 것 찾아오기
 watch(
-    () => tripSearchStore.focusLocation,
-    () => {
-        let moveLatLon = new kakao.maps.LatLng(tripSearchStore.focusLocation.mapy, tripSearchStore.focusLocation.mapx);
-        map.value.panTo(moveLatLon);
+    [() => tripSearchStore.focusLocation, () => props.open],
+    ([focusLocation, isOpen]) => {
+        // 입력받은 focus 확인
+        if (focusLocation) {
+            const newCenter = new kakao.maps.LatLng(focusLocation.data.mapy, focusLocation.data.mapx);
+            console.log("포커싱" , focusLocation);
+            changeMarkerImg(focusLocation.index);
+            adjustMapCenter(newCenter);
+
+
+            map.value.panTo(newCenter);
+            
+        }
     },
     {deep : true}
 );
 
-// drawer의 상태가 변경될 때마다 지도의 중심을 재조정
-watch(() => props.drawerOpen, (isOpen) => {
-    console.log("drawer 상태변경 :: ", isoOpen);
-    if (isOpen) {
-        // drawer가 열렸을 때 새로운 중심 좌표 계산
-        const currentCenter = map.value.getCenter;
-        panToCenterWithDrawerOffset(currentCenter);
+// 특정 marker의 index를 선택해서, 변경하는 마커
+const changeMarkerImg = (focusIndex) => {
+    // 이전에 포커싱된 것이 있었다면 해제해주고 이미지 이동
+    if (focusMarkerIdx.value !== null && focusMarkerIdx.value !== undefined && markers.value[focusMarkerIdx.value]){
+        markers.value[focusMarkerIdx.value].setImage(originMarkerImg.value);
     }
-})
+    markers.value[focusIndex].setImage(clickMarkerImg.value);
+    focusMarkerIdx.value = focusIndex;
+};
+
 
 // marker 화면 표시
 const loadMarkers = () => {
     deleteMarkers();
-
-    // 마커 이미지 생성
-    // var imageSrc = `assets/img/marker_${ positions[i].contenttypeid }_color_round.png`; (색상 지정할 것)
-    const imgSrc = "src/assets/img/map/map-marker-primary.png";
-    const imgSize = new kakao.maps.Size(52, 52);
-    const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
     const content = '<div class ="label"><span class="left"></span><span class="center">카카오!</span><span class="right"></span></div>;'
     
@@ -68,15 +88,14 @@ const loadMarkers = () => {
     markers.value = [];
     positions.value.forEach((pos) => {
         // 각 포지션 for문 돌리기
-
+        console.log(pos);
         const marker = new kakao.maps.Marker({
             map : map.value,
             position : pos.latlng,
             title : pos.title,
             clickable : true,
-            image : markerImage
+            image : originMarkerImg.value
         });
-
 
         markers.value.push(marker); // 전역에 넣기
         // 이벤트 리스너 등록하기
@@ -129,46 +148,58 @@ const deleteMarkers = () => {
 };
 
 // 지도의 중심을 조정하는 함수
-const panToCenterWithDrawerOffset = (center) => {
-    if (props.open && map.value) {
-        const offsetX = props.drawerWidth / 2; // 중심점을 옮길 x offset 값;
-        const mapWidth = mapContainer.value.offsetWidth;
-        const bounds = map.value.getBounds();
-        // 중점 가져오기
-        const lngSpan = bounds.getNorthEast().getLng() - bounds.getSouthWest().getLng();
-        const lngPerPixel = lngSpan / mapWidth;
-        const lngOffset = lngPerPixel * offsetX;
-        
-        // 새로운 중심 좌표
-        const newCenter = new kakao.maps.LatLng(
-            center.getLat(),
-            center.getLng() - lngOffset
-        );
-        map.value.panTo(newCenter);
-    }else {
-        map.value && map.value.panTo(center);
-    }
+const adjustMapCenter = (center) => {
+    console.log("원래값 : ", center.getLat(), center.getLng());
+
+
+    if (!map.value) return;
+
+    // drawerWidth 정수 추출
+    const drawerWidth = parseInt(props.drawerWidth, 10); // 10진수 변환
+    const offsetX = props.open ? drawerWidth : 0;
+    
+    const mapWidth = container.value.offsetWidth; // map의 너비
+    const bounds  = map.value.getBounds();
+    const lngSpan = bounds.getNorthEast().getLng() - bounds.getSouthWest().getLng();
+    const lngPerPixel = lngSpan / mapWidth;
+    const lngOffset = lngPerPixel * offsetX;
+    const newCenter = new kakao.maps.LatLng(
+        center.getLat(),
+        center.getLng() + lngOffset
+    );
+    map.value.panTo(newCenter);
 };
+
+
+// kakao map 객체가 생성되기 전에 객체를 부르는 경우 때문에 init 뒤에 초기화를 묶어주었다.
+const initKakaoObj = () => {
+    markerSize.value = new kakao.maps.Size(64, 64);
+    originMarkerImg.value = createMarkerImage(markerSize.value, imgSrc);
+    clickMarkerImg.value = createMarkerImage(markerSize.value, clickSrc);
+}
 
 
 // Kakao Map 초기화
 const initMap = () => {
-    const container = document.getElementById("map");
+    const initContainer = document.getElementById("map");
+    container.value = initContainer;
     const options = {
         center : new kakao.maps.LatLng(33.450701, 126.570667),
         level : 3
     };
-    map.value = new kakao.maps.Map(container, options);
+    
+    map.value = new kakao.maps.Map(container.value, options);
+    initKakaoObj();
 };
 
 
 // 화면이 켜지자 마자.
 onMounted(() => {
-    if (window.kakao && window.kakao.maps) {
+    if (window?.kakao && window?.kakao?.maps) {
         initMap();
     } else{
         const script = document.createElement("script");
-        script.onload = () => kakao.maps.load(initMap);
+        script.onload = () => kakao.maps.load(() => initMap());
         script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
             import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
             }&libraries=services,clusterer`;
