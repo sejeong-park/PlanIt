@@ -2,6 +2,7 @@ package com.trip.planit.board.model.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +16,9 @@ public interface BoardMapper {
 	void insertBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	int selectBoardId() throws SQLException;
 	void insertFile(FileInfoDto fileInfoDto) throws Exception;
+	List<BoardListDto> selectAllBoardForPage(Map<String, Object> param) throws SQLException;
 	List<BoardListDto> selectAllBoard() throws SQLException;
+	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
 	BoardListDto selectBoard(int boardId) throws SQLException;
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;

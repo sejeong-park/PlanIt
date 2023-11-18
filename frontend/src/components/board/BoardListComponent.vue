@@ -1,27 +1,101 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const cardList = ref([]);
+import VPageNavigation from "@/components/common/VPageNavigation.vue";
 
-axios.get("http://localhost:/boards/").then((response) => {
-  //   console.log(response);
-  response.data.forEach((card) => {
-    cardList.value.push(card);
-  });
+// 게시글 정보를 담을 배열
+const articles = ref([]);
+
+// 현재 페이지 정보(1부터 시작)
+const currentPage = ref(1);
+
+// 전체 페이지
+const totalPage = ref(0);
+
+// .env에서 설정한 게시글 리스트 사이즈
+const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+// console.log("VITE :" ,VITE_ARTICLE_LIST_SIZE)
+// 페이징 정보를 넘겨줄 param
+const param = ref({
+  pgno: currentPage.value.toString(),
+  spp: VITE_ARTICLE_LIST_SIZE.toString(),
 });
+
+onMounted(() => {
+  getArticleList();
+});
+// 화면이 띄어지자마자 바로 게시글들을 보여주기 위해
+// onMounted(() => {
+//   getArticleList();
+// });
+
+// 서버에서 아티클 정보를 가져온다.
+// const getArticleList = () => {
+//   console.log("서버에서 글목록 얻어오자!!", param.value);
+//   listArticles(
+//     param.value,
+//     ({ data }) => {
+//       articles.value = data.articles;
+//     },
+//     (error) => {
+//       console.log(error);
+//     }
+//   );
+// };
+
+// const getArticleList = () => {
+//   // console.log("getArticleList 호출!", param.value);
+//   axios.get("http://localhost:/boards/", param.value).then((response) => {
+//     console.log(response.data);
+//     response.data.articles.forEach((data) => {
+//       // console.log("data:", data);
+//       articles.value.push(data);
+//     });
+//     currentPage.value = response.data.currentPage;
+//     totalPage.value = response.data.totalPage;
+//   });
+// };
+
+const getArticleList = () => {
+  axios
+    .get("http://localhost:/boards/", {
+      params: param.value,
+    })
+    .then((response) => {
+      console.log(response.data);
+      // 새로운 데이터를 받아올 때마다 articles 배열을 초기화
+      articles.value = response.data.articles;
+      currentPage.value = response.data.currentPage;
+      totalPage.value = response.data.totalPageCount;
+    });
+};
+// 페이지 이동할 때 사용되는 메서드
+const onPageChange = (val) => {
+  console.log(val + "번 페이지로 이동 준비 끝!!!");
+  // 클릭한 페이지 정보를 다시 받고
+  currentPage.value = val;
+  param.value.pgno = val;
+  //여기서 getArticle을 다시 호출하는구나?
+  getArticleList();
+};
 </script>
 
 <template>
   <h1 id="page-title">컨텐츠</h1>
   <a-row class="card-container">
-    <div v-for="card in cardList" :key="boardId" class="card">
+    <div v-for="article in articles" :key="article.boardId" class="card">
       <img src="@\assets\img\trip.jpg" alt="Card Image" />
       <h2>
-        <strong>{{ card.title }}</strong>
+        <strong>{{ article.title }}</strong>
       </h2>
     </div>
   </a-row>
+  <VPageNavigation
+    :current-page="currentPage"
+    :total-page="totalPage"
+    @pageChange="onPageChange"
+  ></VPageNavigation>
 </template>
 
 <style scoped>
