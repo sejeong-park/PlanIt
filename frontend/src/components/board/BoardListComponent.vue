@@ -53,7 +53,7 @@ img {
   width: 100%; /* 이미지를 부모 요소에 맞추기 위해 100%로 설정 */
   width: 20rem;
   border-radius: 1rem;
-  height: 17rem;
+  height: 16rem;
   /* height: auto; */
   max-height: 20rem;
   /* max-width: 13rem; */
