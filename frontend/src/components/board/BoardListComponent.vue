@@ -82,7 +82,10 @@ const onPageChange = (val) => {
 </script>
 
 <template>
-  <h1 id="page-title">컨텐츠</h1>
+  <a-row id="page-top">
+    <h2><strong>컨텐츠</strong></h2>
+  </a-row>
+
   <a-row class="card-container">
     <div v-for="article in articles" :key="article.boardId" class="card">
       <img src="@\assets\img\trip.jpg" alt="Card Image" />
@@ -98,7 +101,7 @@ const onPageChange = (val) => {
   ></VPageNavigation>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -117,10 +120,6 @@ const onPageChange = (val) => {
   padding: 1rem;
   text-align: center;
   box-sizing: border-box; /* 패딩 및 테두리를 박스 모델에 포함시킴으로써 겹치지 않도록 한다. */
-
-  h2 {
-    margin-top: 2rem;
-  }
 }
 
 img {
@@ -134,13 +133,15 @@ img {
   object-fit: fill; /*요소 콘텐츠 박스 크기에 맞춰 대체 콘텐츠의 크기를 조절합니다. 콘텐츠가 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 콘텐츠가 늘어납니다. */
 }
 
-#page-title {
+#page-top {
+  padding-left: 1rem;
   text-align: center;
-  margin-top: 1rem;
-  padding-left: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h2 {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 </style>
