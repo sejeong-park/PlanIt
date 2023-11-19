@@ -88,10 +88,15 @@ const onPageChange = (val) => {
 
   <a-row class="card-container">
     <div v-for="article in articles" :key="article.boardId" class="card">
-      <img src="@\assets\img\trip.jpg" alt="Card Image" />
-      <h2>
-        <strong>{{ article.title }}</strong>
-      </h2>
+      <router-link to="#"
+        ><img
+          src="@\assets\img\trip.jpg"
+          alt="Card Image"
+          class="hover-opacity"
+      /></router-link>
+      <router-link to="#"
+        ><p>{{ article.title }}</p>
+      </router-link>
     </div>
   </a-row>
   <VPageNavigation
@@ -109,6 +114,12 @@ const onPageChange = (val) => {
   margin: 0 20rem; /*양쪽 여백 만들기*/
   max-width: 1200px; /* 부모 요소 크기를 더 키워서 한 행에 세개의 카드를 나오게 한다. */
   padding-left: 5rem;
+
+  p {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
 }
 
 .card {
@@ -120,17 +131,24 @@ const onPageChange = (val) => {
   padding: 1rem;
   text-align: center;
   box-sizing: border-box; /* 패딩 및 테두리를 박스 모델에 포함시킴으로써 겹치지 않도록 한다. */
+  text-align: left; // 제목을 좌측으로 정렬
 }
 
 img {
   width: 100%; /* 이미지를 부모 요소에 맞추기 위해 100%로 설정 */
   width: 20rem;
-  border-radius: 1rem;
+  border-radius: 5px;
   height: 16rem;
   /* height: auto; */
   max-height: 20rem;
   /* max-width: 13rem; */
   object-fit: fill; /*요소 콘텐츠 박스 크기에 맞춰 대체 콘텐츠의 크기를 조절합니다. 콘텐츠가 콘텐츠 박스를 가득 채웁니다. 서로의 가로세로비가 일치하지 않으면 콘텐츠가 늘어납니다. */
+  // position: relative; /* 포지션을 상대적으로 지정?*/
+  transition: opacity 0.3s ease; /*투명도 전환을 부드럽게 만들기 위한 트랜지션 속성 */
+}
+
+img.hover-opacity:hover {
+  opacity: 0.6; /*마우스 호버 시 투명도를 0.8로 조정 */
 }
 
 #page-top {
@@ -143,5 +161,9 @@ img {
 
 h2 {
   margin-top: 1rem;
+}
+
+a {
+  color: black;
 }
 </style>

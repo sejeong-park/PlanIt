@@ -21,14 +21,19 @@ const updateContent = (event) => {
 <template>
   <div class="board-editor">
     <div class="post-title">
-      <textarea
-        id="post-title-inp"
-        class="textarea_tit"
-        placeholder="제목을 입력하세요"
-        style="height: 42px !important"
-        v-model="title"
-      ></textarea>
-      <div id="board-editor-container" style="display: block"></div>
+      <div class="title-input-container">
+        <textarea
+          id="post-title-inp"
+          class="textarea_tit"
+          placeholder="제목을 입력하세요"
+          style="height: 42px !important"
+          v-model="title"
+        ></textarea>
+        <div class="file-input-container">
+          <input type="file" />
+        </div>
+        <div id="board-editor-container" style="display: block"></div>
+      </div>
     </div>
     <body
       id="tinymce"
@@ -55,10 +60,17 @@ const updateContent = (event) => {
 
 <style lang="scss" scoped>
 .post-title {
+  display: flex;
   width: 860px;
   margin: 35px auto 17px;
   padding-bottom: 26px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  .title-input-container,
+  .file-input-container {
+    flex: 1; /* 자식들이 동일한 너비를 가지도록 설정 */
+    margin-right: 10px;
+  }
 
   .textarea_tit {
     display: block;
@@ -75,7 +87,7 @@ const updateContent = (event) => {
     letter-spacing: -0.4px;
 
     &::placeholder {
-      color: #999999;
+      color: #c3bebe;
     }
   }
 }
