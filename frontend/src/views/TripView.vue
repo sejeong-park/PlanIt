@@ -6,7 +6,7 @@ import {ref} from "vue";
 
 // drawer를 여는 함수
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
-const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
+const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
 
 </script>
 <template>
@@ -76,7 +76,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
         left: 0;
         margin-top: 2.5rem;
         margin-left : 4rem; /* 왼쪽으로부터 마진값이 존재. */
-        z-index: 1000; /* 입체적으로 위에 노출하는 방법 */
+        z-index: 500; /* 입체적으로 위에 노출하는 방법 */
         /* 백그라운드 */
         padding : 0.5rem 1rem;
         background-color : white;
@@ -86,7 +86,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
         transition : transform 0.3s ease;
     }
     .map-header.is-open{
-    transform: translateX(38rem); /**draw 너비만큼 이동/ */
+    transform: translateX(550px); /**draw 너비만큼 이동/ */
     }
 }
 
