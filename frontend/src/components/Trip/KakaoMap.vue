@@ -2,6 +2,7 @@
 import { onMounted, ref, watch, defineProps } from "vue";
 import {useTripSearchStore} from '@/stores/trip';
 
+
 const props = defineProps({
     open : Boolean, // drawer의 열려있음 여부
     drawerWidth : String // drawer의 너비
@@ -56,9 +57,6 @@ watch(
             const newCenter = new kakao.maps.LatLng(focusLocation.data.mapy, focusLocation.data.mapx);
             changeMarkerImg(focusLocation.index);
             adjustMapCenter(newCenter, isOpen);
-
-            // map.value.panTo(newCenter);
-            
         }
     },
     {deep : true}
@@ -79,8 +77,6 @@ const changeMarkerImg = (focusIndex) => {
 // marker 화면 표시
 const loadMarkers = () => {
     deleteMarkers();
-
-    const content = '<div class ="label"><span class="left"></span><span class="center">카카오!</span><span class="right"></span></div>;'
     
     // 마커 값 표시
     markers.value = [];
@@ -96,25 +92,12 @@ const loadMarkers = () => {
         });
 
         markers.value.push(marker); // 전역에 넣기
-        // 이벤트 리스너 등록하기
-        const infowindow = new kakao.maps.InfoWindow({
-            content : pos.title
-        })
 
-        kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
-        // kakao.maps.event.addListener(marker, "mouseout"), makeOutListener(infowindow);
 
-        // kakao.maps.event.addListener(marker, "mousemover", )
         kakao.maps.event.addListener(marker, 'click', function() { 
             console.log("클릭")
             changeMarkerImg(index); // 색상 변경
-            // map.value.panTo(map.getCenter);
-
-            const overlay = new kakao.maps.CustomOverlay({
-                map : map.value,
-                position : marker.getPosition(),
-                content : content
-            });
+            adjustMapCenter(pos.latlng); // 센터 이동
         })
 
     });
@@ -126,19 +109,6 @@ const loadMarkers = () => {
     );
 
     map.value.setBounds(bounds);
-}
-
-
-// 이벤트 함수
-function makeOverListener(map, marker, infowindow) {
-    return function(){
-        infowindow.open(map, marker);
-    };
-}
-function makeOutListener(infowindow) {
-    return function() {
-        infowindow.close();
-    }
 }
 
 // marker 초기화

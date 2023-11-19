@@ -77,7 +77,22 @@ const region =
                 {value: '5', label: '서구'}
             ]
         },
-        // {label: '부산', value: '6', children: Proxy(Array)},
+        {
+            label: '부산',
+            value: '6', 
+            children: [
+                { value: "1", label: "강서구"},
+                { value: "2", label: "금정구"},
+                { value: "3", label: "기장군"},
+                { value: "4", label: "남구"},
+                { value: "5", label: "동구"},
+                { value: "6", label: "동래구"},
+                { value: "7", label: "부산진구"},
+                { value: "8", label: "북구"},
+                { value: "9", label: "사상구"},
+                { value: "10", label: "사하구"}
+            ]
+        },
         {
             label: '울산',
             value: '7',
@@ -98,7 +113,22 @@ const region =
                 {label : '세종특별자치시', value : '1'}
             ]
         },
-        // {label: '경기도', value: '31', children: Proxy(Array)},
+        {
+            label: '경기도', 
+            value: '31',
+            children: [
+                {label : '전체', value: '0'},
+                {value: '1',label: "가평군"},
+                {value: '2',label: "고양시"},
+                {value: '3',label: "과천시"},
+                {value: '4',label: "광명시"},
+                {value: '5',label: "광주시"},
+                {value: '6',label: "구리시"},
+                {value: '7',label: "군포시"},
+                {value: '8',label: "김포시"},
+                {value: '9',label: "남양주시"},
+                {value: '10',label: "동두천시"}
+            ]},
         {
             label: '강원특별자치도',
             value: '32', 

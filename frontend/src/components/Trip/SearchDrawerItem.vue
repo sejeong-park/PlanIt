@@ -4,6 +4,7 @@ import { listTripAttraction } from "@/api/tripAttraction";
 import {defineProps, ref} from 'vue'; 
 import {useTripSearchStore} from '@/stores/trip';
 import {usePlanStore} from '@/stores/plan';
+import {InfoCircleOutlined, PlusCircleOutlined} from '@ant-design/icons-vue';
 
 // 부모 컴포넌트로부터 버튼의 상태를 전달 받기 위함
 const props = defineProps({
@@ -69,6 +70,18 @@ const planDetailStore = usePlanStore();
 const addAttractionToDail = (data) => {
     console.log("Attraction : " + data.title + "선택 -> 일정에 저장");
     planDetailStore.addClickedAttractionInfo(data);
+}
+
+const infoOpen = ref(false); // 열리지 않은 상태
+// 디테일한 여행지 정보를 보여준다.
+const showDetailInfoModal = (data) => {
+    infoOpen.value = true; // 열린 상태로 변경
+    console.log("디테일 정보 열림");
+}
+
+const handleOk = e => {
+    console.log(e);
+    infoOpen.value = false;
 }
 
 </script>
@@ -139,7 +152,25 @@ const addAttractionToDail = (data) => {
                                             {{ item.title }}
                                         </div>
                                         <div class = "card-description">
-                                            {{ item.addr1 }}
+                                            {{ item.addr1 }}<br>
+                                            {{ item.addr2 }}<br>
+                                        </div>
+                                        <div class = "card-btn">
+                                            <!--상세 정보를 보여주는 모달-->
+                                            <a-tooltip title="상세 정보 보기">
+                                                <a-button class = "info-btn" type="default" shape="circle" size="20" @click = "showDetailInfoModal(item)">
+                                                    <InfoCircleOutlined />
+                                                </a-button>
+                                            </a-tooltip>
+
+                                            
+
+                                            <!--상세 일정에 등록하는 버튼-->
+                                            <a-tooltip title="일정에 추가하기">
+                                                <a-button class = "add-btn" type="primary" shape="circle" size="20" @click = "addAttractionToDail(item)">
+                                                    <PlusCircleOutlined />
+                                                </a-button>
+                                            </a-tooltip>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +180,9 @@ const addAttractionToDail = (data) => {
                 </a-list>
         </a-drawer>
 </template>
-<style scoped>
+<style scoped lang="scss">
+
+
 .ant-input { 
     border : 1.5px solid var(--planit-primary);
 }
@@ -187,7 +220,7 @@ const addAttractionToDail = (data) => {
     .card-div {
         width : 100%;
         height : 100%;
-        padding : 1rem 0 1rem 1.5rem;
+        padding : 1rem;
         border-radius: 20px; 
     }
     .card-div:hover {
@@ -202,8 +235,12 @@ const addAttractionToDail = (data) => {
     display : flex;
     .card-img {
         width : 35%;
+        height : auto;
         margin-right : 0.5rem;
-        justify-content: end;
+        display : flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
         
         .card-image-src {
             width : 150px;
@@ -218,11 +255,12 @@ const addAttractionToDail = (data) => {
         display : flex;
         flex-direction: column;
         padding-left : 0.5rem;
+        position : relative;
 
         .card-title {
             padding : 0.5rem 0;
             /* 글꼴 관련 속성 */
-            font-size : x-large;
+            font-size : 24px;
             font-weight: 900;
             color : var(--planit-dark);
             letter-spacing: 0.01px;
@@ -231,9 +269,26 @@ const addAttractionToDail = (data) => {
             height : auto;
             
             /* 글꼴 내역 */
-            font-size : 16px;
-            font-weight : 500;
+            font-size : 17px;
+            font-weight : 600;
+            color : var(--color-gray800);
+        }
+        .card-btn {
+            margin-top : auto;
+            bottom : 0;
+            right : 0;
+            align-self : flex-end;
 
+            .add-btn,
+            .info-btn {
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+                height : 50px;
+                width : 50px;
+                margin-left : 0.5rem;
+                box-shadow: 0 0 12px rgba(128, 128, 128, 0.25), 0 5px 5px rgba(128, 128, 128, 0.22);
+            }
         }
     }
 }
