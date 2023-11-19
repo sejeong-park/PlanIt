@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import {useRouter } from "vue-router";
 import { usePlanStore } from "@/stores/plan";
 
 const title = ref(""); // title

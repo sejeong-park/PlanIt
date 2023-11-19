@@ -1,6 +1,17 @@
 <script setup>
 import {ref, computed, onMounted} from 'vue';
+import {useRouter} from "vue-router";
 import Typed from 'typed.js';
+
+// route 이동
+const router = useRouter();
+// 버튼 클릭 시 이동
+const goLogin = () => {
+  router.push({name : 'login'});
+}
+const goPlanit = () => {
+  router.push({name : 'plans'});
+}
 
 
 // 이미지가 있는 디렉토리의 context
@@ -55,8 +66,8 @@ onMounted(() => {
           
       </div>
       <div class = "next-service">
-        <a-button ghost class = "login-btn custom-btn">Sign in</a-button>
-        <a-button type = 'primary' class = "planit-btn custom-btn">Plan It !</a-button>
+        <a-button ghost class = "login-btn custom-btn" @click="goLogin">Sign in</a-button>
+        <a-button type = 'primary' class = "planit-btn custom-btn" @click = "goPlanit">Plan It !</a-button>
       </div>
     </div>
 
