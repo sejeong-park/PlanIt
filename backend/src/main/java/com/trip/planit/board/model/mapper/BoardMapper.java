@@ -15,10 +15,14 @@ import com.trip.planit.board.model.dto.FileInfoDto;
 public interface BoardMapper {
 	int insertBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	void insertFile(FileInfoDto fileInfoDto) throws Exception;
+<<<<<<< HEAD
 	int selectBoardId() throws SQLException;
 	List<BoardListDto> selectAllBoard() throws SQLException;
+=======
 	List<BoardListDto> selectAllBoardForPage(Map<String, Object> param) throws SQLException;
+	List<BoardListDto> selectAllBoard() throws SQLException;
 	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
+>>>>>>> origin/feature#10
 	BoardListDto selectBoard(int boardId) throws SQLException;
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;

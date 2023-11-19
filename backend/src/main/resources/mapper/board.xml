@@ -29,12 +29,14 @@
 			select last_insert_id()
 		</selectKey>
 	</insert>
-
+<<<<<<< HEAD
+=======
 
 	<select id="selectBoardId" resultType="int">
 		select max(board_id) from
 		boards;
 	</select>
+>>>>>>> origin/feature#10
 
 	<insert id="insertFile" parameterType="fileInfoDto">
 		insert into
@@ -43,11 +45,17 @@
 		#{originalFile})
 	</insert>
 
+	<select id="selectBoardId" resultType="int">
+		select max(board_id) from
+		boards;
+	</select>
 
 	<select id="selectAllBoard" resultMap="boardListDto">
 		select * from boards;
 	</select>
 
+<<<<<<< HEAD
+=======
 	<select id="selectAllBoardForPage" parameterType="map"
 		resultMap="boardListDto">
 		select * from boards order by board_id desc limit #{start}, #{listsize};
@@ -58,6 +66,7 @@
 		select count(board_id) from boards
 	</select>
 
+>>>>>>> origin/feature#10
 	<select id="selectBoard" parameterType="int"
 		resultMap="boardListDto">
 		select * from boards where board_id = #{boardId}

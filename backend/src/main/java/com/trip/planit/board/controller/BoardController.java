@@ -71,6 +71,7 @@ public class BoardController {
 		try {
 			boardRegistDto.setPlanKey(planKey);
 
+<<<<<<< HEAD
 			// System.out.println(file.getOriginalFilename());
 			if (!file.isEmpty() && file != null) {
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -102,6 +103,7 @@ public class BoardController {
 			return exceptionHandling(e);
 		}
 	}
+=======
 //	@ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
 //	@PostMapping(value = "/{boardId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 //	public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String boardIdVal, @RequestPart MultipartFile file)
@@ -145,6 +147,7 @@ public class BoardController {
 //			}
 //		}
 //	}
+>>>>>>> origin/feature#10
 
 	// @ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
 	// @PostMapping(value = "/{boardId}", consumes =
