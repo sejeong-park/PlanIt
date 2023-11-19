@@ -54,7 +54,7 @@ public class BoardServiceImpl implements BoardService{
 		int start = currentPage * sizePerPage - sizePerPage;
 		param.put("start", start);
 		param.put("listsize", sizePerPage);
-		System.out.println(start + " " + sizePerPage);
+//		System.out.println(start + " " + sizePerPage);
 		
 		List<BoardListDto> list = boardMapper.selectAllBoardForPage(param);
 		
