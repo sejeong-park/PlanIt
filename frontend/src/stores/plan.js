@@ -9,6 +9,9 @@ import { convertDateFormat, calculateDaysBetweenDates, getAllDatesBetween } from
 export const usePlanStore = defineStore(
     "plan", () =>{
 
+        const planKey = ref("3f54528e-19a2-4f8e-8ce5-92bbf281be48"); // 임의로 이렇게 설정함.
+        // const planKey = ref("87690a6a-32a7-42e7-a175-8fea7e06038a"); // 임의로 이렇게 설정함.
+
         // plan에서 계획을 설정 (plan에서 계획 설정 시 startDate, endDate 등의 정보를 세부 일정 계획 페이지로 전달한다.)
         const tripScheduleInfo = ref();
 
@@ -68,6 +71,7 @@ export const usePlanStore = defineStore(
             addClickedAttractionInfo,
             clickScheduleInfo,
             setClickedActiveDate,
+            planKey,
         }
     },{
         persist : true          // stoarge : sessionStroate를 할 수도 있음
