@@ -10,8 +10,6 @@
 
 ### 요약(Summary)
 
-
 ### 상세 내용(Describe your changes)
-
 
 ### Issue Number or Link
