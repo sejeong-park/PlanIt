@@ -1,11 +1,52 @@
 <script setup>
 import { ref, watch } from "vue";
+import axios from "axios";
+
+const boardRegistDto = ref({});
 
 const title = ref("");
-const content = ref("");
+const contents = ref("");
+const selectedFile = ref(null);
+
+const baseUrl = "http://localhost:/boards";
+const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
+
+const handleFileChange = (event) => {
+  selectedFile.value = event.target.files[0];
+  //   console.log(selectedFile.value)
+};
+
+const uploadPost = async () => {
+  try {
+    const formData = new FormData();
+    boardRegistDto.value = {
+      title: title.value,
+      contents: contents.value,
+    };
+    // console.log(boardRegistDto.value)
+    formData.append(
+      "boardRegistDto",
+      new Blob([JSON.stringify(boardRegistDto.value)], { type: "application/json" })
+    );
+
+    formData.append("file", selectedFile.value);
+
+    // console.log(formData)
+
+    const response = await axios.post(`${baseUrl}/${planKey}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("Post uploaded sucecess ", response.data);
+  } catch (error) {
+    console.error("Error uploading post :", error);
+  }
+};
 
 const updateContent = (event) => {
-  content.value = event.target.innerText;
+  contents.value = event.target.innerText;
   // console.log("content:", content.value);
 };
 
@@ -46,12 +87,7 @@ const closeFileModal = () => {
       data-id="editor-tistory"
       contenteditable="true"
       spellcheck="false"
-      style="
-        overflow-y: hidden;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 50px;
-      "
+      style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px"
       data-mce-style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px;"
       role="textbox"
       aria-multiline="true"
@@ -62,34 +98,25 @@ const closeFileModal = () => {
     </body>
     <div class="content-aside">
       <div class="wrap_btn">
-        <button
-          id="publish-layer-btn"
-          class="btn btn-default"
-          @click="openFileModal"
-        >
-          완료
-        </button>
+        <button id="publish-layer-btn" class="btn btn-default" @click="openFileModal">완료</button>
       </div>
     </div>
     <div v-if="isFileModalOpen" class="file-modal">
       <div class="sc-jHkVzv hrosqC">
-        <div class="sc-bQtKYq fZgivC">
-          <div class="sc-fXEqDS eUikOV">
-            <button
-              class="sc-jWUzzU hhwHgR"
-              style="
-                background-color: #4caf50;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-                border-radius: 4px;
-              "
-            >
-              썸네일 업로드
-            </button>
-          </div>
-        </div>
+        <label
+          for="thumbnail-upload"
+          class="sc-jWUzzU hhwHgR"
+          style="
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+          "
+          >썸네일 업로드</label
+        >
+        <input type="file" id="thumbnail-upload" style="display: none" @change="handleFileChange" />
       </div>
       <button
         @click="closeFileModal"
@@ -114,6 +141,7 @@ const closeFileModal = () => {
           cursor: pointer;
           border-radius: 4px;
         "
+        @click="uploadPost"
       >
         출간하기
       </button>
@@ -134,8 +162,7 @@ const closeFileModal = () => {
     border: none;
     font-size: 30px;
     color: #202020;
-    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic",
-      dotum, sans-serif;
+    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic", dotum, sans-serif;
     resize: none;
     outline: 0 none;
     line-height: 40px;
@@ -158,8 +185,8 @@ const closeFileModal = () => {
   font-size: 14px;
   min-height: 370px;
   max-width: 860px;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    "Apple SD Gothic Neo", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;
