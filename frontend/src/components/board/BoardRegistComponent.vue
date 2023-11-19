@@ -6,7 +6,7 @@ const content = ref("");
 
 const updateContent = (event) => {
   content.value = event.target.innerText;
-  console.log("content:", content.value);
+  // console.log("content:", content.value);
 };
 
 // watch(
@@ -73,6 +73,10 @@ const updateContent = (event) => {
     line-height: 40px;
     overflow: hidden;
     letter-spacing: -0.4px;
+
+    &::placeholder {
+      color: #999999;
+    }
   }
 }
 

@@ -110,9 +110,9 @@ function onPageChange(pg) {
 }
 
 .page-item.active .page-link {
-  background-color: #91caff;
-  color: #fff;
-  border-color: #007bff;
+  background-color: white;
+  color: #a791ff;
+  border: 1px solid #a791ff;
 }
 
 .page-link,
