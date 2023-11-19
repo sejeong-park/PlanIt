@@ -16,11 +16,9 @@
     "ant-design-vue": "^4.0.6",
     "axios": "^1.6.1",
     "pinia": "^2.1.7",
-    "typed.js": "^2.1.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
-    "vuedraggable": "^2.24.3",
-    "vuesax": "^4.0.1-alpha.25"
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
