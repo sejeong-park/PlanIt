@@ -4,7 +4,7 @@
 <mapper namespace="com.trip.planit.user.model.mapper.AuthMapper">
 
     <select id="selectByUser" resultType = "auth">
-        SELECT 8 FROM `refresh-token` WHERE user_id=#{user_id}
+        SELECT * FROM `refresh-token` WHERE user_id=#{user_id}
     </select>
 
     <insert id="insertByAuth" parameterType="auth">

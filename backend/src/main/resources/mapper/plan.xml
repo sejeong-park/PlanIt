@@ -36,8 +36,8 @@
 	 -->
 	
 	<insert id="insertPlan" parameterType="planRegistDto">
-		insert into trip_plans(plan_key, create_user, anonymous_password, start_date, end_date, create_at)
-		values(#{planKey},#{createUser} ,#{anonymousPassword}, #{startDate}, #{endDate}, now()) 
+		insert into trip_plans(plan_key, create_user, anonymous_password, start_date, end_date, create_at, title)
+		values(#{planKey},#{createUser} ,#{anonymousPassword}, #{startDate}, #{endDate}, now(), #{title}) 
 	</insert>
 	
 	<insert id="insertPlanDetail" parameterType="list">

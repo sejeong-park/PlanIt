@@ -16,6 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class PlanRegistDto {
 	private String planKey;
+	private String title;
 	private String createUser;
 	private String anonymousPassword;
 	private Date startDate;

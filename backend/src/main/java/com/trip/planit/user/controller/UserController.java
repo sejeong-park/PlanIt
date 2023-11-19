@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-@Api(tags = {"User 컨트롤러"})
+@Api(tags = { "User 컨트롤러" })
 public class UserController {
 
 	private final UserService userService;
@@ -39,7 +39,6 @@ public class UserController {
 	@Value("${jwt.refreshtoken.expiretime}")
 	private Integer refreshTokenExpireTime; // refresh 토큰 만료 기간
 
-
 	// 로그인
 	@ApiOperation(value = "로그인", notes = "로그인 성공 시 JWT를 반환합니다.")
 	@ApiResponses({
@@ -47,17 +46,17 @@ public class UserController {
 			@ApiResponse(code = 401, message = "로그인 실패")
 	})
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser, HttpServletResponse response) throws Exception{
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser, HttpServletResponse response)
+			throws Exception {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		User validUser = userService.loginUser(requestUser); // 로그인
 
 		// 일치하는 사용자가 없을 경우
-		if (validUser == null ){
+		if (validUser == null) {
 			result.put("message", "아이디 또는 패스워드를 확인해주세요.");
 			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.UNAUTHORIZED);
 		}
-
 
 		// AccessToken과 RefreshToken 발급
 		String accessToken = jwtUtil.createAccessToken(validUser.getUserId()); // id값으로 토큰 생성
@@ -73,7 +72,7 @@ public class UserController {
 		// 이미 발급 받은 refreshToken이 있는 지 확인
 		Auth auth = authService.getRefreshToken(validUser.getUserId());
 
-		if (auth != null){
+		if (auth != null) {
 			auth.setRefreshToken(refreshToken);
 			authService.updateRefreshToken(auth);
 		} else {
@@ -83,10 +82,8 @@ public class UserController {
 
 		// AccessToken은 json으로 전달
 		result.put("accessToken", accessToken);
-		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.CREATED);
+		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CREATED);
 	}
-
-
 
 	// 로그아웃
 	@ApiOperation(value = "로그아웃", notes = "로그아웃을 합니다. (해당 사용자의 refresh token을 삭제합니다.)")
@@ -95,7 +92,7 @@ public class UserController {
 			@ApiResponse(code = 401, message = "로그아웃 실패")
 	})
 	@DeleteMapping("/logout")
-	public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -109,24 +106,21 @@ public class UserController {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 
-		authService.updateRefreshToken(new Auth("userId","")); // 리프레시 토큰 공백으로 업데이트
+		authService.updateRefreshToken(new Auth("userId", "")); // 리프레시 토큰 공백으로 업데이트
 
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
-
 	// 회원가입
 	@ApiOperation(value = "회원가입", notes = "회원가입을 합니다.")
 	@PostMapping("/regist")
-	public ResponseEntity regist(@RequestBody User requestUser) throws Exception{
+	public ResponseEntity regist(@RequestBody User requestUser) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		userService.registUser(requestUser);
 		result.put("message", "회원가입이 완료되었습니다.");
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CREATED);
 	}
-
-
 
 	// 회원 탈퇴
 	@ApiOperation(value = "회원탈퇴", notes = "회원탈퇴를 합니다.")
@@ -145,8 +139,6 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 
-
-
 	// 마이페이지
 	@ApiOperation(value = "마이페이지", notes = "마이페이지를 확인합니다.")
 	@ApiResponses({
@@ -156,7 +148,8 @@ public class UserController {
 	})
 	@AuthRequired // 인증 필요
 	@GetMapping("/mypage")
-	public ResponseEntity<Map<String, Object>> mypage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity<Map<String, Object>> mypage(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		// Authorization에 포함된 accessToken의 userId 가져온다.
@@ -164,8 +157,8 @@ public class UserController {
 		Cookie[] cookieList = request.getCookies();
 		String requestRefreshToken = ""; // 리프레시 토큰
 
-		for (Cookie cookie : cookieList){
-			if (cookie.getName().equals("refreshToken")){
+		for (Cookie cookie : cookieList) {
+			if (cookie.getName().equals("refreshToken")) {
 				requestRefreshToken = cookie.getValue();
 			}
 		}
@@ -173,7 +166,7 @@ public class UserController {
 		// 요청으로 들어온 refreshToken이 database의 refreshToken과 일치하는 지 확인
 		String dbRefreshToken = authService.getRefreshToken(userId).getRefreshToken();
 
-		if (! requestRefreshToken.equals(dbRefreshToken)){
+		if (!requestRefreshToken.equals(dbRefreshToken)) {
 			// 쿠키 발급
 
 			// RefreshToken은 HttpOnly Cookie로 발급
@@ -194,9 +187,8 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
-
 	// 회원정보 수정
-	@ApiOperation(value = "회원정보를 수정합니다.",notes = "마이페이지에서 회원정보를 수정합니다.")
+	@ApiOperation(value = "회원정보를 수정합니다.", notes = "마이페이지에서 회원정보를 수정합니다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "사용자 정보 수정 성공"),
 			@ApiResponse(code = 403, message = "권한 없음"),
@@ -204,7 +196,8 @@ public class UserController {
 	})
 	@AuthRequired // 인증 필요
 	@PutMapping("/modify")
-	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> requestMap, HttpServletRequest request) throws Exception{
+	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> requestMap,
+			HttpServletRequest request) throws Exception {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -215,7 +208,7 @@ public class UserController {
 		boolean isUpdated = userService.modify(requestMap);
 
 		// 검증
-		if (!isUpdated){
+		if (!isUpdated) {
 			result.put("message", "일치하는 사용자가 없습니다.");
 			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.NOT_FOUND);
 		}

@@ -24,8 +24,8 @@
 
 	<!--회원 가입을 한다.-->
 	<insert id = "insertByUser" parameterType="user">
-		INSERT INTO users(user_id, user_password, user_name)
-		VALUES (#{userId}, #{userPassword}, #{userName})
+		INSERT INTO users(user_id, user_password, user_name, email)
+		VALUES (#{userId}, #{userPassword}, #{userName}, #{email})
 	</insert>
 
 	<!--회원 탈퇴를 한다.-->
