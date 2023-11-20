@@ -94,7 +94,7 @@ const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포�
 .right-side {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* 스크롤을 위해 100vh로 고정 */
+    height: 100%; /* 스크롤을 위해 100vh로 고정 */
 }
 
 .shadow {
