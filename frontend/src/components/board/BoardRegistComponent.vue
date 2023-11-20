@@ -8,12 +8,27 @@ const title = ref("");
 const contents = ref("");
 const selectedFile = ref(null);
 
+const file = ref(null);
+const isModalOpen = ref(false);
+
 const baseUrl = "http://localhost:/boards";
 const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
 
 const handleFileChange = (event) => {
   selectedFile.value = event.target.files[0];
-  //   console.log(selectedFile.value)
+  file.value = selectedFile.value;
+  // console.log(event.target.files[0]);
+
+  // 이미지 파일 미리보기 생성
+  if (selectedFile.value.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      file.value = reader.result;
+    };
+    reader.readAsDataURL(selectedFile.value);
+  } else {
+    file.value = null; // 이미지가 아닌 경우 처리
+  }
 };
 
 const uploadPost = async () => {
@@ -39,7 +54,7 @@ const uploadPost = async () => {
       },
     });
 
-    console.log("Post uploaded sucecess ", response.data);
+    // console.log("Post uploaded sucecess ", response.data);
   } catch (error) {
     console.error("Error uploading post :", error);
   }
@@ -62,10 +77,12 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
+  isModalOpen.value = true;
 };
 
 const closeFileModal = () => {
   isFileModalOpen.value = false;
+  isModalOpen.value = false;
 };
 </script>
 
@@ -96,14 +113,22 @@ const closeFileModal = () => {
     >
       <p data-ke-size="size16"><br /></p>
     </body>
+
     <div class="content-aside">
-      <div class="wrap_btn">
+      <div class="wrap_btn" v-if="isModalOpen === false">
         <button id="publish-layer-btn" class="btn btn-default" @click="openFileModal">완료</button>
       </div>
     </div>
+
     <div v-if="isFileModalOpen" class="file-modal">
-      <div id="thumbnail">
-        <p>No Thumbnail selected!</p>
+      <div class="modal-title">
+        <p>{{ title }}</p>
+      </div>
+      <div id="thumbnail" v-if="file === null" class="no-files-container">
+        선택된 썸네일이 없습니다.
+      </div>
+      <div v-if="file !== null" class="yes-files-container">
+        <img :src="file" alt="Selected File" class="preview-image" />
       </div>
       <div class="sc-jHkVzv hrosqC">
         <label
@@ -119,7 +144,13 @@ const closeFileModal = () => {
           "
           >썸네일 업로드</label
         >
-        <input type="file" id="thumbnail-upload" style="display: none" @change="handleFileChange" />
+        <input
+          type="file"
+          accept="image/*"
+          id="thumbnail-upload"
+          style="display: none"
+          @change="handleFileChange"
+        />
       </div>
       <button
         @click="closeFileModal"
@@ -153,6 +184,9 @@ const closeFileModal = () => {
 </template>
 
 <style lang="scss" scoped>
+.modal-title > p {
+  font-weight: 900;
+}
 .post-title {
   width: 860px;
   margin: 35px auto 17px;
@@ -248,5 +282,19 @@ body {
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 2;
+}
+
+.no-files-container {
+  margin-bottom: 5rem; /* Adjust the margin as needed to create spacing */
+}
+
+.yes-files-container {
+  margin-bottom: 5rem; /* Adjust the margin as needed to create spacing */
+
+  .preview-image {
+    max-width: 10rem; /* 이미지의 최대 너비를 부모 요소에 맞게 설정 */
+    max-height: 10rem; /* 이미지의 최대 높이를 부모 요소에 맞게 설정 */
+    border-radius: 10px;
+  }
 }
 </style>
