@@ -15,7 +15,7 @@ const file = ref(null);
 const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
-const planKey = "87690a6a-32a7-42e7-a175-8fea7e06038a";
+const planKey = "277d11f6-e153-41fd-acc8-d0391da4caab";
 const board = ref({});
 
 const handleFileChange = (event) => {
@@ -42,7 +42,8 @@ const uploadPost = async () => {
       title: title.value,
       contents: contents.value,
     };
-    // console.log(boardRegistDto.value)
+    // console.log(boardRegistDto.value
+    // 제목과 컨텐츠는 json 형태로
     formData.append(
       "boardRegistDto",
       new Blob([JSON.stringify(boardRegistDto.value)], {
@@ -54,46 +55,28 @@ const uploadPost = async () => {
 
     // console.log(formData)
 
-    const response = await axios.post(`${baseUrl}/${planKey}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    // response.data를 이용하여 board 객체 생성
-    board.value = {
-      boardId: response.data.boardId,
-      planKey: response.data.planKey,
-      title: response.data.title,
-      createUser: response.data.createUser,
-      createAt: response.data.createAt,
-      hits: response.data.hits,
-      contents: response.data.contents,
-      // 필요한 다른 속성들도 추가
-    };
-
-    // console.log("보드 밸류 : ", board.value);
-
-    // 업로드 성공 후 변수 초기화
-    title.value = "";
-    contents.value = "";
-    selectedFile.value = null;
-    // console.log("게시글 등록 시 넘겨 받는 데이터 :", response.data);
-
-    router.replace({
-      name: "board-detail",
-      state: {
-        board: {
-          boardId: board.value.boardId,
-          planKey: board.value.planKey,
-          title: board.value.title,
-          createUser: board.value.createUser,
-          createAt: board.value.createAt,
-          hits: board.value.hits,
-          contents: board.value.contents,
+    // 파일은 multipart 타입으로
+    const responsePost = await axios
+      .post(`${baseUrl}/${planKey}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-      },
-    });
+      })
+      .then((response) => {
+        // console.log(response);
+        // 업로드 성공 후 변수 초기화
+        title.value = "";
+        contents.value = "";
+        selectedFile.value = null;
+        const boardId = response.data.boardId;
+        router.replace({
+          name: "board-detail",
+          params: { boardId: response.data.boardId },
+          state: {
+            boardId: boardId,
+          },
+        });
+      });
 
     // console.log(
     //   "타이틀, 컨텐츠, 파일 등록 초기화 체크 : ",

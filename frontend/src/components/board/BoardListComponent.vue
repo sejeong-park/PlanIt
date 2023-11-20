@@ -89,7 +89,14 @@ const onPageChange = (val) => {
   <a-row class="card-container">
     <div v-for="article in articles" :key="article.boardId" class="card">
       <div v-if="article.base64Image !== null">
-        <router-link to="#"
+        <router-link
+          :to="{
+            name: 'board-detail',
+            params: { boardId: article.boardId },
+            state: {
+              boardId: article.boardId,
+            },
+          }"
           ><img
             :src="'data:image/jpeg;base64,' + article.base64Image"
             alt="Card Image"
@@ -97,14 +104,28 @@ const onPageChange = (val) => {
         /></router-link>
       </div>
       <div v-if="article.base64Image === null">
-        <router-link to="#"
+        <router-link
+          :to="{
+            name: 'board-detail',
+            params: { boardId: article.boardId },
+            state: {
+              boardId: article.boardId,
+            },
+          }"
           ><img
             src="@\assets\img\trip.jpg"
             alt="Card Image"
             class="hover-opacity"
         /></router-link>
       </div>
-      <router-link to="#"
+      <router-link
+        :to="{
+          name: 'board-detail',
+          params: { boardId: article.boardId },
+          state: {
+            boardId: article.boardId,
+          },
+        }"
         ><p>{{ article.title }}</p>
       </router-link>
     </div>

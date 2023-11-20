@@ -70,11 +70,10 @@ const router = createRouter({
             import("@/components/board/BoardRegistComponent.vue"),
         },
         {
-          path: "detail",
+          path: "detail/:boardId",
           name: "board-detail",
           component: () =>
             import("@/components/board/BoardDetailComponent.vue"),
-          // props: true,
         },
         {
           path: "thumbnailtest",
