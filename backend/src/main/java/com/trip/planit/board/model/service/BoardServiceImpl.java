@@ -27,7 +27,22 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	@Transactional
 	public int writeBoard(BoardRegistDto boardRegistDto) throws SQLException {
+//		System.out.println("글 입력 전 dto : " + boardRegistDto);
 		boardMapper.insertBoard(boardRegistDto);
+//		System.out.println("글 입력 후 dto : " + boardRegistDto);
+		FileInfoDto fileInfo = boardRegistDto.getFileInfoDto();
+		if(fileInfo != null) {
+//			System.out.println(boardRegistDto.getFileInfoDto());
+			try {
+				FileInfoDto fileInfoDto = boardRegistDto.getFileInfoDto();
+				fileInfoDto.setBoardId(boardRegistDto.getBoardId());
+				boardMapper.insertFile(boardRegistDto.getFileInfoDto());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return boardMapper.selectBoardId();
 	}
 
@@ -39,7 +54,7 @@ public class BoardServiceImpl implements BoardService{
 		int start = currentPage * sizePerPage - sizePerPage;
 		param.put("start", start);
 		param.put("listsize", sizePerPage);
-		System.out.println(start + " " + sizePerPage);
+//		System.out.println(start + " " + sizePerPage);
 		
 		List<BoardListDto> list = boardMapper.selectAllBoardForPage(param);
 		

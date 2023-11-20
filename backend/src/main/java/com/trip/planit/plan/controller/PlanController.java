@@ -145,6 +145,7 @@ public class PlanController {
 	public ResponseEntity<?> planDetail(@PathVariable("planKey") String planKey){
 		try {
 			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			
 			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);

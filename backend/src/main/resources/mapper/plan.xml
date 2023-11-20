@@ -14,6 +14,7 @@
 	</resultMap>
 	
 	<resultMap type="planDetailDto" id="planDetailDto">
+		<result column="detail_id" property="detailId"/>
 		<result column="plan_key" property="planKey"/>
 		<result column="plan_date" property="planDate"/>
 		<result column="sequence" property="sequence"/>
