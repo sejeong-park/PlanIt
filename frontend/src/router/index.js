@@ -66,18 +66,20 @@ const router = createRouter({
         {
           path: "regist",
           name: "board-regist",
-          component: () => import("@/components/board/BoardRegistComponent.vue"),
+          component: () =>
+            import("@/components/board/BoardRegistComponent.vue"),
         },
         {
           path: "detail",
           name: "board-detail",
-          component: () => import("@/components/board/BoardDetailComponent.vue"),
+          component: () =>
+            import("@/components/board/BoardDetailComponent.vue"),
           // props: true,
         },
         {
-          path: "thumbnail",
-          name: "thumbnail",
-          component: () => import("@/components/board/BoardThumbnailComponent.vue"),
+          path: "thumbnailtest",
+          name: "board-thumbnail-test",
+          component: () => import("@/components/board/ThumbnailTest.vue"),
         },
       ],
     },

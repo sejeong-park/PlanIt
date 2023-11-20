@@ -3,15 +3,21 @@ package com.trip.planit.board.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -53,6 +59,7 @@ public class BoardController {
 	@Value("${file.path}")
 	private String uploadPath;
 
+	
 	/**
 	 * 게시글 등록 API 넘겨 받는 값 : planKey, 게시글 title, create_user(유저
 	 * 이름?),create_at,contents, hits 전체 게시글 리스트로 이동할 것이므로 게시글 전체 리스트를 반환
@@ -74,8 +81,8 @@ public class BoardController {
 			// System.out.println(file.getOriginalFilename());
 			if (!file.isEmpty() && file != null) {
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = uploadPath + File.separator + today;
-				File folder = new File(saveFolder);
+//				String saveFolder = uploadPath + File.separator + today;
+				File folder = new File(uploadPath);
 				if (!folder.exists())
 					folder.mkdirs();
 				FileInfoDto fileInfoDto = new FileInfoDto();
@@ -150,23 +157,102 @@ public class BoardController {
 	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
 	 * 
 	 * @return
+	 * @throws Exception 
+	 */
+//	@ApiOperation(value = "전체 게시글을 반환합니다..", notes = "게시글 전체 리스트 목록 화면")
+//	@GetMapping("/")
+//	public ResponseEntity<?> list(
+//			@RequestParam @ApiParam(value="게시글을 얻기위한 부가정보", required = true) Map<String, String> map) throws Exception {
+//		try {
+////			System.out.println(map.toString());
+//			String path ="C:\\board\\upload\\";
+//			String folder = "";
+//			BoardListPageDto boardListPageDtos = boardService.findAllBoardForPage(map);
+////			System.out.println(boardListPageDtos);
+//			HttpHeaders header = new HttpHeaders();
+//			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+//
+//			List<BoardListDto> boardListDtos = new ArrayList<BoardListDto>(); 
+//			for (BoardListDto boardListDto : boardListPageDtos.getArticles()) {
+//				int boardId = boardListDto.getBoardId();
+//				String fileName = boardService.findFileName(boardId);
+//				Resource resource = new FileSystemResource(path + folder + fileName);
+//				boardListDto.setResource(resource);
+//				boardListDtos.add(boardListDto);
+//				Path filePath = null;
+//				try{
+//					filePath = Paths.get(path + folder + fileName);
+//					header.add("Content-type", Files.probeContentType(filePath));
+//					System.out.println("header : " + header);
+//				}catch(IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			boardListPageDtos.setArticles(boardListDtos);
+//			
+//			return ResponseEntity.ok().headers(header).body(boardListPageDtos);
+//		} catch (SQLException e) {
+//			return exceptionHandling(e);
+//		}
+//	}
+	/**
+	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
+	 * 
+	 * @return
+	 * @throws Exception 
 	 */
 	@ApiOperation(value = "전체 게시글을 반환합니다..", notes = "게시글 전체 리스트 목록 화면")
 	@GetMapping("/")
 	public ResponseEntity<?> list(
-			@RequestParam @ApiParam(value="게시글을 얻기위한 부가정보", required = true) Map<String, String> map) {
-		try {
-//			System.out.println(map.toString());
-			BoardListPageDto boardListPageDtos = boardService.findAllBoardForPage(map);
-//			System.out.println(boardListPageDtos);
-			HttpHeaders header = new HttpHeaders();
-			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-			
-			return ResponseEntity.ok().headers(header).body(boardListPageDtos);
-		} catch (SQLException e) {
-			return exceptionHandling(e);
-		}
+	        @RequestParam @ApiParam(value="게시글을 얻기위한 부가정보", required = true) Map<String, String> map) throws Exception {
+	    try {
+	        String path ="C:\\board\\upload\\";
+	        String folder = "";
+	        BoardListPageDto boardListPageDtos = boardService.findAllBoardForPage(map);
+
+	        List<BoardListDto> boardListDtos = new ArrayList<BoardListDto>(); 
+	        for (BoardListDto boardListDto : boardListPageDtos.getArticles()) {
+	            int boardId = boardListDto.getBoardId();
+	            String fileName = boardService.findFileName(boardId);
+	            // Check if fileName is null, set it to an empty string
+	            Path filePath = Paths.get(path + folder + fileName);
+	            // 이미지 파일을 Base64로 인코딩하여 문자열로 변환
+	            // BoardListDto에 Base64 인코딩된 이미지 데이터 추가
+	            // 등록된 썸네일이 없다면 null을 반환해준다.
+	            if(fileName != null) {
+	            	String base64Image = Base64.getEncoder().encodeToString(Files.readAllBytes(filePath));
+	            	boardListDto.setBase64Image(base64Image);	
+	            }
+	            boardListDtos.add(boardListDto);
+	        }
+
+	        boardListPageDtos.setArticles(boardListDtos);
+	        return ResponseEntity.ok(boardListPageDtos);
+	    } catch (SQLException | IOException e) {
+	        return exceptionHandling(e);
+	    }
 	}
+	
+//	@ApiOperation(value = "디스플레이.")
+//	@GetMapping("/display")
+//	public ResponseEntity<Resource> display(@RequestParam("filename") String filename) {
+//		String path = "C:\\board\\upload\\";
+//		String folder = "";
+//		Resource resource = new FileSystemResource(path + folder + filename);
+//		if(!resource.exists()) 
+//			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+//		HttpHeaders header = new HttpHeaders();
+//		Path filePath = null;
+//		try{
+//			filePath = Paths.get(path + folder + filename);
+//			header.add("Content-type", Files.probeContentType(filePath));
+////			System.out.println("header : " + header);
+//		}catch(IOException e) {
+//			e.printStackTrace();
+//		}
+////		System.out.println("리소스 : " + resource);
+//		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+//	}
 
 	/**
 	 * 선택한 게시글을 조회합니다.

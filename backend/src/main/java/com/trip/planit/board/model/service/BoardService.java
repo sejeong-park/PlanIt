@@ -13,6 +13,7 @@ import com.trip.planit.board.model.dto.FileInfoDto;
 public interface BoardService {
 	int writeBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	void registFile(FileInfoDto fileInfoDto) throws Exception;
+	String findFileName(int boardId) throws Exception;
 	BoardListPageDto findAllBoardForPage(Map<String, String> map) throws SQLException;
 	List<BoardListDto> findAllBoard() throws SQLException;
 	BoardListDto findBoard(int boardId) throws SQLException;

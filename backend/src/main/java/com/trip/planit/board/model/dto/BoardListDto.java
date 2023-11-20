@@ -2,6 +2,8 @@ package com.trip.planit.board.model.dto;
 
 import java.sql.Timestamp;
 
+import org.springframework.core.io.Resource;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
@@ -24,4 +26,6 @@ public class BoardListDto {
 	private Timestamp updateAt;
 	private String contents;
 	private int hits;
+//	private Resource resource;
+	  private String base64Image;
 }

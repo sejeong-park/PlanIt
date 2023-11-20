@@ -72,7 +72,7 @@ const getArticleList = () => {
 };
 // 페이지 이동할 때 사용되는 메서드
 const onPageChange = (val) => {
-  console.log(val + "번 페이지로 이동 준비 끝!!!");
+  // console.log(val + "번 페이지로 이동 준비 끝!!!");
   // 클릭한 페이지 정보를 다시 받고
   currentPage.value = val;
   param.value.pgno = val;
@@ -88,12 +88,22 @@ const onPageChange = (val) => {
 
   <a-row class="card-container">
     <div v-for="article in articles" :key="article.boardId" class="card">
-      <router-link to="#"
-        ><img
-          src="@\assets\img\trip.jpg"
-          alt="Card Image"
-          class="hover-opacity"
-      /></router-link>
+      <div v-if="article.base64Image !== null">
+        <router-link to="#"
+          ><img
+            :src="'data:image/jpeg;base64,' + article.base64Image"
+            alt="Card Image"
+            class="hover-opacity"
+        /></router-link>
+      </div>
+      <div v-if="article.base64Image === null">
+        <router-link to="#"
+          ><img
+            src="@\assets\img\trip.jpg"
+            alt="Card Image"
+            class="hover-opacity"
+        /></router-link>
+      </div>
       <router-link to="#"
         ><p>{{ article.title }}</p>
       </router-link>
