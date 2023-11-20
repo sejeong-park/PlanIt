@@ -14,6 +14,11 @@ const router = createRouter({
       path: '/plans',
       name: 'plans',
       component : PlanView
+    },{
+      // 데이터 결과 View 만들기 위해 라우터 먼저 테스트
+      path : '/result',
+      name : 'result',
+      component : () => import("@/views/TripResultView.vue")
     },
     {
       // 데이터까지 연결하면, {plan-key}로 라우터 변경할 예정

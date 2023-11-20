@@ -3,10 +3,18 @@ import KakaoMap from '@/components/Trip/KakaoMap.vue';
 import SearchDrawerItem from '@/components/Trip/SearchDrawerItem.vue';
 import PlanDetail from "@/components/Trip/PlanDetail.vue"
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 // drawer를 여는 함수
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
 const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
+
+// 컴포넌트에 존재하는 저장버튼을 클릭했을 시 View로 돌아온다.
+const router = useRouter();
+function onSaved() {
+    console.log("저장저장저장");
+    router.push({name : 'result'})
+}
 
 </script>
 <template>
@@ -48,7 +56,7 @@ const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포�
         </a-col>
         <a-col class="right-side" :span="5">
             <!--우측 계획-->
-            <PlanDetail/>
+            <PlanDetail @save-plan = 'onSaved'/>
         </a-col>
     </a-row>
 </template>
