@@ -1,6 +1,9 @@
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const boardRegistDto = ref({});
 
@@ -13,6 +16,7 @@ const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
 const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
+const board = ref({});
 
 const handleFileChange = (event) => {
   selectedFile.value = event.target.files[0];
@@ -53,6 +57,50 @@ const uploadPost = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
+
+    // response.data를 이용하여 board 객체 생성
+    board.value = {
+      boardId: response.data.boardId,
+      planKey: response.data.planKey,
+      title: response.data.title,
+      createUser: response.data.createUser,
+      createAt: response.data.createAt,
+      hits: response.data.hits,
+      contents: response.data.contents,
+      // 필요한 다른 속성들도 추가
+    };
+
+    // console.log("보드 밸류 : ", board.value);
+
+    // 업로드 성공 후 변수 초기화
+    title.value = "";
+    contents.value = "";
+    selectedFile.value = null;
+    // console.log("게시글 등록 시 넘겨 받는 데이터 :", response.data);
+
+    router.replace({
+      name: "board-detail",
+      state: {
+        board: {
+          boardId: board.value.boardId,
+          planKey: board.value.planKey,
+          title: board.value.title,
+          createUser: board.value.createUser,
+          createAt: board.value.createAt,
+          hits: board.value.hits,
+          contents: board.value.contents,
+        },
+      },
+    });
+
+    // console.log(
+    //   "타이틀, 컨텐츠, 파일 등록 초기화 체크 : ",
+    //   title.value,
+    //   contents.value,
+    //   selectedFile.value
+    // );
+
+    // router.push({name:''})
 
     // console.log("Post uploaded sucecess ", response.data);
   } catch (error) {
@@ -292,8 +340,8 @@ body {
   margin-bottom: 5rem; /* Adjust the margin as needed to create spacing */
 
   .preview-image {
-    max-width: 10rem; /* 이미지의 최대 너비를 부모 요소에 맞게 설정 */
-    max-height: 10rem; /* 이미지의 최대 높이를 부모 요소에 맞게 설정 */
+    max-width: 15rem; /* 이미지의 최대 너비를 부모 요소에 맞게 설정 */
+    max-height: 20rem; /* 이미지의 최대 높이를 부모 요소에 맞게 설정 */
     border-radius: 10px;
   }
 }

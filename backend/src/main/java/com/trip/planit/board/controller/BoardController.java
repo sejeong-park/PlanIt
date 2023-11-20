@@ -96,7 +96,7 @@ public class BoardController {
 
 			BoardListDto board = boardService.findBoard(boardId);
 
-//			System.out.println(board);
+			System.out.println(board);
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 import MainView from "@/views/MainView.vue";
 import PlanView from "@/views/PlanView.vue";
 
@@ -6,20 +6,20 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'main',
-      component: MainView
+      path: "/",
+      name: "main",
+      component: MainView,
     },
     {
-      path: '/plans',
-      name: 'plans',
-      component : PlanView
+      path: "/plans",
+      name: "plans",
+      component: PlanView,
     },
     {
       // 데이터까지 연결하면, {plan-key}로 라우터 변경할 예정
-      path: '/trip',
-      name : 'trip',
-      component : () => import("@/views/TripView.vue")
+      path: "/trip",
+      name: "trip",
+      component: () => import("@/views/TripView.vue"),
     },
     {
       path: "/modal",
@@ -66,18 +66,22 @@ const router = createRouter({
         {
           path: "regist",
           name: "board-regist",
-          component: () =>
-            import("@/components/board/BoardRegistComponent.vue"),
+          component: () => import("@/components/board/BoardRegistComponent.vue"),
+        },
+        {
+          path: "detail",
+          name: "board-detail",
+          component: () => import("@/components/board/BoardDetailComponent.vue"),
+          // props: true,
         },
         {
           path: "thumbnail",
           name: "thumbnail",
-          component: () =>
-            import("@/components/board/BoardThumbnailComponent.vue"),
+          component: () => import("@/components/board/BoardThumbnailComponent.vue"),
         },
       ],
     },
-  ]
-})
+  ],
+});
 
-export default router
+export default router;

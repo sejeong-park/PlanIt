@@ -1,6 +1,5 @@
 <script setup>
 import { RouterView } from "vue-router";
-import HeaderComponent from "@/components/layout/HeaderComponent.vue";
 import TheHeadingNavBar from "@/components/layout/TheHeadingNavBar.vue";
 </script>
 
