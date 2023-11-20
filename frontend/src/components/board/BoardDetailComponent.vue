@@ -10,26 +10,29 @@ const hits = ref("");
 const contents = ref("");
 
 onMounted(() => {
-  // console.log(board);
-  (boardId.value = board.boardId),
-    (planKey.value = board.planKey),
-    (title.value = board.title),
-    (createAt.value = board.createAt),
-    (hits.value = board.hits),
-    (contents.value = board.contents);
+  console.log(board);
+  if (board) {
+    // console.log("ddd");
+    (boardId.value = board.boardId),
+      (planKey.value = board.planKey),
+      (title.value = board.title),
+      (createAt.value = board.createAt),
+      (hits.value = board.hits),
+      (contents.value = board.contents);
+  }
 });
 // console.log(history.state);
 </script>
 
 <template>
-  {{ boardId }}
-  {{ title }}
-  {{ contents }}
-  {{ hits }}
-  {{ createAt }}
-  {{ planKey }}
-  <!-- {{ board.boardId }}
-  {{ board.title }} -->
+  <div v-if="board">
+    {{ boardId }}
+    {{ title }}
+    {{ contents }}
+    {{ hits }}
+    {{ createAt }}
+    {{ planKey }}
+  </div>
 </template>
 
 <style scoped></style>
