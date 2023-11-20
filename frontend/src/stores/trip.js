@@ -21,7 +21,6 @@ export const useTripSearchStore = defineStore(
 
         // kakaomap에 표시할 전체 데이터
         const setTotalSearchLocation = (data) => {
-            // console.log("search Data : " , data);
             searchLocationList.value = data; 
         };
 

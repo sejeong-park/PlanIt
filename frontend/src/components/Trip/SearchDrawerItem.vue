@@ -4,6 +4,7 @@ import { listTripAttraction } from "@/api/tripAttraction";
 import {defineProps, ref} from 'vue'; 
 import {useTripSearchStore} from '@/stores/trip';
 import {usePlanStore} from '@/stores/plan';
+import InfoModal from '@/components/Trip/item/InfoModal.vue';
 import {InfoCircleOutlined, PlusCircleOutlined} from '@ant-design/icons-vue';
 
 // 부모 컴포넌트로부터 버튼의 상태를 전달 받기 위함
@@ -73,10 +74,16 @@ const addAttractionToDail = (data) => {
 }
 
 const infoOpen = ref(false); // 열리지 않은 상태
+const infoData = ref();
 // 디테일한 여행지 정보를 보여준다.
-const showDetailInfoModal = (data) => {
+const showDetailInfoModal = (data, index) => {
+    console.log("선택한 info 버튼의 index : ",  index);
     infoOpen.value = true; // 열린 상태로 변경
-    console.log("디테일 정보 열림");
+    tripSearchStore.setFocusLocation(data, index);
+    infoData.value = {
+        index : index,
+        data : data
+    }
 }
 
 const handleOk = e => {
@@ -158,13 +165,11 @@ const handleOk = e => {
                                         <div class = "card-btn">
                                             <!--상세 정보를 보여주는 모달-->
                                             <a-tooltip title="상세 정보 보기">
-                                                <a-button class = "info-btn" type="default" shape="circle" size="20" @click = "showDetailInfoModal(item)">
+                                                <a-button class = "info-btn" type="default" shape="circle" size="20" @click.stop.prevent = "showDetailInfoModal(item, index)">
                                                     <InfoCircleOutlined />
                                                 </a-button>
                                             </a-tooltip>
-
-                                            
-
+                                            <InfoModal v-if="infoOpen" @click="infoOpen = false" :infoData = infoData ></InfoModal>
                                             <!--상세 일정에 등록하는 버튼-->
                                             <a-tooltip title="일정에 추가하기">
                                                 <a-button class = "add-btn" type="primary" shape="circle" size="20" @click = "addAttractionToDail(item)">
@@ -181,7 +186,6 @@ const handleOk = e => {
         </a-drawer>
 </template>
 <style scoped lang="scss">
-
 
 .ant-input { 
     border : 1.5px solid var(--planit-primary);
