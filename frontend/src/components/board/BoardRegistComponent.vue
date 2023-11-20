@@ -102,6 +102,9 @@ const closeFileModal = () => {
       </div>
     </div>
     <div v-if="isFileModalOpen" class="file-modal">
+      <div id="thumbnail">
+        <p>No Thumbnail selected!</p>
+      </div>
       <div class="sc-jHkVzv hrosqC">
         <label
           for="thumbnail-upload"
