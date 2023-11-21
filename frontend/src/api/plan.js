@@ -2,17 +2,25 @@ import {planitAxios} from "@/util/http-commons";
 
 const local = planitAxios();
 
-// ( Plan 버튼 실행 시 ) plan-key를 리턴 받는다.
+// plan-key를 리턴 받는다.
 function makePlanKey(requestData, success, fail){
     local.post("/plans/", requestData).then(success).catch(fail);
 }
 
-// ( 여행 상세 일정 생성 )
-function makeDetailSchedule(planKey, success, fail) {
-    local.post("/plans/${planKey}").then(success).catch(fail);
+// 생성한 plan 에 대해 받는다.
+function getPlanInfo(planKey, success, fail) {
+    local.get(`/plans/${planKey}`).then(success).catch(fail);
 }
+
+// ( 여행 상세 일정 생성 )
+function makeTripSchedule(planKey, success, fail) {
+    local.post(`/plans/${planKey}`).then(success).catch(fail);
+}
+
+
 
 export {
     makePlanKey,
-    makeDetailSchedule
+    getPlanInfo,
+    makeTripSchedule
 }

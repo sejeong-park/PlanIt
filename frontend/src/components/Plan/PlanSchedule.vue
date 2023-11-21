@@ -26,7 +26,7 @@ const makeMyPlan = () => {
   makePlanKey(
   planRegistDto
   , (response) => {
-    planStore.planKey.value = response.data; // pinia에 저장
+    planStore.planKey = response.data; // pinia에 저장
     router.push({name : 'planning'}); // 결과 응답 받았을 경우, planning 페이지로 이동
   } , (error) => {
     if (error){

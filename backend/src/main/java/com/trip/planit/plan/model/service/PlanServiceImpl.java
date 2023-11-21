@@ -40,6 +40,11 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
+	public PlanListDto findPlan(String planKey) throws SQLException {
+		return planMapper.selectPlan(planKey);
+	}
+
+	@Override
 	public void deletePlan(String planKey) throws SQLException {
 		planMapper.deletePlan(planKey);
 	}

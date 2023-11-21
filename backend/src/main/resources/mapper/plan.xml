@@ -54,6 +54,10 @@
 	<select id="selectAllPlan" resultMap="planListDto">
 		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans;
 	</select>
+
+	<select id = "selectPlan" resultMap = "planListDto">
+		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans where plan_key = #{planKey};
+	</select>
 	
 	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">
 		select * from trip_details where plan_key = #{planKey}
