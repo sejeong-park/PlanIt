@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,7 +66,6 @@ public class BoardController {
 	 * 게시글 등록 API 넘겨 받는 값 : planKey, 게시글 title, create_user(유저
 	 * 이름?),create_at,contents, hits 전체 게시글 리스트로 이동할 것이므로 게시글 전체 리스트를 반환
 	 * 반환 : 게시글 생성시 자동으로 생성된 boardId
-	 * 
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalStateException
@@ -109,95 +110,10 @@ public class BoardController {
 			return exceptionHandling(e);
 		}
 	}
-//	@ApiOperation(value = "썸네일 등록.", notes = "썸네일 등록")
-//	@PostMapping(value = "/{boardId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	public ResponseEntity<?> registThumbnail(@PathVariable("boardId") String boardIdVal, @RequestPart MultipartFile file)
-//			{
-//		if (!file.isEmpty() && file != null) {
-//			try {
-//				int boardId = Integer.parseInt(boardIdVal);
-//				BoardListDto board = boardService.findBoard(boardId); // 해당 게시글 상세 정보를 조회해서 userId를 가져온다.
-//				
-//				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-//				String saveFolder = uploadPath + File.separator + today;
-//				File folder = new File(saveFolder);
-//				if (!folder.exists())
-//					folder.mkdirs();
-//				FileInfoDto fileInfoDto = new FileInfoDto();
-//				String originalFileName = file.getOriginalFilename();
-//				if (!originalFileName.isEmpty()) {
-//					String saveFileName = UUID.randomUUID().toString()
-//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-//					fileInfoDto.setSaveFolder(today);
-//					fileInfoDto.setOriginalFile(originalFileName);
-//					fileInfoDto.setSaveFile(saveFileName);
-//					file.transferTo(new File(folder, saveFileName));
-//				}
-//				
-//				fileInfoDto.setUserId(board.getCreateUser());
-//				fileInfoDto.setBoardId(boardId);
-//				boardService.registFile(fileInfoDto);
-//				
-//				List<BoardListDto> boardListDtos = boardService.findAllBoard();
-//				return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
-//			} catch (Exception e) {
-//				return exceptionHandling(e);
-//			}
-//		}else {
-//			try {
-//				List<BoardListDto> boardListDtos = boardService.findAllBoard();
-//				return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
-//			} catch (Exception e) {
-//				return exceptionHandling(e);
-//			}
-//		}
-//	}
+
 
 	/**
 	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
-	 * 
-	 * @return
-	 * @throws Exception 
-	 */
-//	@ApiOperation(value = "전체 게시글을 반환합니다..", notes = "게시글 전체 리스트 목록 화면")
-//	@GetMapping("/")
-//	public ResponseEntity<?> list(
-//			@RequestParam @ApiParam(value="게시글을 얻기위한 부가정보", required = true) Map<String, String> map) throws Exception {
-//		try {
-////			System.out.println(map.toString());
-//			String path ="C:\\board\\upload\\";
-//			String folder = "";
-//			BoardListPageDto boardListPageDtos = boardService.findAllBoardForPage(map);
-////			System.out.println(boardListPageDtos);
-//			HttpHeaders header = new HttpHeaders();
-//			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-//
-//			List<BoardListDto> boardListDtos = new ArrayList<BoardListDto>(); 
-//			for (BoardListDto boardListDto : boardListPageDtos.getArticles()) {
-//				int boardId = boardListDto.getBoardId();
-//				String fileName = boardService.findFileName(boardId);
-//				Resource resource = new FileSystemResource(path + folder + fileName);
-//				boardListDto.setResource(resource);
-//				boardListDtos.add(boardListDto);
-//				Path filePath = null;
-//				try{
-//					filePath = Paths.get(path + folder + fileName);
-//					header.add("Content-type", Files.probeContentType(filePath));
-//					System.out.println("header : " + header);
-//				}catch(IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			boardListPageDtos.setArticles(boardListDtos);
-//			
-//			return ResponseEntity.ok().headers(header).body(boardListPageDtos);
-//		} catch (SQLException e) {
-//			return exceptionHandling(e);
-//		}
-//	}
-	/**
-	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
-	 * 
 	 * @return
 	 * @throws Exception 
 	 */
@@ -233,30 +149,9 @@ public class BoardController {
 	    }
 	}
 	
-//	@ApiOperation(value = "디스플레이.")
-//	@GetMapping("/display")
-//	public ResponseEntity<Resource> display(@RequestParam("filename") String filename) {
-//		String path = "C:\\board\\upload\\";
-//		String folder = "";
-//		Resource resource = new FileSystemResource(path + folder + filename);
-//		if(!resource.exists()) 
-//			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
-//		HttpHeaders header = new HttpHeaders();
-//		Path filePath = null;
-//		try{
-//			filePath = Paths.get(path + folder + filename);
-//			header.add("Content-type", Files.probeContentType(filePath));
-////			System.out.println("header : " + header);
-//		}catch(IOException e) {
-//			e.printStackTrace();
-//		}
-////		System.out.println("리소스 : " + resource);
-//		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
-//	}
 
 	/**
 	 * 선택한 게시글을 조회합니다.
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "상세 게시글 조회", notes = "게시글 상세 조회")
@@ -274,27 +169,27 @@ public class BoardController {
 
 	/**
 	 * 게시글 삭제 기능 삭제 후 게시글 전체 리스트 반환
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "단일 게시글 삭제", notes = "단일 게시글을 삭제합니다")
+	@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.DELETE})
 	@DeleteMapping("/{boardId}")
-	public ResponseEntity<?> delete(@PathVariable("boardId") String boardId) {
+	public void delete(@PathVariable("boardId") String boardId) {
 		try {
 			boardService.deleteBoard(boardId);
-			List<BoardListDto> boardListDtos = boardService.findAllBoard();
-			return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
+//			List<BoardListDto> boardListDtos = boardService.findAllBoard();
+//			return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
 		} catch (SQLException e) {
-			return exceptionHandling(e);
+			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * 게시글 수정 기능 게시글 수정 후 해당 단일 게시글 정보 반환
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "단일 게시글 수정", notes = "단일 게시글을 수정합니다")
+	@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.PATCH})
 	@PatchMapping("/{boardId}")
 	public ResponseEntity<?> update(@PathVariable("boardId") String boardIdVal,
 			@RequestBody BoardUpdateDto boardUpdateDto) {
@@ -303,6 +198,7 @@ public class BoardController {
 			boardUpdateDto.setBoardId(boardId);
 			boardService.updateBoard(boardUpdateDto);
 			BoardListDto board = boardService.findBoard(boardId);
+//			System.out.println("게시글 업데이트 호출!");
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
