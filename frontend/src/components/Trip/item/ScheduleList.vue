@@ -131,7 +131,7 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
                         </div>
 
                         <!--폼 추가를 위한 태그-->
-                        <a-button type="dashed" style="width: 100%" @click="addUserSchedule(date)">
+                        <a-button class = "add-btn" style = "width : 100%;" type="dashed" @click="addUserSchedule(date)">
                             <PlusOutlined />
                             Add Schedule
                         </a-button>
@@ -184,7 +184,8 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
         /* font 내용 */
         font-size : 18px;
         font-weight: 500;
-        color : var(--color-gray900)
+        color : var(--color-gray900);
+        box-shadow: 0 0 5px rgba(128, 128, 128, 0.22), 0 3px 8px rgba(128, 128, 128, 0.18);
     }
     /* activeDate 기준으로 panel이 열린다. */
     .active-panel {
@@ -204,12 +205,13 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
         background: white ;
         border-radius: 10px;
         border : 0;
-        /* box-shadow: 0 1px 0 rgba(black, .2); */
+        width : 100%;
 
         font-size : 17px;
         letter-spacing: 0.5px;
 
         white-space: nowrap; 
+        box-shadow: 0 0 5px rgba(128, 128, 128, 0.25), 0 5px 10px rgba(128, 128, 128, 0.18);
         /* 카드에 적는 내용 */
         .card-imoji  {
             width : 10%;
@@ -227,6 +229,10 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
         .card-remove-btn{
             width : 10%;
             align-items: center;
+        }
+
+        .add-btn {
+            box-shadow: 0 0 5px rgba(128, 128, 128, 0.20), 0 5px 10px rgba(128, 128, 128, 0.18);
         }
     }
 
@@ -250,14 +256,4 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
     opacity: 0.5;
 }
 
-
-
-
-
-/*그림자 지정 클래스 */
-/* .shadow {
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-        -moz-box-shadow: 0 10px 6px -6px #777;
-            box-shadow: 0 10px 6px -6px #777;
-} */
 </style>

@@ -3,10 +3,18 @@ import KakaoMap from '@/components/Trip/KakaoMap.vue';
 import SearchDrawerItem from '@/components/Trip/SearchDrawerItem.vue';
 import PlanDetail from "@/components/Trip/PlanDetail.vue"
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 // drawer를 여는 함수
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
-const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
+const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포넌트에게 전달한다.
+
+// 컴포넌트에 존재하는 저장버튼을 클릭했을 시 View로 돌아온다.
+const router = useRouter();
+function onSaved() {
+    console.log("저장저장저장");
+    router.push({name : 'result'})
+}
 
 </script>
 <template>
@@ -48,7 +56,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
         </a-col>
         <a-col class="right-side" :span="5">
             <!--우측 계획-->
-            <PlanDetail/>
+            <PlanDetail @save-plan = 'onSaved'/>
         </a-col>
     </a-row>
 </template>
@@ -76,7 +84,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
         left: 0;
         margin-top: 2.5rem;
         margin-left : 4rem; /* 왼쪽으로부터 마진값이 존재. */
-        z-index: 1000; /* 입체적으로 위에 노출하는 방법 */
+        z-index: 500; /* 입체적으로 위에 노출하는 방법 */
         /* 백그라운드 */
         padding : 0.5rem 1rem;
         background-color : white;
@@ -86,7 +94,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
         transition : transform 0.3s ease;
     }
     .map-header.is-open{
-    transform: translateX(38rem); /**draw 너비만큼 이동/ */
+    transform: translateX(550px); /**draw 너비만큼 이동/ */
     }
 }
 
@@ -94,7 +102,7 @@ const drawerWidth = '600px'; // drawer의 크기를 지정하고, 자식 컴포�
 .right-side {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* 스크롤을 위해 100vh로 고정 */
+    height: 100%; /* 스크롤을 위해 100vh로 고정 */
 }
 
 .shadow {

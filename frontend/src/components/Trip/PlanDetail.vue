@@ -3,7 +3,7 @@
 import PlanInfo from '@/components/Trip/item/PlanInfo.vue';
 import ScheduleList from '@/components/Trip/item/ScheduleList.vue';
 import {usePlanStore} from '@/stores/plan';
-import {onMounted, ref} from "vue";
+import {onMounted, ref, defineEmits} from "vue";
 import {CheckCircleOutlined} from '@ant-design/icons-vue';
 
 const scheduleInfo = ref(); // 입력 받은 스케줄 객체 하위 컴포넌트로 넘기기
@@ -13,6 +13,15 @@ const planStore = usePlanStore();
 const getScheduleDate = () => {
     scheduleInfo.value = planStore.tripScheduleInfo;
 }
+
+
+// 전체 Detail의 결과를 저장한다.
+const emit = defineEmits(['save-plan'])
+const savePlanTotal = () => {
+    console.log("편집 완료");
+    emit('save-plan')
+}
+
 
 onMounted(() => {
     getScheduleDate();
@@ -36,7 +45,9 @@ onMounted(() => {
                     <CheckCircleOutlined />
                 </template>
                 <a-button class="save-btn" type="primary" shape="round" size="large"
-                    style="width : 200px; height : 50px">저장하기</a-button>
+                    style="width : 200px; height : 50px" @click = "savePlanTotal">
+                    저장하기
+                </a-button>
             </a-col>
         </div>
     </div>
