@@ -25,8 +25,6 @@ const regist = function () {
   // 이메일 유효성 검사
   if (!emailRegex.test(email.value)) {
     emailCheck.value = "유효한 이메일 주소를 입력해주세요.";
-    console.log(emailCheck.value);
-    email.value = "";
     return; // 이메일이 유효하지 않으면 더 이상 진행하지 않음
   }
 
@@ -78,14 +76,20 @@ watch(email, () => {
       <img src="@\assets\img\PlanIt!.png" alt="logo" />
 
       <a-label for="userId">아이디 </a-label>
-      <a-input id="userId" name="userId" v-model:value="userId" type="text" style="width: 20rem">
+      <a-input
+        id="userId"
+        name="userId"
+        v-model:value="userId"
+        type="text"
+        style="width: 20rem"
+      >
       </a-input>
 
-      <div v-if="duplicateCheck">
+      <div v-if="duplicateCheck" class="valid">
         <p style="color: red">이미 존재하는 계정입니다.</p>
       </div>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist">
+      <div v-if="clickRegist" class="valid">
         <p v-if="userId === ''" style="color: red">아이디 입력해주세요</p>
       </div>
 
@@ -99,8 +103,10 @@ watch(email, () => {
       >
       </a-input>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist">
-        <p v-if="userPassword === ''" style="color: red">패스워드를 입력해주세요</p>
+      <div v-if="clickRegist" class="valid">
+        <p v-if="userPassword === ''" style="color: red">
+          패스워드를 입력해주세요
+        </p>
       </div>
 
       <a-label for="passwordCheck">패스워드 확인</a-label>
@@ -112,7 +118,10 @@ watch(email, () => {
         style="width: 20rem"
       >
       </a-input>
-      <div v-if="passwordCheck !== '' && passwordCheck !== userPassword">
+      <div
+        v-if="passwordCheck !== '' && passwordCheck !== userPassword"
+        class="valid"
+      >
         <p style="color: red">비밀번호가 일치하지 않습니다.</p>
       </div>
 
@@ -126,17 +135,25 @@ watch(email, () => {
       >
       </a-input>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist">
+      <div v-if="clickRegist" class="valid">
         <p v-if="userName === ''" style="color: red">이름을 입력해주세요</p>
       </div>
 
       <a-label for="email">이메일</a-label>
-      <a-input id="email" name="email" v-model:value="email" type="email" style="width: 20rem">
+      <a-input
+        id="email"
+        name="email"
+        v-model:value="email"
+        type="email"
+        style="width: 20rem"
+      >
       </a-input>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist">
+      <div v-if="clickRegist" class="valid" style="margin-right: 14rem">
         <p v-if="email === ''" style="color: red">이메일을 입력해주세요</p>
-        <p v-if="emailCheck !== ''" style="color: red">{{ emailCheck }}</p>
+        <p v-if="email !== '' && emailCheck !== ''" style="color: red">
+          {{ emailCheck }}
+        </p>
       </div>
 
       <a-button type="primary" @click="regist()">회원가입</a-button>
@@ -147,7 +164,7 @@ watch(email, () => {
 <style lang="scss" scoped>
 .register-form {
   width: 27rem;
-  height: 35rem;
+  height: 45rem;
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
@@ -158,12 +175,12 @@ watch(email, () => {
 
   a-label {
     color: gray;
-    margin-top: 1rem;
+    margin-top: 2rem;
     text-align: left;
   }
 
   button {
-    margin-top: 1rem;
+    margin-top: 3rem;
     border-radius: 2rem;
     width: 20rem;
     height: 2rem;
@@ -176,11 +193,19 @@ watch(email, () => {
 
   p {
     color: gray;
+    margin-top: -0.1rem;
   }
 }
 
 .gender {
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
+}
+
+.valid {
+  margin-right: 8rem;
+  p {
+    position: absolute;
+  }
 }
 </style>
