@@ -137,12 +137,7 @@ const closeFileModal = () => {
       data-id="editor-tistory"
       contenteditable="true"
       spellcheck="false"
-      style="
-        overflow-y: hidden;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 50px;
-      "
+      style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px"
       data-mce-style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px;"
       role="textbox"
       aria-multiline="true"
@@ -154,13 +149,7 @@ const closeFileModal = () => {
 
     <div class="content-aside">
       <div class="wrap_btn" v-if="isModalOpen === false">
-        <button
-          id="publish-layer-btn"
-          class="btn btn-default"
-          @click="openFileModal"
-        >
-          완료
-        </button>
+        <button id="publish-layer-btn" class="btn btn-default" @click="openFileModal">완료</button>
       </div>
     </div>
 
@@ -196,33 +185,36 @@ const closeFileModal = () => {
           @change="handleFileChange"
         />
       </div>
-      <button
-        @click="closeFileModal"
-        style="
-          background-color: #d9534f;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          cursor: pointer;
-          border-radius: 4px;
-        "
-      >
-        취소
-      </button>
-      <button
-        class="sc-jWUzzU hhwHgR"
-        style="
-          background-color: gray;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          cursor: pointer;
-          border-radius: 4px;
-        "
-        @click="uploadPost"
-      >
-        출간하기
-      </button>
+      <div class="modal-btns">
+        <button
+          @click="closeFileModal"
+          style="
+            background-color: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+          "
+          class="cancel-button"
+        >
+          취소
+        </button>
+        <button
+          class="complete-button"
+          style="
+            background-color: gray;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+          "
+          @click="uploadPost"
+        >
+          출간하기
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -243,8 +235,7 @@ const closeFileModal = () => {
     border: none;
     font-size: 30px;
     color: #202020;
-    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic",
-      dotum, sans-serif;
+    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic", dotum, sans-serif;
     resize: none;
     outline: 0 none;
     line-height: 40px;
@@ -267,8 +258,8 @@ const closeFileModal = () => {
   font-size: 14px;
   min-height: 370px;
   max-width: 860px;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    "Apple SD Gothic Neo", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;
@@ -327,6 +318,34 @@ body {
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 2;
+  border-radius: 1rem;
+  min-width: 40rem;
+  min-height: 25rem;
+
+  .modal-title {
+    text-align: center;
+  }
+
+  .no-files-container {
+    text-align: center;
+  }
+
+  .modal-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 30%; /* 버튼 간 간격을 조절하기 위해 너비를 조정 */
+
+    > button {
+      min-width: 10rem;
+      min-height: 3rem;
+      margin: 0 1rem; /* 각 버튼 간의 마진 조절 */
+      border-radius: 4px;
+    }
+  }
 }
 
 .no-files-container {
