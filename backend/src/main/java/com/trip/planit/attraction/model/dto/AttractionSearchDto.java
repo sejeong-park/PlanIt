@@ -1,19 +1,14 @@
 package com.trip.planit.attraction.model.dto;
 
-import lombok.ToString;
-
-import lombok.Setter;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class AttractionSearchDto {
-	private int sidoCode;
-	private int gugunCode;
+	private Integer sidoCode;
+	private Integer gugunCode;
 	private String keyword;
-	private int contentTypeId;
+	private Integer contentTypeId;
 }
