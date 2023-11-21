@@ -17,7 +17,6 @@ const setDataInfo = () => {
     getPlanInfo(
     planStore.planKey
     ,(response) => {
-        console.log(response.data);
         planStore.setTripSchedule(response.data); // planStore에 데이터 저장
         scheduleInfo.value = planStore.tripScheduleInfo;
     }, (error) => {

@@ -22,7 +22,7 @@ const router = createRouter({
     },
     {
       // 데이터 결과 View 만들기 위해 라우터 먼저 테스트
-      path : '/result',
+      path : '/plans/:planKey',
       name : 'result',
       component : () => import("@/views/TripResultView.vue")
     },
