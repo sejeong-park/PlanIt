@@ -2,6 +2,10 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 // const { board } = history.state; // 이렇게 받는다.
 const { boardId } = history.state;
 // const boardId = ref(0);
@@ -86,12 +90,20 @@ const updatePost = () => {
 const closeFileModal = () => {
   isFileModalOpen.value = false;
 };
+
+const deleteBoard = () => {
+  // console.log("deleteBoard 호출 성공 : ", deleteBoard);
+  axios.delete("http://localhost:/boards/" + board.value.boardId).then((response) => {
+    // console.log(response);
+    router.replace({ name: "board-list" });
+  });
+};
 </script>
 
 <template>
   <div class="modify-delete-btn" :class="{ fixed: isFixed }">
     <button id="board-modify-btn" @click="openFileModal" style="cursor: pointer">수정</button>
-    <button id="board-delete-btn" @click="closeFileModal" style="cursor: pointer">삭제</button>
+    <button id="board-delete-btn" @click="deleteBoard" style="cursor: pointer">삭제</button>
   </div>
 
   <!-- modal -->

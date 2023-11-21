@@ -169,18 +169,18 @@ public class BoardController {
 
 	/**
 	 * 게시글 삭제 기능 삭제 후 게시글 전체 리스트 반환
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "단일 게시글 삭제", notes = "단일 게시글을 삭제합니다")
+	@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.DELETE})
 	@DeleteMapping("/{boardId}")
-	public ResponseEntity<?> delete(@PathVariable("boardId") String boardId) {
+	public void delete(@PathVariable("boardId") String boardId) {
 		try {
 			boardService.deleteBoard(boardId);
-			List<BoardListDto> boardListDtos = boardService.findAllBoard();
-			return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
+//			List<BoardListDto> boardListDtos = boardService.findAllBoard();
+//			return new ResponseEntity<List<BoardListDto>>(boardListDtos, HttpStatus.CREATED);
 		} catch (SQLException e) {
-			return exceptionHandling(e);
+			e.printStackTrace();
 		}
 	}
 
