@@ -26,16 +26,15 @@ const setDataInfo = () => {
     })
 }
 
-// 스케줄 계획 완료
+// 스케줄 계획 완료 
 const saveScheduleData = () => {
-
-
-
+    //TODO :: post DB에 저장 부분 이슈 확인 필요.
 }
 // 전체 Detail의 결과를 저장한다.
 const emit = defineEmits(['save-plan'])
 const savePlanTotal = () => {
     emit('save-plan'); // 저장하기를 부모뷰에 데이터 올리기
+    // TODO :: 저장 API까지
     console.log("현재까지 저장되는 데이터");
     console.log(planStore.tripScheduleInfo);
 }
