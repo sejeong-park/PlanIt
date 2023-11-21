@@ -1,10 +1,10 @@
-import {localAxios} from "@/util/http-commons";
+import {planitAxios} from "@/util/http-commons";
 
-const local = localAxios();
+const local = planitAxios();
 
 // ( Plan 버튼 실행 시 ) plan-key를 리턴 받는다.
-function makePlanKey(success, fail){
-    local.post("/plans").then(success).catch(fail);
+function makePlanKey(requestData, success, fail){
+    local.post("/plans/", requestData).then(success).catch(fail);
 }
 
 // ( 여행 상세 일정 생성 )
