@@ -13,5 +13,6 @@ public class CORSConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**") // REST API 경로
                 .allowedOrigins("http://localhost:5173"); // Client 측 주소
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
     }
 }

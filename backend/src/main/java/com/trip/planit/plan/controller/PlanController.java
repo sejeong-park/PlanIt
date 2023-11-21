@@ -136,7 +136,7 @@ public class PlanController {
 	 * @param planKey
 	 * @return planKey에 해당하는 plan_detail 값들을 출력해준다.
 	 */
-	@ApiOperation(value="단일 여행 계획 가져오기", notes="단일 여행 계획을 가져온다.")
+	@ApiOperation(value="단일 여행 계획들 가져오기", notes="단일 여행 계획들을 가져온다.")
 	@ApiResponses({@ApiResponse(code=200, message="단일 계획 목록 가져오기 OK!"),
 		@ApiResponse(code=204, message="요청에 대해서 보내줄 수 있는 콘텐츠가 없습니다"),
 		@ApiResponse(code=404, message="서버로 요청받은 페이지를 찾을 수 없습니다."),
