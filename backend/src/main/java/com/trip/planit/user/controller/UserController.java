@@ -117,8 +117,15 @@ public class UserController {
 	public ResponseEntity regist(@RequestBody User requestUser) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 
-		userService.registUser(requestUser);
-		result.put("message", "회원가입이 완료되었습니다.");
+//		System.out.println("requestUser :" + requestUser);
+		try {
+			userService.registUser(requestUser);	
+			result.put("message", "회원가입이 완료되었습니다.");
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("error", "이미 존재하는 회원입니다.");
+			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.NOT_ACCEPTABLE);
+		}
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CREATED);
 	}
 
