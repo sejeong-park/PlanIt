@@ -18,27 +18,42 @@ public class AttractionServiceImpl implements AttractionService{
 	private final AttractionMapper attractionMapper;
 
 	@Override
-	public List<AttractionSearchResultDto> findAttractionBySearch(AttractionSearchDto attractionSearchDto)
+	public List<AttractionSearchResultDto> findSido(AttractionSearchDto attractionSearchDto) throws SQLException {
+		return attractionMapper.selectSido(attractionSearchDto);
+	}
+
+	@Override
+	public List<AttractionSearchResultDto> findSidoGugun(AttractionSearchDto attractionSearchDto) throws SQLException {
+		return attractionMapper.selectSidoGugun(attractionSearchDto);
+	}
+
+	@Override
+	public List<AttractionSearchResultDto> findSidoKeyword(AttractionSearchDto attractionSearchDto)
 			throws SQLException {
-		return attractionMapper.selectAttractionBySearch(attractionSearchDto);
+		return attractionMapper.selectSidoKeyword(attractionSearchDto);
 	}
 
 	@Override
-	public List<AttractionSearchResultDto> findAttractionBySearchNonKeyword(AttractionSearchDto attractionSearchDto)
+	public List<AttractionSearchResultDto> findSidoGugunKeyword(AttractionSearchDto attractionSearchDto)
 			throws SQLException {
-		return attractionMapper.selectAttractionBySearchNonKeyword(attractionSearchDto);
-	}
-	
-	@Override
-	public List<AttractionSearchResultDto> findAttractionBySearchAndContentTypeId(
-			AttractionSearchDto attractionSearchDto) throws SQLException {
-		return attractionMapper.selectAttractionBySearchAndContentTypeId(attractionSearchDto);
+		return attractionMapper.selectSidoGugunKeyword(attractionSearchDto);
 	}
 
 	@Override
-	public List<AttractionSearchResultDto> findAttractionBySearchAndContentTypeIdNonKeyword(
-			AttractionSearchDto attractionSearchDto) throws SQLException {
+	public List<AttractionSearchResultDto> findSidoContentTypeId(AttractionSearchDto attractionSearchDto)
+			throws SQLException {
+		return attractionMapper.selectSidoContentTypeId(attractionSearchDto);
+	}
 
-		return attractionMapper.selectAttractionBySearchAndContentTypeIdNonKeyword(attractionSearchDto);
+	@Override
+	public List<AttractionSearchResultDto> findSidoGugunContentTypeId(AttractionSearchDto attractionSearchDto)
+			throws SQLException {
+		return attractionMapper.selectSidoGugunContentTypeId(attractionSearchDto);
+	}
+
+	@Override
+	public List<AttractionSearchResultDto> findSidoGugunKeywordContentTypeId(AttractionSearchDto attractionSearchDto)
+			throws SQLException {
+		return attractionMapper.selectSidoGugunKeywordContentTypeId(attractionSearchDto);
 	}
 }

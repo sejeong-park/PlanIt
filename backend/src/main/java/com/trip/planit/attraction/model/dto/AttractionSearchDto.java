@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttractionSearchDto {
 	private int sidoCode;
+	private int gugunCode;
 	private String keyword;
 	private int contentTypeId;
 }
