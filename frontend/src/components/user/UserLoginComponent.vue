@@ -11,6 +11,8 @@ const userPassword = ref("");
 
 const router = useRouter();
 
+const notFoundUser = ref("");
+
 const login = function () {
   axios
     .post("http://localhost:/users/login", {
@@ -37,9 +39,9 @@ const login = function () {
       }
     })
     .catch((error) => {
-      if (error.response.status === 404) {
-        alert("계정을 찾을 수 없습니다!!");
-      }
+      // alert("계정을 찾을 수 없습니다!!");
+      notFoundUser.value = "가입되지 않은 계정입니다.!";
+      userPassword.value = "";
     });
 };
 </script>
@@ -48,37 +50,19 @@ const login = function () {
   <div class="background">
     <div class="login-form">
       <div>
-        <img src="@\assets\img\PlanIt!.png" alt="logo" />
+        <img src="@\assets\img\Planit.png" alt="logo" />
       </div>
 
       <a-label for="id">아이디 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userId"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
+      <a-input id="id" name="id" v-model:value="userId" type="text" style="width: 20rem"> </a-input>
 
       <a-label for="id">패스워드 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userPassword"
-        type="text"
-        style="width: 20rem"
-      >
+      <a-input id="id" name="id" v-model:value="userPassword" type="password" style="width: 20rem">
       </a-input>
+      <p v-if="notFoundUser" style="color: red">{{ notFoundUser }}</p>
 
-      <a-button type="primary" @click="login()" htmlType="submit"
-        >로그인</a-button
-      >
-      <p>
-        아직 회원이 아니세요?<router-link to="/users/regist"
-          >회원가입</router-link
-        >
-      </p>
+      <a-button type="primary" @click="login()" htmlType="submit">로그인</a-button>
+      <p>아직 회원이 아니세요?<router-link to="/users/regist">회원가입</router-link></p>
     </div>
   </div>
 </template>
