@@ -13,6 +13,10 @@ watch(title, () => {
   console.log(title.value);
 });
 
+const makeMyPlan = () => {
+  
+}
+
 // 플랜으로 이동
 const router = useRouter();
 // 버튼을 눌렀을 때 pinia에 데이터를 세팅 해준다.
