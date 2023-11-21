@@ -5,26 +5,44 @@ import ScheduleList from '@/components/Trip/item/ScheduleList.vue';
 import {usePlanStore} from '@/stores/plan';
 import {onMounted, ref, defineEmits} from "vue";
 import {CheckCircleOutlined} from '@ant-design/icons-vue';
+import { getPlanInfo } from "@/api/plan";
 
+const planKey = ref();
 const scheduleInfo = ref(); // 입력 받은 스케줄 객체 하위 컴포넌트로 넘기기
 
-// Plan 일정세우기
-const planStore = usePlanStore(); 
-const getScheduleDate = () => {
-    scheduleInfo.value = planStore.tripScheduleInfo;
+const planStore = usePlanStore();  // Store에서 관리
+
+// 스케줄에 이용할 값 세팅
+const setDataInfo = () => {
+    getPlanInfo(
+    planStore.planKey
+    ,(response) => {
+        console.log(response.data);
+        planStore.setTripSchedule(response.data); // planStore에 데이터 저장
+        scheduleInfo.value = planStore.tripScheduleInfo;
+    }, (error) => {
+        console.log("해당하는 Plan에 대한 정보가 없습니다.")/
+        console.log(error);
+    })
 }
 
+// 스케줄 계획 완료
+const saveScheduleData = () => {
 
+
+
+}
 // 전체 Detail의 결과를 저장한다.
 const emit = defineEmits(['save-plan'])
 const savePlanTotal = () => {
-    console.log("편집 완료");
-    emit('save-plan')
+    emit('save-plan'); // 저장하기를 부모뷰에 데이터 올리기
+    console.log("현재까지 저장되는 데이터");
+    console.log(planStore.tripScheduleInfo);
 }
 
-
 onMounted(() => {
-    getScheduleDate();
+    planKey.value = planStore.planKey;
+    setDataInfo(); // data전체 Info 가져오기
 });
 
 </script>

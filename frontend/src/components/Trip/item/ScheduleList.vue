@@ -3,60 +3,41 @@ import { ref, reactive } from 'vue';
 import {usePlanStore} from '@/stores/plan';
 import {CaretRightOutlined, PlusOutlined, MinusCircleOutlined} from '@ant-design/icons-vue';
 
-// pinia에서 여행 계획 관리
-const planStore = usePlanStore(); 
+const planStore = usePlanStore(); // pinia에서 여행 계획 관리
 
- // 현재 선택한 Date에 대해 담아주는 변수
-const activeDate = ref(null);
+const activeDate = ref(null);  // 현재 선택한 Date에 대해 담아주는 변수
 const setActiveDate = (currentDate) => {
     activeDate.value = currentDate; // 현재 선택한 Date 넘기기
-    console.log(activeDate.value + " 를 선택했습니다.");
-
     // pinia의 값에 넣기
     planStore.setClickedActiveDate(currentDate); // 현재 값 pinia 에 세팅한다.
 }
 
-
 // 사용자 직접 입력 태그 
-// 사용자가 별도로 적는 input 넣기
 const userAddCards = reactive({});
 
 // 메서드에서 스케줄 세부 정보 업데이트 
 function updateScheduleDetail(uniqueKey, newTitle) {
-    console.log("사용자가 입력한 카드가 완료되어 planStore에 업데이트 한다.")
-
     const [date, detailIdx] = uniqueKey.split(',');
     // PiniaStore에 새 제목을 업데이트 한다.
     if (planStore.tripScheduleInfo.scheduleList[date]) {
         planStore.tripScheduleInfo.scheduleList[date][detailIdx].title = newTitle;
         planStore.tripScheduleInfo.scheduleList[date][detailIdx].isNew = false; // 비 활성화 하기
     }
-    console.log("현재까지의 planPinia 결과 ", planStore.tripScheduleInfo);
 }
-
 
 //  Add Schdule 추가했다.
 const addUserSchedule = (date) => {
-    // 현재 date 
-    console.log("사용자 카드 추가하기.")
-
     // Add Schedule에서 추가한 카드 
     const newScheduleDetail = {
         title : '', // 기본 제목이 없는 새 일정
         isNew : true // 새 항목임을 나타나는 플래그
     }
-    console.log("테스트 :: ", planStore.tripScheduleInfo);
-    // 데이터 카드 추가
-    // planStore.tripSchduleInfo.schduleList[date] 에 새로 생성한 값을 추가한다.
-    
     planStore.tripScheduleInfo.scheduleList[date].push(newScheduleDetail); 
-
-    // 가장 최근 추가된 인덱스
+    // 가장 최근 추가된 인덱스 관리
     const detailIdx = planStore.tripScheduleInfo.scheduleList[date].length - 1; // 배열 인덱스
     const uniqueKey = `${date} ${detailIdx}`;
     userAddCards[uniqueKey] = ''; //  카드 index 값 초기화
 }
-
 
 const removeSchedule = (date, detailIdx) => {
     console.log("사용자가 삭제 버튼을 눌렀습니다. + ", date , "idx : ", detailIdx)
@@ -67,11 +48,6 @@ const removeSchedule = (date, detailIdx) => {
 
 }
 
-const activeKey = ref(['1']);
-const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
-
-
-
 </script>
 
 <template>
@@ -80,29 +56,24 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 
             <a-collapse
                 class = "collapse"
-                v-model:activeKey="activeKey"
-                :bordered="false"
-            >
+                :bordered="false">
 
                 <template #expandIcon="{ isActive }">
                     <CaretRightOutlined :rotate="isActive ? 90 : 0" height = "1rem"/>
                 </template>
 
 
-                <!--
-                    클릭 시 해당일자에 대해 정보 추가
-                -->
+                <!--클릭 시 해당일자에 대해 정보 추가-->
                 <a-collapse-panel
                     class = "collapse-title" 
                     v-for="(schedule, date, index) in planStore.tripScheduleInfo.scheduleList"
                     :class = "{'active-panel' : activeDate === date}"
                     :key="date" 
-                    :header="`${date} (Day ${index + 1})`"
+                    :header="`${date} (${index + 1}일차)`"
                     @click="setActiveDate(date)"
                 >
                     <!-- 스케줄에 카드 정보 출력하기  -->
                     <div class = "card-list">
-
                         <div class="card"
                             v-for = "(scheduleDetail, detailIdx) in schedule"
                             :key="detailIdx"
@@ -132,12 +103,10 @@ const text = `A dog is a type of domesticated animal.Known for its loyalty and f
 
                         <!--폼 추가를 위한 태그-->
                         <a-button class = "add-btn" style = "width : 100%;" type="dashed" @click="addUserSchedule(date)">
-                            <PlusOutlined />
-                            Add Schedule
+                            <PlusOutlined />Add Schedule
                         </a-button>
                     </div>
                 </a-collapse-panel>
-
             </a-collapse>
         </div>
     </div>
