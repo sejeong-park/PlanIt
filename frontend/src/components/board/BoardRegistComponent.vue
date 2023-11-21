@@ -2,6 +2,9 @@
 import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const store = useUserStore();
 
 const router = useRouter();
 
@@ -15,7 +18,7 @@ const file = ref(null);
 const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
-const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
+const planKey = "ff8f2a66-887d-48a9-841f-01f858bee1f3";
 const board = ref({});
 
 const handleFileChange = (event) => {
@@ -41,6 +44,7 @@ const uploadPost = async () => {
     boardRegistDto.value = {
       title: title.value,
       contents: contents.value,
+      createUser: store.userId,
     };
     // console.log(boardRegistDto.value
     // 제목과 컨텐츠는 json 형태로
@@ -137,7 +141,12 @@ const closeFileModal = () => {
       data-id="editor-tistory"
       contenteditable="true"
       spellcheck="false"
-      style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px"
+      style="
+        overflow-y: hidden;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 50px;
+      "
       data-mce-style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px;"
       role="textbox"
       aria-multiline="true"
@@ -149,7 +158,13 @@ const closeFileModal = () => {
 
     <div class="content-aside">
       <div class="wrap_btn" v-if="isModalOpen === false">
-        <button id="publish-layer-btn" class="btn btn-default" @click="openFileModal">완료</button>
+        <button
+          id="publish-layer-btn"
+          class="btn btn-default"
+          @click="openFileModal"
+        >
+          완료
+        </button>
       </div>
     </div>
 
@@ -235,7 +250,8 @@ const closeFileModal = () => {
     border: none;
     font-size: 30px;
     color: #202020;
-    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic", dotum, sans-serif;
+    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic",
+      dotum, sans-serif;
     resize: none;
     outline: 0 none;
     line-height: 40px;
@@ -258,8 +274,8 @@ const closeFileModal = () => {
   font-size: 14px;
   min-height: 370px;
   max-width: 860px;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "Apple SD Gothic Neo", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;

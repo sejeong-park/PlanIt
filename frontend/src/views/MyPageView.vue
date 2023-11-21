@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import MyBoardComponent from "@/components/mypage/MyBoardComponent.vue";
+import MyPlanComponent from "@/components/mypage/MyPlanComponent.vue";
 
 const activeTab = ref("board");
 
@@ -15,7 +17,7 @@ const changeTab = (tabName) => {
         :class="{ 'active-tab': activeTab === 'board' }"
         id="board-tab"
         @click="changeTab('board')"
-        style="margin-left: 10rem"
+        style="margin-left: 10.7rem"
       >
         <span class="tab-text">게시판</span>
       </div>
@@ -29,13 +31,11 @@ const changeTab = (tabName) => {
       </div>
     </div>
     <div class="content" v-if="activeTab === 'board'">
-      <!-- 게시판 컨텐츠 내용 -->
-      <p>게시판 내용이 여기에 들어갑니다.</p>
+      <MyBoardComponent />
     </div>
 
     <div class="content" v-if="activeTab === 'travel'">
-      <!-- 여행 계획 컨텐츠 내용 -->
-      <p>여행 계획 내용이 여기에 들어갑니다.</p>
+      <MyPlanComponent />
     </div>
   </div>
 </template>
@@ -85,11 +85,5 @@ body {
 .content {
   padding: 20px;
   border-style: none;
-}
-
-@media (max-width: 600px) {
-  .tab-container {
-    flex-direction: column;
-  }
 }
 </style>

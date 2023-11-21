@@ -210,4 +210,33 @@ public class BoardController {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ApiOperation(value="마이페이지, 나의 게시글")
+	@GetMapping("/mypage")
+	public ResponseEntity<?> boardMypage(@RequestParam("createUser") String createUser) throws Exception{
+		
+		try {
+			List<BoardListDto> answerBoards = new ArrayList<BoardListDto>();
+			String path ="C:\\board\\upload\\";
+	        String folder = "";
+			List<BoardListDto> boardListDtos = boardService.findMyBoard(createUser);
+			for (BoardListDto boardListDto : boardListDtos) {
+				int boardId = boardListDto.getBoardId();
+				String fileName = boardService.findFileName(boardId);
+	            // Check if fileName is null, set it to an empty string
+	            Path filePath = Paths.get(path + folder + fileName);
+	            // 이미지 파일을 Base64로 인코딩하여 문자열로 변환
+	            // BoardListDto에 Base64 인코딩된 이미지 데이터 추가
+	            // 등록된 썸네일이 없다면 null을 반환해준다.
+	            if(fileName != null) {
+	            	String base64Image = Base64.getEncoder().encodeToString(Files.readAllBytes(filePath));
+	            	boardListDto.setBase64Image(base64Image);	
+	            }
+	            answerBoards.add(boardListDto);
+			}
+	        return ResponseEntity.ok(answerBoards);
+		} catch (SQLException e) {
+			return exceptionHandling(e);
+		}
+	}
 }
