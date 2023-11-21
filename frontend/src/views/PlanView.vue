@@ -1,7 +1,7 @@
 <script setup>
 import PlanSchedule from '@/components/Plan/PlanSchedule.vue';
 import ContentInfoItem from '@/components/Plan/ContentInfoItem.vue';
-import {ref, onMounted, computed} from "vue";
+import {ref, onMounted } from "vue";
 import { listFestival } from "@/api/tripAttraction";
 import { convertDateFormat } from "@/util/dateUtil";
 

@@ -3,10 +3,12 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { makePlanKey } from "@/api/plan";
 import { useUserStore } from "@/stores/user";
+import { usePlanStore } from "@/stores/plan";
 import { message } from 'ant-design-vue';
 
 const router = useRouter();
 const userStore = useUserStore();
+const planStore = usePlanStore();
 
 const title = ref(""); // title
 const setSchedule = ref(null);
@@ -24,6 +26,7 @@ const makeMyPlan = () => {
   makePlanKey(
   planRegistDto
   , (response) => {
+    planStore.planKey.value = response.data; // pinia에 저장
     router.push({name : 'planning'}); // 결과 응답 받았을 경우, planning 페이지로 이동
   } , (error) => {
     if (error){

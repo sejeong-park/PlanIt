@@ -9,6 +9,7 @@ import { convertDateFormat, calculateDaysBetweenDates, getAllDatesBetween } from
 export const usePlanStore = defineStore(
     "plan", () =>{
 
+        const planKey = ref(); // 임의로 이렇게 설정함.
         // const planKey = ref("87690a6a-32a7-42e7-a175-8fea7e06038a"); // 임의로 이렇게 설정함.
 
         // plan에서 계획을 설정 (plan에서 계획 설정 시 startDate, endDate 등의 정보를 세부 일정 계획 페이지로 전달한다.)
