@@ -10,12 +10,22 @@ const board = ref({});
 
 const planDetails = ref([]);
 
+const updateTitle = ref("");
+const updateContents = ref("");
+
+const updateContent = (event) => {
+  updateContents.value = event.target.innerText;
+  console.log(updateContents.value);
+  console.log(updateTitle.value);
+};
+
 onMounted(async () => {
   try {
     const boardResponse = await axios.get("http://localhost:/boards/" + boardId);
 
     // 첫번째 비동기 작업
     board.value = {
+      boardId: boardResponse.data.boardId,
       title: boardResponse.data.title,
       createAt: boardResponse.data.createAt,
       hits: boardResponse.data.hits,
@@ -25,15 +35,6 @@ onMounted(async () => {
     // console.log("board : ", board.value);
     // 두번째 비동기 작업
     const planResponse = await axios.get("http://localhost:/plans/" + board.value.planKey);
-    // planResponse.data.forEach((data) => {
-    //   planDetails.value.push({
-    //     detail_id: data.detail_id,
-    //     attractionId: data.attractionId,
-    //     planDate: data.planDate,
-    //     sequence: data.sequence,
-    //     title: data.title,
-    //   });
-    // });
 
     planDetails.value = planResponse.data;
 
@@ -61,12 +62,29 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
-  isModalOpen.value = true;
+};
+
+const updatePost = () => {
+  // console.log("boardId : ", board);
+  const boardUpdateDto = {
+    boardId: board.value.boardId,
+    title: updateTitle.value,
+    contents: updateContents.value,
+  };
+  axios
+    .patch("http://localhost:/boards/" + board.value.boardId, boardUpdateDto)
+    .then((response) => {
+      // console.log("updatePost", response);
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+  isFileModalOpen.value = false;
+  location.reload();
 };
 
 const closeFileModal = () => {
   isFileModalOpen.value = false;
-  isModalOpen.value = false;
 };
 </script>
 
@@ -87,7 +105,7 @@ const closeFileModal = () => {
         class="textarea_tit"
         placeholder="제목을 입력하세요"
         style="height: 42px !important"
-        v-model="title"
+        v-model="updateTitle"
       ></textarea>
       <div id="board-editor-container" style="display: block"></div>
     </div>
@@ -131,7 +149,7 @@ const closeFileModal = () => {
           cursor: pointer;
           border-radius: 4px;
         "
-        @click="uploadPost"
+        @click="updatePost"
       >
         수정완료
       </button>

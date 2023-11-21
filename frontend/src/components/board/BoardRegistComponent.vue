@@ -15,7 +15,7 @@ const file = ref(null);
 const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
-const planKey = "277d11f6-e153-41fd-acc8-d0391da4caab";
+const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
 const board = ref({});
 
 const handleFileChange = (event) => {

@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,7 +66,6 @@ public class BoardController {
 	 * 게시글 등록 API 넘겨 받는 값 : planKey, 게시글 title, create_user(유저
 	 * 이름?),create_at,contents, hits 전체 게시글 리스트로 이동할 것이므로 게시글 전체 리스트를 반환
 	 * 반환 : 게시글 생성시 자동으로 생성된 boardId
-	 * 
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalStateException
@@ -113,7 +114,6 @@ public class BoardController {
 
 	/**
 	 * 전체 게시글 데이터를 반환합니다. 전체 게시글 리스트 반환 : List<boardListDto>
-	 * 
 	 * @return
 	 * @throws Exception 
 	 */
@@ -152,7 +152,6 @@ public class BoardController {
 
 	/**
 	 * 선택한 게시글을 조회합니다.
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "상세 게시글 조회", notes = "게시글 상세 조회")
@@ -187,10 +186,10 @@ public class BoardController {
 
 	/**
 	 * 게시글 수정 기능 게시글 수정 후 해당 단일 게시글 정보 반환
-	 * 
 	 * @return
 	 */
 	@ApiOperation(value = "단일 게시글 수정", notes = "단일 게시글을 수정합니다")
+	@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.PATCH})
 	@PatchMapping("/{boardId}")
 	public ResponseEntity<?> update(@PathVariable("boardId") String boardIdVal,
 			@RequestBody BoardUpdateDto boardUpdateDto) {
@@ -199,6 +198,7 @@ public class BoardController {
 			boardUpdateDto.setBoardId(boardId);
 			boardService.updateBoard(boardUpdateDto);
 			BoardListDto board = boardService.findBoard(boardId);
+//			System.out.println("게시글 업데이트 호출!");
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
