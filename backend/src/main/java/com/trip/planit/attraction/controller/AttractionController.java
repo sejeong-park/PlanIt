@@ -27,53 +27,85 @@ public class AttractionController {
 
 	private final AttractionService attractionService;
 
-	@ApiOperation(value = "명소를 검색합니다.", notes = "명소를 검색합니다")
+	@ApiOperation(value = "명소 검색 기능", notes = "명소 검색 기능입니다.")
 	@GetMapping("/search")
 	public ResponseEntity<List<AttractionSearchResultDto>> searchAttractions(
-			@RequestParam(name = "sidoCode") String sidoCodeValue,
-			@RequestParam(name = "keyword", required = false) String keyword) throws SQLException {
+			@RequestParam(name = "sidoCode", required = false) String sidoCodeValue,
+			@RequestParam(name = "keyword", required = false) String keywordValue,
+			@RequestParam(name = "gugun", required = false) String gugunCodeValue,
+			@RequestParam(name = "contentTypeId", required = false) String contentTypeIdValue) throws SQLException {
 		AttractionSearchDto attractionSearchDto = new AttractionSearchDto();
 
 		List<AttractionSearchResultDto> attractions = new ArrayList<>();
+		
+		
+		/**
+		 * sido 코드로만 검색
+			sido 코드, gugun 코드로만 검색
+			sido 코드 + 키워드 검색
+			sido 코드 + gugun 코드 키워드 검색
+			시도 코드 + 컨텐츠 타입 검색
+			시도 코드 + 구군 + 컨텐츠 타입 
+			시도 코드 + 구군 + 키워드 + 컨텐츠 타입
+		 */
 
-		int sidoCode = Integer.parseInt(sidoCodeValue);
-
-		if (keyword == null) {
+		// sido코드로만 검색
+		if(sidoCodeValue != null && gugunCodeValue == null && keywordValue == null && contentTypeIdValue == null) {
+			int sidoCode = Integer.parseInt(sidoCodeValue);
 			attractionSearchDto.setSidoCode(sidoCode);
-			attractions = attractionService.findAttractionBySearchNonKeyword(attractionSearchDto);
-		} else {
+			attractions = attractionService.findSido(attractionSearchDto);
+		} // sido 코드 + gugun 코드로만 검색
+		else if(sidoCodeValue != null && gugunCodeValue != null && keywordValue == null && contentTypeIdValue == null) {
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			int gugunCode = Integer.parseInt(gugunCodeValue);
 			attractionSearchDto.setSidoCode(sidoCode);
-			attractionSearchDto.setKeyword(keyword);
-			attractions = attractionService.findAttractionBySearch(attractionSearchDto);
+			attractionSearchDto.setGugunCode(gugunCode);
+			attractions = attractionService.findSidoGugun(attractionSearchDto);
 		}
-
+		 // sido 코드 + 키워드로만 검색
+		else if(sidoCodeValue != null && gugunCodeValue == null && keywordValue != null && contentTypeIdValue == null) {
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			attractionSearchDto.setSidoCode(sidoCode);
+			attractionSearchDto.setKeyword(keywordValue);
+			attractions = attractionService.findSidoKeyword(attractionSearchDto);
+		}
+		// sido 코드 + gugunCode+키워드로만 검색
+		else if(sidoCodeValue != null && gugunCodeValue != null && keywordValue != null && contentTypeIdValue == null) {
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			int gugunCode = Integer.parseInt(gugunCodeValue);
+			attractionSearchDto.setSidoCode(sidoCode);
+			attractionSearchDto.setGugunCode(gugunCode);
+			attractionSearchDto.setKeyword(keywordValue);
+			attractions = attractionService.findSidoGugunKeyword(attractionSearchDto);
+		}// 시도 코드 + 컨텐츠 타입 아이디 검색
+		else if(sidoCodeValue != null && gugunCodeValue == null && keywordValue == null && contentTypeIdValue != null) {
+			int contentTypeId = Integer.parseInt(contentTypeIdValue);
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			attractionSearchDto.setContentTypeId(contentTypeId);
+			attractionSearchDto.setSidoCode(sidoCode);
+			attractions = attractionService.findSidoContentTypeId(attractionSearchDto);
+		}
+		// 시도 코드 + 구군 +컨텐츠 타입 아이디 검색
+		else if(sidoCodeValue != null && gugunCodeValue != null && keywordValue == null && contentTypeIdValue != null) {
+			int contentTypeId = Integer.parseInt(contentTypeIdValue);
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			int gugunCode = Integer.parseInt(gugunCodeValue);
+			attractionSearchDto.setContentTypeId(contentTypeId);
+			attractionSearchDto.setSidoCode(sidoCode);
+			attractionSearchDto.setGugunCode(gugunCode);
+			attractions = attractionService.findSidoGugunContentTypeId(attractionSearchDto);
+		}// 시도 코드 + 구군 +키워드+컨텐츠 타입 아이디 검색
+		else if(sidoCodeValue != null && gugunCodeValue != null && keywordValue != null && contentTypeIdValue != null) {
+			int contentTypeId = Integer.parseInt(contentTypeIdValue);
+			int sidoCode = Integer.parseInt(sidoCodeValue);
+			int gugunCode = Integer.parseInt(gugunCodeValue);
+			attractionSearchDto.setContentTypeId(contentTypeId);
+			attractionSearchDto.setSidoCode(sidoCode);
+			attractionSearchDto.setGugunCode(gugunCode);
+			attractionSearchDto.setKeyword(keywordValue);
+			attractions = attractionService.findSidoGugunKeywordContentTypeId(attractionSearchDto);
+		}
+		
 		return new ResponseEntity<List<AttractionSearchResultDto>>(attractions, HttpStatus.OK);
 	}
-
-	@ApiOperation(value = "컨텐츠 타입을 기반으로 명소를 검색합니다", notes = "컨텐츠 타입을 기반으로 명소를 검색합니다")
-	@GetMapping("/")
-	public ResponseEntity<List<AttractionSearchResultDto>> searchAttractionsByContentTypeId(
-			@RequestParam(name = "sidoCode") String sidoCodeValue,
-			@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "contentTypeId") String contentTypeIdValue) throws SQLException {
-		AttractionSearchDto attractionSearchDto = new AttractionSearchDto();
-
-		int sidoCode = Integer.parseInt(sidoCodeValue);
-		int contentTypeId = Integer.parseInt(contentTypeIdValue);
-		
-		List<AttractionSearchResultDto> attractions = new ArrayList<>();
-		if(keyword == null) {
-			attractionSearchDto.setSidoCode(sidoCode);
-			attractionSearchDto.setContentTypeId(contentTypeId);
-			attractions = attractionService.findAttractionBySearchAndContentTypeIdNonKeyword(attractionSearchDto);
-		}else {
-			attractionSearchDto.setSidoCode(sidoCode);
-			attractionSearchDto.setKeyword(keyword);
-			attractionSearchDto.setContentTypeId(contentTypeId);
-			attractions = attractionService.findAttractionBySearchAndContentTypeId(attractionSearchDto);
-		}
-		
-		return new ResponseEntity<List<AttractionSearchResultDto>>(attractions, HttpStatus.OK);
-	}
-
 }

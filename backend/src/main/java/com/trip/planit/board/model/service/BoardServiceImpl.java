@@ -93,4 +93,12 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardListDto> findAllBoard() throws SQLException {
 		return boardMapper.selectAllBoard();
 	}
+
+	@Override
+	public String findFileName(int boardId) throws Exception {
+		// TODO Auto-generated method stub
+		return boardMapper.selectFileName(boardId);
+	}
+	
+	
 }

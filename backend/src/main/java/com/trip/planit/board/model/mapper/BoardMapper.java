@@ -15,6 +15,7 @@ import com.trip.planit.board.model.dto.FileInfoDto;
 public interface BoardMapper {
 	int insertBoard(BoardRegistDto boardRegistDto) throws SQLException;
 	void insertFile(FileInfoDto fileInfoDto) throws Exception;
+	String selectFileName(int boardId) throws Exception;
 	int selectBoardId() throws SQLException;
 	List<BoardListDto> selectAllBoardForPage(Map<String, Object> param) throws SQLException;
 	List<BoardListDto> selectAllBoard() throws SQLException;

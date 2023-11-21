@@ -41,6 +41,10 @@
 		values(#{boardId}, #{userId}, #{saveFolder}, #{saveFile},
 		#{originalFile})
 	</insert>
+	
+	<select id="selectFileName" parameterType="int" resultType="String">
+		select save_file from file_infos where board_id = #{boardId};
+	</select>
 
 	<select id="selectAllBoard" resultMap="boardListDto">
 		select * from boards;
