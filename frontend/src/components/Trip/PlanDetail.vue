@@ -5,7 +5,7 @@ import ScheduleList from '@/components/Trip/item/ScheduleList.vue';
 import {usePlanStore} from '@/stores/plan';
 import {onMounted, ref, defineEmits} from "vue";
 import {CheckCircleOutlined} from '@ant-design/icons-vue';
-import { getPlanInfo } from "@/api/plan";
+import { getPlanInfo, makeTripSchedule } from "@/api/plan";
 
 const planKey = ref();
 const scheduleInfo = ref(); // 입력 받은 스케줄 객체 하위 컴포넌트로 넘기기
@@ -15,7 +15,7 @@ const planStore = usePlanStore();  // Store에서 관리
 // 스케줄에 이용할 값 세팅
 const setDataInfo = () => {
     getPlanInfo(
-    planStore.planKey
+    planKey.value
     ,(response) => {
         planStore.setTripSchedule(response.data); // planStore에 데이터 저장
         scheduleInfo.value = planStore.tripScheduleInfo;
@@ -25,17 +25,41 @@ const setDataInfo = () => {
     })
 }
 
-// 스케줄 계획 완료 
-const saveScheduleData = () => {
-    //TODO :: post DB에 저장 부분 이슈 확인 필요.
-}
 // 전체 Detail의 결과를 저장한다.
 const emit = defineEmits(['save-plan'])
 const savePlanTotal = () => {
-    emit('save-plan'); // 저장하기를 부모뷰에 데이터 올리기
-    // TODO :: 저장 API까지
-    console.log("현재까지 저장되는 데이터");
-    console.log(planStore.tripScheduleInfo);
+    
+    emit('save-plan');
+
+    console.log("현재 저장 결과 :: ", planStore.tripScheduleInfo.scheduleList);
+
+    const resultData = planStore.tripScheduleInfo.scheduleList;
+    const scheduleDetailList = []
+    Object.keys(resultData).forEach(date => {
+        resultData[date].forEach((item, index) => {
+            const detailResult = {
+                "planDate" : date,
+                "sequence" : index + 1,
+                "title" : item.title
+            }
+            if ("contentid" in item) {
+                //TODO :: attraction API 연결 후 detailResult.overview 추가 필요
+                detailResult.attractionId = item.contentid; // 만약 Attraction 추가 정보라면, 넣기
+                // detailResult.overview = item.descript~~
+            }
+            scheduleDetailList.push(detailResult);
+        }) 
+    })
+    
+    makeTripSchedule(planKey.value,
+        scheduleDetailList,
+        (response) => {
+            console.log("저장 성공!!");
+            console.log(response);
+        },
+        (error) => {
+            console.log(error);
+        })
 }
 
 onMounted(() => {

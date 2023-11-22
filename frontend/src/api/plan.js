@@ -17,9 +17,9 @@ function getPlanDetailList(planKey, success, fail) {
     local.get(`/plans/list/${planKey}`).then(success).catch(fail);
 }
 
-// TODO :: API 생성이 안된다.
-function makeTripSchedule(planKey, success, fail) {
-    local.post(`/plans/${planKey}`).then(success).catch(fail);
+// 일정 전체 전달
+function makeTripSchedule(planKey, scheduleDetailList, success, fail) {
+    local.post(`/plans/${planKey}`, scheduleDetailList).then(success).catch(fail);
 }
 
 

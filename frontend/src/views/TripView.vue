@@ -22,7 +22,8 @@ function onSaved() {
             planKey : planStore.planKey
         }
     })
-    planStore.planKey = null; // pinia에서 저장하던 key 저장 후 초기화.
+    // planStore.planKey = null; // pinia에서 저장하던 key 저장 후 초기화.
+    // planStore.tripScheduleInfo = null;  // 사용했던 정보 종료
 }
 
 </script>

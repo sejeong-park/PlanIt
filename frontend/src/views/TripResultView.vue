@@ -32,6 +32,7 @@ const generateColorByDate = () => {
 // 전체 데이터 결과 가져오기
 const getResultSchedule = () => {
     
+    // 일시 띄워주기
     const planKey = route.params.planKey;
     getPlanInfo(planKey,
         (response) => {
@@ -39,32 +40,38 @@ const getResultSchedule = () => {
             resultPlanInfo.value = planStore.tripScheduleInfo; // 기본 PlanInfo 저장
         }
     )
-    //TODO :: 이거 위에 resultPlanInfo 여기 있는 scheduleList 키에 넣어주기
+    
+    // 이 컴포넌트에서 화면을 뿌리기 위해 만든 resultPlanInfo변수에 넣는다.
     getPlanDetailList(planKey, 
-        (response) => {
-            // Date 별 그룹 화
-            const groupByDate = response.data.reduce(
-                (acc, item) => {
-                    const date = item.planDate;
-                    if (!acc[date]) acc[date] = []; // 날짜 없으면 생성
-                    acc[date].push(item);
-                    return acc;
-                }, {});
-            for (const date in groupByDate) {
-                groupByDate[date].sort((a, b) => a.sequence - b.sequence);
+            (response) => {
+                // Date 별 그룹 화
+                const groupByDate = response.data.reduce(
+                    (acc, item) => {
+                        const date = item.planDate;
+                        if (!acc[date]) acc[date] = []; // 날짜 없으면 생성
+                        acc[date].push(item);
+                        return acc;
+                    }, {});
+                for (const date in groupByDate) {
+                    groupByDate[date].sort((a, b) => a.sequence - b.sequence);
+                }
+                console.log("결과", groupByDate);
+                resultPlanInfo.value.scheduleList = groupByDate;
+            },(error) => {
+                console.log(error);
             }
-            console.log("결과", groupByDate);
-        },(error) => {
-            console.log(error);
-        }
-    )
+        )
+    
+    // resultPlanInfo.value.scheduleList = groupByDate;
+    console.log(resultPlanInfo);
+
+
 }
 
 
-
 onMounted(() => {
-    // resultPlanInfo.value = planStore.tripScheduleInfo;
-    // generateColorByDate();
+    resultPlanInfo.value = planStore.tripScheduleInfo;
+    generateColorByDate();
     getResultSchedule()
 });
 
