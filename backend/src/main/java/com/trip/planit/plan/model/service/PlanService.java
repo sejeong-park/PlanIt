@@ -14,6 +14,7 @@ public interface PlanService {
 	List<PlanDetailDto> findPlanDetail(String planKey) throws SQLException;
 	PlanListDto findPlan(String planKey) throws SQLException;
 	List<PlanListDto> findAllPlan() throws SQLException;
+	List<PlanListDto> findMyPlans(String createUser) throws SQLException;
 	void deletePlan(String planKey) throws SQLException;
 	void deletePlanDetail(String planKey) throws SQLException;
 	void updatePlanDetail(List<PlanUpdateDetailDto> updateDtos) throws SQLException; 

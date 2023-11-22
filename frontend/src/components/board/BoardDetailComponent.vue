@@ -17,6 +17,9 @@ const planDetails = ref([]);
 const updateTitle = ref("");
 const updateContents = ref("");
 
+const dateList = ref([]);
+const maxdate = ref("");
+
 const updateContent = (event) => {
   updateContents.value = event.target.innerText;
   console.log(updateContents.value);
@@ -40,21 +43,35 @@ onMounted(async () => {
     // 두번째 비동기 작업
     const planResponse = await axios.get("http://localhost:/plans/" + board.value.planKey);
 
-    planDetails.value = planResponse.data;
+    // console.log(planResponse.data);
+
+    // planDetails.value = planResponse.data;
 
     // planDetails 정렬
-    planDetails.value.sort((a, b) => {
+    planDetails.value = planResponse.data.sort((a, b) => {
       // planDate 기준으로 오름차순 정렬
       if (a.planDate < b.planDate) return -1;
       if (a.planDate > b.planDate) return 1;
 
       // planDate가 같으면 sequence 기준으로 오름차순 정렬
-      if (a.sequence < b.sequence) return -1;
+      if (a.planDate == b.planDate) if (a.sequence < b.sequence) return -1;
       if (a.sequence > b.sequence) return 1;
 
       return 0; // planDate와 sequence가 같을 경우
     });
-    console.log("planDetails :", planDetails.value);
+
+    maxdate.value = planDetails.value[0].planDate;
+    dateList.value.push(maxdate.value);
+
+    planDetails.value.forEach((plan) => {
+      if (plan.planDate > maxdate.value) {
+        maxdate.value = plan.planDate;
+        dateList.value.push(maxdate.value);
+      }
+    });
+
+    console.log("데이트리스트 ", dateList.value);
+    // console.log("planDetails :", planDetails.value);
     // console.log("planRes : ", planResponse);
   } catch (error) {
     console.log("Error : ", error);

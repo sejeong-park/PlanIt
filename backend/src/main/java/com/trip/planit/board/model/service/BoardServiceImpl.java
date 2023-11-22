@@ -99,6 +99,9 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.selectFileName(boardId);
 	}
-	
-	
+
+	@Override
+	public List<BoardListDto> findMyBoard(String createUser) throws SQLException {
+		return boardMapper.selectMyBoard(createUser);
+	}
 }

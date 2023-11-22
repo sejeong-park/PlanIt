@@ -2,6 +2,9 @@
 import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const store = useUserStore();
 
 const router = useRouter();
 
@@ -15,7 +18,7 @@ const file = ref(null);
 const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
-const planKey = "303e14f1-cc7b-49b5-9da4-fe392fdd2af9";
+const planKey = "117a23b3-9a76-4413-8732-47b377396ba6";
 const board = ref({});
 
 const handleFileChange = (event) => {
@@ -41,6 +44,7 @@ const uploadPost = async () => {
     boardRegistDto.value = {
       title: title.value,
       contents: contents.value,
+      createUser: store.userId,
     };
     // console.log(boardRegistDto.value
     // 제목과 컨텐츠는 json 형태로
@@ -110,12 +114,12 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
-  isModalOpen.value = true;
+  // isModalOpen.value = true;
 };
 
 const closeFileModal = () => {
   isFileModalOpen.value = false;
-  isModalOpen.value = false;
+  // isModalOpen.value = false;
 };
 </script>
 
