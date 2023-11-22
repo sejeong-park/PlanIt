@@ -38,7 +38,7 @@ onMounted(() => {
 
   if (typedElement.value) {
     new Typed(typedElement.value, {
-      strings: ["여행을 계획하는 순간부터,<br> 새로운 세계를 발견하는 모든 순간까지", "당신의 여행을 위한 우주적 계획.", "지금 바로 PLAN IT !"],
+      strings: ["여행을 계획하는 순간부터,<br> 새로운 세계를 발견하는 모든 순간", "당신의 여행을 위한 우주적 계획.", "지금 바로 PLAN IT !"],
       typeSpeed: 200, // 타이핑 속도 조절
       startDelay : 500, // 시작 전 지연시간
       backSpeed : 50, //백스페이스 속도

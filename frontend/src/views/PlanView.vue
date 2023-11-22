@@ -4,6 +4,7 @@ import ContentInfoItem from '@/components/Plan/ContentInfoItem.vue';
 import {ref, onMounted } from "vue";
 import { listFestival } from "@/api/tripAttraction";
 import { convertDateFormat } from "@/util/dateUtil";
+import mockupdata from "@/util/mockup-data";
 
 let today = new Date(); // 오늘 날짜
 const startStr = ref('');
@@ -25,7 +26,17 @@ const getFestivalList = () => {
     listFestival(
         param.value, // param 설정
         ({data}) => {
-            festivalList.value = data.response.body.items.item; // result api 결과
+            const responseData = data.response.body.items.item;
+            responseData.forEach((item) => {
+                const object = {
+                    title : item.title,
+                    info1 : item.addr1 + " " + item.addr2,
+                    info2 : item.eventstartdate + " ~ " + item.eventenddate,
+                    image : item.firstimage
+                };
+                festivalList.value.push(object);
+            })
+            // festivalList.value = data.response.body.items.item; // result api 결과
             console.log(festivalList.value);
         },
         (error) => {
@@ -34,17 +45,25 @@ const getFestivalList = () => {
     )
 }
 
+const recommendHeader = ref({});
+const recommendList = ref(mockupdata);
+
 onMounted(() => {
     getFestivalList(); //  해제 시키기
     // 출력해줄 날짜 나타내기
     startStr.value = convertDateFormat(todayDate, 'YY.MM.DD');
     endStr.value = convertDateFormat(oneMonthLaterDate, 'YY.MM.DD');
 
-    const festivalSubtitle = startStr.value + "부터 " + endStr.value + "까지의 다양한 축제 정보입니다."
+    const festivalSubtitle = startStr.value + "부터 " + endStr.value + "까지의 다양한 축제 정보"
     festivalHeader.value = {
         title: "축제의 매력🎉 그리고 여행의 설렘🚘",
         subtitle: festivalSubtitle
     };
+
+    recommendHeader.value = {
+        title : "서울에서 떠나는 주말 여행 🏝",
+        subtitle : "이번주는 잠시 일상을 떠나보는 건 어떤가요?"
+    }
 
 })
 
@@ -59,9 +78,8 @@ onMounted(() => {
         </div>
         <div class = "information-section">
             <div class = "hotplace-section">
-                <ContentInfoItem />
-            
-            </div>
+                <ContentInfoItem :resultList = "recommendList" :resultHeader = "recommendHeader"/> 
+            </div> 
             <div class = "festival-section">
                 <ContentInfoItem :resultList = "festivalList" :resultHeader = "festivalHeader"/> 
             </div>

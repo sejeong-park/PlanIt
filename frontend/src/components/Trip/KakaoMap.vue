@@ -150,7 +150,7 @@ watch( [() => props.planResultData, kakaoMapStatus],
                 }
             });
             makePolyLine(polyline);
-            loadResultMarkers(date);
+            loadResultMarkers(date)
             Array.prototype.push.apply(totalPosition.value, positions.value); // 전체 포지션에 대한 결과
     })}
     // 날짜 기준 종료
@@ -220,7 +220,7 @@ const loadResultMarkers = (date) => {
             xAnchor : 0.5
         });
 
-        markers.value.push(marker);
+        // markers.value.push(marker);
     })
 
 }
