@@ -1,9 +1,12 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, defineProps } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
+const props = defineProps(["planKey"]);
+// console.log("asdsad", planKey.planKey);
+const planKey = props.planKey;
 const store = useUserStore();
 
 const router = useRouter();
@@ -18,7 +21,6 @@ const file = ref(null);
 const isModalOpen = ref(false);
 
 const baseUrl = "http://localhost:/boards";
-const planKey = "117a23b3-9a76-4413-8732-47b377396ba6";
 const board = ref({});
 
 const handleFileChange = (event) => {

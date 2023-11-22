@@ -67,6 +67,7 @@ const router = createRouter({
           path: "regist",
           name: "board-regist",
           component: () => import("@/components/board/BoardRegistComponent.vue"),
+          props: (route) => ({ planKey: route.query.planKey }), // Pass the planKey as a prop
         },
         {
           path: "detail/:boardId",

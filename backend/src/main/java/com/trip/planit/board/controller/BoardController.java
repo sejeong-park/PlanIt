@@ -70,6 +70,7 @@ public class BoardController {
 	 * @throws IllegalStateException
 	 */
 	@ApiOperation(value = "게시글을 등록합니다.", notes = "게시글을 등록합니다")
+	@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.POST})
 	@PostMapping(value = "/{planKey}")
 	public ResponseEntity<?> regist(
 			@PathVariable String planKey,
