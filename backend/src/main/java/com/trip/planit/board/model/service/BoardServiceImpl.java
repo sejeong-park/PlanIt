@@ -49,6 +49,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardListPageDto findAllBoardForPage(Map<String, String> map) throws SQLException {
 		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("word", map.get("word") == null ? "" : map.get("word")); 
 		int currentPage = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
 		int sizePerPage = Integer.parseInt(map.get("spp") == null ? "6" : map.get("spp"));
 		int start = currentPage * sizePerPage - sizePerPage;
