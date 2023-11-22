@@ -11,11 +11,5 @@ import com.trip.planit.attraction.model.dto.AttractionSearchDto;
 
 @Mapper
 public interface AttractionMapper {
-	List<AttractionSearchResultDto> selectSido(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoGugun(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoKeyword(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoGugunKeyword(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoContentTypeId(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoGugunContentTypeId(AttractionSearchDto attractionSearchDto) throws SQLException;
-	List<AttractionSearchResultDto> selectSidoGugunKeywordContentTypeId(AttractionSearchDto attractionSearchDto) throws SQLException;
+	List<AttractionSearchResultDto> selectAttractionBySearch(AttractionSearchDto attractionSearchDto) throws SQLException;
 }
