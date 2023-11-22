@@ -183,62 +183,70 @@ const closeFileModal = () => {
         <img :src="file" alt="Selected File" class="preview-image" />
       </div>
       <div class="sc-jHkVzv hrosqC">
-        <label
-          for="thumbnail-upload"
-          class="sc-jWUzzU hhwHgR"
-          style="
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-          "
-          >썸네일 업로드</label
-        >
-        <input
-          type="file"
-          accept="image/*"
-          id="thumbnail-upload"
-          style="display: none"
-          @change="handleFileChange"
-        />
-      </div>
-      <div class="modal-btns">
-        <button
-          @click="closeFileModal"
-          style="
-            background-color: #d9534f;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-          "
-          class="cancel-button"
-        >
-          취소
-        </button>
-        <button
-          class="complete-button"
-          style="
-            background-color: gray;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-          "
-          @click="uploadPost"
-        >
-          출간하기
-        </button>
+        <div class="modal-btns">
+          <label
+            for="thumbnail-upload"
+            class="sc-jWUzzU hhwHgR"
+            style="
+              background-color: #4caf50;
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              cursor: pointer;
+              border-radius: 4px;
+            "
+            >썸네일 업로드</label
+          >
+          <input
+            type="file"
+            accept="image/*"
+            id="thumbnail-upload"
+            style="display: none"
+            @change="handleFileChange"
+          />
+        </div>
+        <div>
+          <button
+            @click="closeFileModal"
+            style="
+              background-color: #d9534f;
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              cursor: pointer;
+              border-radius: 4px;
+            "
+            class="cancel-button"
+          >
+            취소
+          </button>
+          <button
+            class="complete-button"
+            style="
+              background-color: gray;
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              cursor: pointer;
+              border-radius: 4px;
+            "
+            @click="uploadPost"
+          >
+            저장하기
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.hrosqC {
+  display: flex;
+}
+.modal-btns {
+  display: flex;
+}
 .modal-title > p {
   font-weight: 900;
 }
@@ -339,7 +347,7 @@ body {
   border: 1px solid #ccc;
   z-index: 2;
   border-radius: 1rem;
-  min-width: 40rem;
+  min-width: 20rem;
   min-height: 25rem;
 
   .modal-title {
@@ -374,7 +382,8 @@ body {
 
 .yes-files-container {
   margin-bottom: 5rem; /* Adjust the margin as needed to create spacing */
-
+  display: flex; // 가로로 나열
+  justify-content: center; // 중앙 정렬
   .preview-image {
     max-width: 15rem; /* 이미지의 최대 너비를 부모 요소에 맞게 설정 */
     max-height: 20rem; /* 이미지의 최대 높이를 부모 요소에 맞게 설정 */

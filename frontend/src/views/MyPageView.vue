@@ -15,7 +15,7 @@ const changeTab = (tabName) => {
     <div class="tab-container">
       <div
         :class="{ 'active-tab': activeTab === 'board' }"
-        id="board-tab"
+        id="tab"
         @click="changeTab('board')"
         style="margin-left: 10.7rem"
       >
@@ -23,7 +23,7 @@ const changeTab = (tabName) => {
       </div>
       <div
         :class="{ 'active-tab': activeTab === 'travel' }"
-        id="travel-tab"
+        id="tab"
         @click="changeTab('travel')"
         style="margin-left: 15rem"
       >
@@ -54,20 +54,21 @@ body {
   display: flex;
   border-bottom: 1px solid var(--color-gray50);
   max-width: 50rem;
+  transition: border-bottom 0.3s; /* 실선의 이동에 대한 애니메이션을 추가 */
 }
 
 .active-tab {
-  //   background-color: #3498db; /* 파란색으로 변경 */
   border-bottom: 1px solid blue;
   color: black;
   font-weight: 700;
 }
 
-.tab {
+#tab {
   cursor: pointer;
   padding: 10px 20px;
   margin-right: 10px;
   transition: background-color 0.3s;
+  font-weight: 400;
 }
 
 .tab:hover {
