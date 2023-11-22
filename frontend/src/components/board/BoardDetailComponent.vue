@@ -28,7 +28,9 @@ const updateContent = (event) => {
 
 onMounted(async () => {
   try {
-    const boardResponse = await axios.get("http://localhost:/boards/" + boardId);
+    const boardResponse = await axios.get(
+      "http://localhost:/boards/" + boardId
+    );
 
     // 첫번째 비동기 작업
     board.value = {
@@ -41,7 +43,9 @@ onMounted(async () => {
     };
     // console.log("board : ", board.value);
     // 두번째 비동기 작업
-    const planResponse = await axios.get("http://localhost:/plans/" + board.value.planKey);
+    const planResponse = await axios.get(
+      "http://localhost:/plans/list/" + board.value.planKey
+    );
 
     // console.log(planResponse.data);
 
@@ -110,17 +114,27 @@ const closeFileModal = () => {
 
 const deleteBoard = () => {
   // console.log("deleteBoard 호출 성공 : ", deleteBoard);
-  axios.delete("http://localhost:/boards/" + board.value.boardId).then((response) => {
-    // console.log(response);
-    router.replace({ name: "board-list" });
-  });
+  axios
+    .delete("http://localhost:/boards/" + board.value.boardId)
+    .then((response) => {
+      // console.log(response);
+      router.replace({ name: "board-list" });
+    });
 };
 </script>
 
 <template>
   <div class="modify-delete-btn" :class="{ fixed: isFixed }">
-    <button id="board-modify-btn" @click="openFileModal" style="cursor: pointer">수정</button>
-    <button id="board-delete-btn" @click="deleteBoard" style="cursor: pointer">삭제</button>
+    <button
+      id="board-modify-btn"
+      @click="openFileModal"
+      style="cursor: pointer"
+    >
+      수정
+    </button>
+    <button id="board-delete-btn" @click="deleteBoard" style="cursor: pointer">
+      삭제
+    </button>
   </div>
 
   <!-- modal -->
@@ -144,7 +158,12 @@ const deleteBoard = () => {
       data-id="editor-tistory"
       contenteditable="true"
       spellcheck="false"
-      style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px"
+      style="
+        overflow-y: hidden;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 50px;
+      "
       data-mce-style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px;"
       role="textbox"
       aria-multiline="true"
@@ -188,27 +207,21 @@ const deleteBoard = () => {
 
   <div class="detail-scroll" @scroll="handleScroll">
     <div class="container__Container-sc-5ea7eb67-0 sc-4d05c194-0 iLKpSA ixIhnv">
-      <div class="container__Container-sc-5ea7eb67-0 sc-beeac02a-1 iLKpSA TXJjD">
-        <div size="18" color="gray" class="text__Text-sc-6cffe184-0 gYBzzu">둘째날.</div>
+      <div
+        class="container__Container-sc-5ea7eb67-0 sc-beeac02a-1 iLKpSA TXJjD"
+      >
+        <div size="18" color="gray" class="text__Text-sc-6cffe184-0 gYBzzu">
+          둘째날.
+        </div>
       </div>
-      <div class="container__Container-sc-5ea7eb67-0 sc-beeac02a-2 iLKpSA hkqvVg">
+      <div
+        class="container__Container-sc-5ea7eb67-0 sc-beeac02a-2 iLKpSA hkqvVg"
+      >
         <div class="text__Text-sc-6cffe184-0 sc-beeac02a-0 haSmSi kxcCfC">
           <p>
             <strong>{{ board.title }}</strong
             ><br />
             {{ board.contents }}
-            반나절은 다낭 시내에서, 이후에는 오행산과 호이안에서 보낸다. 전통과 빼어난 자연경관
-            그리고 은은하게 빛나는 야경까지. 구석구석 자리잡은 다낭의 멋으로 지루할 틈이 없다.
-            반나절은 다낭 시내에서, 이후에는 오행산과 호이안에서 보낸다. 전통과 빼어난 자연경관
-            그리고 은은하게 빛나는 야경까지. 구석구석 자리잡은 다낭의 멋으로 지루할 틈이 없다.
-            반나절은 다낭 시내에서, 이후에는 오행산과 호이안에서 보낸다. 전통과 빼어난 자연경관
-            그리고 은은하게 빛나는 야경까지. 구석구석 자리잡은 다낭의 멋으로 지루할 틈이 없다.
-            반나절은 다낭 시내에서, 이후에는 오행산과 호이안에서 보낸다. 전통과 빼어난 자연경관
-            그리고 은은하게 빛나는 야경까지. 구석구석 자리잡은 다낭의 멋으로 지루할 틈이 없다.
-            반나절은 다낭 시내에서, 이후에는 오행산과 호이안에서 보낸다. 전통과 빼어난 자연경관
-            그리고 은은하게 빛나는 야경까지. 구석구석 자리잡은 다낭의 멋으로 지루할 틈이 없다.
-            <br />
-            · 예상 소요시간 : 7시간
           </p>
         </div>
       </div>
@@ -258,7 +271,11 @@ const deleteBoard = () => {
                   <div size="16" class="text__Text-sc-6cffe184-0 jdWASn">
                     {{ plan.planDate }}
                   </div>
-                  <div size="13" color="gray500" class="text__Text-sc-6cffe184-0 dnGFrr">
+                  <div
+                    size="13"
+                    color="gray500"
+                    class="text__Text-sc-6cffe184-0 dnGFrr"
+                  >
                     {{ plan.title }}
                   </div>
                 </div></a
@@ -284,7 +301,8 @@ const deleteBoard = () => {
     border: none;
     font-size: 30px;
     color: #202020;
-    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic", dotum, sans-serif;
+    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic",
+      dotum, sans-serif;
     resize: none;
     outline: 0 none;
     line-height: 40px;
@@ -307,8 +325,8 @@ const deleteBoard = () => {
   font-size: 14px;
   min-height: 370px;
   max-width: 860px;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "Apple SD Gothic Neo", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;
@@ -324,7 +342,12 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 1); /* Adjust alpha for more transparency */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    1
+  ); /* Adjust alpha for more transparency */
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 2;
@@ -444,7 +467,11 @@ body {
 .iQHLcW {
   position: absolute;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--color-white) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    var(--color-white) 100%
+  );
   width: 100%;
   height: 150px;
   bottom: 49px;
