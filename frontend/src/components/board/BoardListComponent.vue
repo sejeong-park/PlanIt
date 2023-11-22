@@ -20,42 +20,12 @@ const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
 const param = ref({
   pgno: currentPage.value.toString(),
   spp: VITE_ARTICLE_LIST_SIZE.toString(),
+  word: "",
 });
 
 onMounted(() => {
   getArticleList();
 });
-// 화면이 띄어지자마자 바로 게시글들을 보여주기 위해
-// onMounted(() => {
-//   getArticleList();
-// });
-
-// 서버에서 아티클 정보를 가져온다.
-// const getArticleList = () => {
-//   console.log("서버에서 글목록 얻어오자!!", param.value);
-//   listArticles(
-//     param.value,
-//     ({ data }) => {
-//       articles.value = data.articles;
-//     },
-//     (error) => {
-//       console.log(error);
-//     }
-//   );
-// };
-
-// const getArticleList = () => {
-//   // console.log("getArticleList 호출!", param.value);
-//   axios.get("http://localhost:/boards/", param.value).then((response) => {
-//     console.log(response.data);
-//     response.data.articles.forEach((data) => {
-//       // console.log("data:", data);
-//       articles.value.push(data);
-//     });
-//     currentPage.value = response.data.currentPage;
-//     totalPage.value = response.data.totalPage;
-//   });
-// };
 
 const getArticleList = () => {
   axios
@@ -82,59 +52,117 @@ const onPageChange = (val) => {
 </script>
 
 <template>
-  <a-row id="page-top">
-    <h2><strong>컨텐츠</strong></h2>
-  </a-row>
-
-  <a-row class="card-container">
-    <div v-for="article in articles" :key="article.boardId" class="card">
-      <div v-if="article.base64Image !== null">
-        <router-link
-          :to="{
-            name: 'board-detail',
-            params: { boardId: article.boardId },
-            state: {
-              boardId: article.boardId,
-            },
-          }"
-          ><img
-            :src="'data:image/jpeg;base64,' + article.base64Image"
-            alt="Card Image"
-            class="hover-opacity"
-        /></router-link>
-      </div>
-      <div v-if="article.base64Image === null">
-        <router-link
-          :to="{
-            name: 'board-detail',
-            params: { boardId: article.boardId },
-            state: {
-              boardId: article.boardId,
-            },
-          }"
-          ><img src="@\assets\img\trip.jpg" alt="Card Image" class="hover-opacity"
-        /></router-link>
-      </div>
-      <router-link
-        :to="{
-          name: 'board-detail',
-          params: { boardId: article.boardId },
-          state: {
-            boardId: article.boardId,
-          },
-        }"
-        ><p>{{ article.title }}</p>
-      </router-link>
+  <div class="page-container">
+    <div class="search-container">
+      <form class="search-form">
+        <div class="search-inputs">
+          <input
+            type="text"
+            v-model="param.word"
+            placeholder="제목으로 검색"
+            class="searchType"
+          />
+          <button class="searchVal" type="button" @click="getArticleList">
+            검색
+          </button>
+        </div>
+      </form>
     </div>
-  </a-row>
-  <VPageNavigation
-    :current-page="currentPage"
-    :total-page="totalPage"
-    @pageChange="onPageChange"
-  ></VPageNavigation>
+    <a-row id="page-top">
+      <h2><strong>컨텐츠</strong></h2>
+    </a-row>
+
+    <a-row class="card-container">
+      <div v-for="article in articles" :key="article.boardId" class="card">
+        <div v-if="article.base64Image !== null">
+          <router-link
+            :to="{
+              name: 'board-detail',
+              params: { boardId: article.boardId },
+              state: {
+                boardId: article.boardId,
+              },
+            }"
+            ><img
+              :src="'data:image/jpeg;base64,' + article.base64Image"
+              alt="Card Image"
+              class="hover-opacity"
+          /></router-link>
+        </div>
+        <div v-if="article.base64Image === null">
+          <router-link
+            :to="{
+              name: 'board-detail',
+              params: { boardId: article.boardId },
+              state: {
+                boardId: article.boardId,
+              },
+            }"
+            ><img
+              src="@\assets\img\trip.jpg"
+              alt="Card Image"
+              class="hover-opacity"
+          /></router-link>
+        </div>
+        <router-link
+          :to="{
+            name: 'board-detail',
+            params: { boardId: article.boardId },
+            state: {
+              boardId: article.boardId,
+            },
+          }"
+          ><p>{{ article.title }}</p>
+        </router-link>
+      </div>
+    </a-row>
+    <VPageNavigation
+      :current-page="currentPage"
+      :total-page="totalPage"
+      @pageChange="onPageChange"
+    ></VPageNavigation>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+.search-inputs {
+  display: flex;
+  margin-left: 1rem;
+}
+
+.searchType {
+  padding: 0.5rem;
+  border-style: none;
+}
+
+.searchVal {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.searchVal:hover {
+  border: 1px solid pink;
+}
+.search-container {
+  position: absolute;
+  top: 0;
+  right: 28rem;
+  padding: 1rem;
+
+  .search-form {
+    display: flex;
+  }
+}
+
+.page-container {
+  position: relative;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
