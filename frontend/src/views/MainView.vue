@@ -74,10 +74,14 @@ onMounted(() => {
             >Sign in</a-button
           >
         </div>
-
-        <a-button type="primary" class="planit-btn custom-btn" @click="goPlanit"
-          >Plan It !</a-button
-        >
+        <div v-show="loginStatus">
+          <a-button
+            type="primary"
+            class="planit-btn custom-btn"
+            @click="goPlanit"
+            >Plan It !</a-button
+          >
+        </div>
       </div>
     </div>
   </div>
