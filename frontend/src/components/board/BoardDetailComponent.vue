@@ -12,6 +12,9 @@ const { boardId } = history.state;
 
 const board = ref({});
 
+const title = ref("");
+const contents = ref("");
+
 const planDetails = ref([]);
 
 const updateTitle = ref("");
@@ -41,6 +44,10 @@ onMounted(async () => {
       contents: boardResponse.data.contents,
       planKey: boardResponse.data.planKey,
     };
+    title.value = boardResponse.data.title;
+    contents.value = boardResponse.data.contents;
+
+    // console.log(title, contents);
     // console.log("board : ", board.value);
     // 두번째 비동기 작업
     const planResponse = await axios.get(
@@ -87,6 +94,7 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
+  updateTitle.value = title.value;
 };
 
 const updatePost = () => {
@@ -170,6 +178,7 @@ const deleteBoard = () => {
       aria-label="글 내용 입력"
       @input="updateContent"
     >
+      <p v-html="contents"></p>
       <p data-ke-size="size16"><br /></p>
     </body>
     <div class="modal-buttons">
