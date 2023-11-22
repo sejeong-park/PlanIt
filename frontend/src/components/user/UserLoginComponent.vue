@@ -28,6 +28,7 @@ const login = function () {
         alert("로그인 성공!!");
         store.loginStatus = true;
         store.userId = userId.value;
+        console.log("userId : ", store.userId);
         const { accessToken } = response.data;
 
         axios.defaults.headers.common["Authorization"] = accessToken;

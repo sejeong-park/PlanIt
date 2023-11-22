@@ -55,7 +55,7 @@ const logout = function () {
           <div v-if="store.loginStatus">
             <a-menu-item key="1" @click="logout()">로그아웃</a-menu-item>
             <a-menu-item key="2"
-              ><router-link to="/users/myPage"
+              ><router-link :to="{ name: 'user-mypage' }"
                 >나의 계획</router-link
               ></a-menu-item
             >

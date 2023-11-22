@@ -11,35 +11,25 @@ const router = createRouter({
       component: MainView,
     },
     {
-      path: '/plans',
-      name: 'plans',
-      component : PlanView,
+      path: "/plans",
+      name: "plans",
+      component: PlanView,
     },
     {
-      path : '/plans/planning',
-      name : 'planning',
-      component : () => import("@/views/TripView.vue")
+      path: "/plans/planning",
+      name: "planning",
+      component: () => import("@/views/TripView.vue"),
     },
     {
       // 데이터 결과 View 만들기 위해 라우터 먼저 테스트
-      path : '/plans/:planKey',
-      name : 'result',
-      component : () => import("@/views/TripResultView.vue")
+      path: "/plans/:planKey",
+      name: "result",
+      component: () => import("@/views/TripResultView.vue"),
     },
     {
       path: "/modal",
       name: "modal-test",
       component: () => import("@/components/modal/ParentComponent.vue"),
-    },
-    {
-      path: "/plans",
-      children: [
-        {
-          path: "regist", // 일단 동적 라우팅 (/: planKey는 사용 하지 않겠음, )
-          name: "plan-detail-regist",
-          component: () => import("@/views/PlanDetailRegister.vue"),
-        },
-      ],
     },
     {
       path: "/users",
@@ -56,6 +46,11 @@ const router = createRouter({
           name: "login",
           component: () => import("@/components/user/UserLoginComponent.vue"),
         },
+        {
+          path: "mypage",
+          name: "user-mypage",
+          component: () => import("@/views/MyPageView.vue"),
+        },
       ],
     },
     {
@@ -71,14 +66,13 @@ const router = createRouter({
         {
           path: "regist",
           name: "board-regist",
-          component: () =>
-            import("@/components/board/BoardRegistComponent.vue"),
+          component: () => import("@/components/board/BoardRegistComponent.vue"),
+          props: (route) => ({ planKey: route.query.planKey }), // Pass the planKey as a prop
         },
         {
           path: "detail/:boardId",
           name: "board-detail",
-          component: () =>
-            import("@/components/board/BoardDetailComponent.vue"),
+          component: () => import("@/components/board/BoardDetailComponent.vue"),
         },
         {
           path: "thumbnailtest",

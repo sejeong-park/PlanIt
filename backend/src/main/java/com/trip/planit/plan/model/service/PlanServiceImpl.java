@@ -25,11 +25,6 @@ public class PlanServiceImpl implements PlanService{
 	}
 	
 	@Override
-	public List<PlanListDto> findAllPlan() throws SQLException {
-		return planMapper.selectAllPlan();
-	}
-
-	@Override
 	public void writePlanDetail(List<PlanDetailDto> planDetailDtos) throws SQLException {
 		planMapper.insertPlanDetail(planDetailDtos);
 	}
@@ -58,4 +53,15 @@ public class PlanServiceImpl implements PlanService{
 	public void updatePlanDetail(List<PlanUpdateDetailDto> updateDtos) throws SQLException {
 		planMapper.updatePlanDetail(updateDtos);
 	}
+
+	@Override
+	public List<PlanListDto> findMyPlans(String createUser) throws SQLException {
+		return planMapper.selectMyPlans(createUser);
+	}
+
+	@Override
+	public List<PlanListDto> findAllPlan() throws SQLException {
+		return planMapper.selectAllPlan();
+	}
+	
 }
