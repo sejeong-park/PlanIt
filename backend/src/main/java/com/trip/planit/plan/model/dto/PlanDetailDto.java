@@ -19,4 +19,5 @@ public class PlanDetailDto {
 	private String title;
 	private String content;
 	private int attractionId;
+	private String overview;
 }

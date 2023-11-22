@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -206,6 +207,24 @@ public class PlanController {
 			System.out.println("list : " + list.toString());
 			if(list != null && !list.isEmpty()) {
 				return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+			
+		} catch (SQLException e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@ApiOperation(value="마의 페이지, 나의 여행 계획")
+	@GetMapping("/mypage")
+	public ResponseEntity<?> planMypage(@RequestParam("createUser") String createUser){
+		try {
+			
+			List<PlanListDto> myList =  planService.findMyPlans(createUser);
+			System.out.println("list : " + myList.toString());
+			if(myList != null && !myList.isEmpty()) {
+				return new ResponseEntity<List<PlanListDto>>(myList, HttpStatus.OK);
 			}else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}

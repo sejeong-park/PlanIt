@@ -45,8 +45,8 @@ onMounted(async () => {
     // planDetails 정렬
     planDetails.value.sort((a, b) => {
       // planDate 기준으로 오름차순 정렬
-      if (a.planDate < b.planDate) return -1;
-      if (a.planDate > b.planDate) return 1;
+      if (a.startDate < b.startDate) return -1;
+      if (a.startDate > b.startDate) return 1;
 
       // planDate가 같으면 sequence 기준으로 오름차순 정렬
       if (a.sequence < b.sequence) return -1;

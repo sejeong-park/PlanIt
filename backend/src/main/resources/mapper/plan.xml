@@ -41,18 +41,18 @@
 	</insert>
 	
 	<insert id="insertPlanDetail" parameterType="list">
-	insert into trip_details(plan_date, plan_key, sequence, title, content, attraction_id)
+	insert into trip_details(plan_date, plan_key, sequence, title, content, attraction_id, overview)
 			values
 		<foreach collection="list" item="planDetailDto" separator=",">
 			(
 			#{planDetailDto.planDate}, #{planDetailDto.planKey}, #{planDetailDto.sequence}, 
-			#{planDetailDto.title}, #{planDetailDto.content}, #{planDetailDto.attractionId}
+			#{planDetailDto.title}, #{planDetailDto.content}, #{planDetailDto.attractionId}, #{planDetailDto.overview}
 			)
 		</foreach>
 	</insert>
 	
-	<select id="selectAllPlan" resultMap="planListDto">
-		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans;
+	<select id="selectMyPlans" resultMap="planListDto" parameterType="String">
+		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans where create_user = #{createUser};
 	</select>
 	
 	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">

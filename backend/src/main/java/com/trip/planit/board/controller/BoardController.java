@@ -60,7 +60,6 @@ public class BoardController {
 
 	@Value("${file.path}")
 	private String uploadPath;
-
 	
 	/**
 	 * 게시글 등록 API 넘겨 받는 값 : planKey, 게시글 title, create_user(유저
@@ -75,12 +74,14 @@ public class BoardController {
 	public ResponseEntity<?> regist(
 			@PathVariable String planKey,
 			@RequestPart BoardRegistDto boardRegistDto,
-			@RequestPart MultipartFile file) throws IllegalStateException, IOException {
+			@RequestPart(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		try {
 			boardRegistDto.setPlanKey(planKey);
+			
+			System.out.println("file : " + file);
 
 			// System.out.println(file.getOriginalFilename());
-			if (!file.isEmpty() && file != null) {
+			if (file != null) {
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
 //				String saveFolder = uploadPath + File.separator + today;
 				File folder = new File(uploadPath);

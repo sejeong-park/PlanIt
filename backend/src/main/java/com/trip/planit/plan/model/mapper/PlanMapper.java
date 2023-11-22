@@ -15,7 +15,7 @@ public interface PlanMapper {
 	void insertPlan(PlanRegistDto planRegistDto) throws SQLException;
 	void insertPlanDetail(List<PlanDetailDto> planDetailDtos) throws SQLException;
 	List<PlanDetailDto> selectPlanDetail(String planKey) throws SQLException;
-	List<PlanListDto> selectAllPlan() throws SQLException;
+	List<PlanListDto> selectMyPlans(String createUser) throws SQLException;
 	void deletePlan(String planKey) throws SQLException;
 	void deletePlanDetail(String planKey) throws SQLException;
 	void updatePlanDetail(List<PlanUpdateDetailDto> updateDtos) throws SQLException; 

@@ -112,10 +112,7 @@ const onPageChange = (val) => {
               boardId: article.boardId,
             },
           }"
-          ><img
-            src="@\assets\img\trip.jpg"
-            alt="Card Image"
-            class="hover-opacity"
+          ><img src="@\assets\img\trip.jpg" alt="Card Image" class="hover-opacity"
         /></router-link>
       </div>
       <router-link
@@ -153,6 +150,10 @@ const onPageChange = (val) => {
   }
 }
 
+.card:hover {
+  transform: scale(1.05); /* 호버 시에 크기를 1.05배로 조절 */
+}
+
 .card {
   flex: 0 1 calc(33.33% - 1rem); /* 카드의 너비를 조절합니다. 100% / 5 = 20%, 여유 공간을 조절하기 위해 약간 작게 설정했습니다. */
   max-width: calc(33.33% - 1rem);
@@ -163,6 +164,7 @@ const onPageChange = (val) => {
   text-align: center;
   box-sizing: border-box; /* 패딩 및 테두리를 박스 모델에 포함시킴으로써 겹치지 않도록 한다. */
   text-align: left; // 제목을 좌측으로 정렬
+  transition: transform 0.2s; /* 변화에 대한 애니메이션 효과 추가 */
 }
 
 img {
