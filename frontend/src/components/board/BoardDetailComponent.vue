@@ -211,7 +211,7 @@ const deleteBoard = () => {
         class="container__Container-sc-5ea7eb67-0 sc-beeac02a-1 iLKpSA TXJjD"
       >
         <div size="18" color="gray" class="text__Text-sc-6cffe184-0 gYBzzu">
-          둘째날.
+          {{ board.title }}
         </div>
       </div>
       <div
@@ -219,8 +219,7 @@ const deleteBoard = () => {
       >
         <div class="text__Text-sc-6cffe184-0 sc-beeac02a-0 haSmSi kxcCfC">
           <p>
-            <strong>{{ board.title }}</strong
-            ><br />
+            <br />
             {{ board.contents }}
           </p>
         </div>
@@ -238,48 +237,36 @@ const deleteBoard = () => {
             class="container__Container-sc-5ea7eb67-0 itinerary__Stack-sc-681c5310-4 iLKpSA eAsDxC"
           >
             <div
-              class="container__Container-sc-5ea7eb67-0 flex-box__FlexBox-sc-df192771-1 iLKpSA gPRjNB"
-              v-for="plan in planDetails"
-              :key="plan.planDate"
+              class="container__Container-sc-5ea7eb67-0 itinerary__Stack-sc-681c5310-4 iLKpSA eAsDxC"
             >
+              <!-- 각 날짜에 대한 반복문 -->
               <div
-                class="container__Container-sc-5ea7eb67-0 flex-box__FlexBox-sc-df192771-1 itinerary__Timeline-sc-681c5310-0 iLKpSA gPRjNB kpPodn"
+                v-for="(date, dateIndex) in dateList"
+                :key="dateIndex"
+                class="day-container"
               >
-                <div
-                  class="container__Container-sc-5ea7eb67-0 flex-box__FlexBox-sc-df192771-1 iLKpSA hUhUTq"
-                >
+                <div class="day">
+                  <span>{{ date }}</span>
+                </div>
+                <div class="day-schedule">
+                  <!-- 각 날짜 및 시퀀스에 대한 반복문 -->
                   <div
-                    class="container__Container-sc-5ea7eb67-0 flex-box__FlexBox-sc-df192771-1 itinerary___StyledFlexBox-sc-681c5310-10 iLKpSA bFFkHa gdAsaT"
+                    v-for="plan in planDetails.filter(
+                      (item) => item.planDate === date
+                    )"
+                    :key="plan.sequence"
+                    class="schedule-section"
                   >
-                    <span
-                      color="rgba(151, 95, 254, 1)"
-                      class="badge__BadgeBase-sc-f2fd9e41-0 badge__CircleBadge-sc-f2fd9e41-2 gJtAJZ fzwqRU"
-                      >{{ plan.sequence }}</span
-                    >
+                    <div class="schedule-index">
+                      <div class="circle-index">{{ plan.sequence }}</div>
+                      <div class="vertical-line"></div>
+                    </div>
+                    <div class="schedule-card">
+                      {{ plan.title }}
+                    </div>
                   </div>
-                  <div
-                    class="container__Container-sc-5ea7eb67-0 itinerary__Duration-sc-681c5310-6 iLKpSA hXEfgc"
-                  ></div>
                 </div>
               </div>
-              <a
-                class="container__Container-sc-5ea7eb67-0 flex-box__FlexBoxItem-sc-df192771-0 itinerary__CardWrapper-sc-681c5310-3 iLKpSA cIkAYa AiTlk"
-                ><div
-                  class="segment__CardFrame-sc-e2042e2a-1 iSLaBf itinerary__PoiCard-sc-681c5310-1 itinerary___StyledPoiCard-sc-681c5310-2 jjciAh iDvhtl"
-                  radius="6"
-                >
-                  <div size="16" class="text__Text-sc-6cffe184-0 jdWASn">
-                    {{ plan.planDate }}
-                  </div>
-                  <div
-                    size="13"
-                    color="gray500"
-                    class="text__Text-sc-6cffe184-0 dnGFrr"
-                  >
-                    {{ plan.title }}
-                  </div>
-                </div></a
-              >
             </div>
           </div>
         </div>
@@ -289,6 +276,93 @@ const deleteBoard = () => {
 </template>
 
 <style lang="scss" scoped>
+.day-container {
+  width: 47rem;
+  height: 100%;
+  background-color: white;
+  margin-right: 1rem;
+  border: 1px solid rgb(187, 183, 183);
+  border-radius: 10px;
+  margin-top: 2rem;
+
+  .day {
+    width: 100%;
+    height: 7%;
+    justify-content: center;
+    padding: 1rem;
+
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-gray800);
+
+    span {
+      font-size: 23px;
+      color: var(--planit-dark);
+    }
+  }
+
+  .day-schedule {
+    width: 100%;
+    height: auto;
+    /* background-color: yellow; */
+    padding: 0 0.5rem;
+  }
+}
+
+.schedule-section {
+  display: flex;
+  flex-direction: row;
+
+  .schedule-index {
+    margin: 0 1rem;
+    position: relative;
+
+    .vertical-line {
+      width: 2px;
+      height: 100%;
+      background-color: var(--color-gray300);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .circle-index {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
+      background-color: var(--planit-primary);
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+  }
+
+  .schedule-card {
+    flex-grow: 1;
+    min-height: 3em; /* 현재 폰트의 크기 배수 */
+    background-color: #f2f4f6;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    margin: 1rem;
+    line-height: 1.3;
+
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 5px rgba(128, 128, 128, 0.5),
+      0 5px 10px rgba(128, 128, 128, 0.22);
+  }
+}
+.iLKpSA {
+  box-sizing: border-box;
+  float: none;
+  // display: flex;
+}
 .post-title {
   width: 860px;
   margin: 35px auto 17px;

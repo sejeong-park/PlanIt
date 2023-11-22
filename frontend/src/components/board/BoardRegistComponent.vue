@@ -143,7 +143,12 @@ const closeFileModal = () => {
       data-id="editor-tistory"
       contenteditable="true"
       spellcheck="false"
-      style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px"
+      style="
+        overflow-y: hidden;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 50px;
+      "
       data-mce-style="overflow-y: hidden; padding-left: 10px; padding-right: 10px; padding-bottom: 50px;"
       role="textbox"
       aria-multiline="true"
@@ -153,9 +158,17 @@ const closeFileModal = () => {
       <p data-ke-size="size16"><br /></p>
     </body>
 
-    <div class="content-aside">
-      <div class="wrap_btn" v-if="isModalOpen === false">
-        <button id="publish-layer-btn" class="btn btn-default" @click="openFileModal">완료</button>
+    <div v-show="!isFileModalOpen">
+      <div class="content-aside">
+        <div class="wrap_btn" v-if="isModalOpen === false">
+          <button
+            id="publish-layer-btn"
+            class="btn btn-default"
+            @click="openFileModal"
+          >
+            완료
+          </button>
+        </div>
       </div>
     </div>
 
@@ -241,7 +254,8 @@ const closeFileModal = () => {
     border: none;
     font-size: 30px;
     color: #202020;
-    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic", dotum, sans-serif;
+    font-family: Noto Sans DemiLight, AppleSDGothicNeo-Regular, "Malgun Gothic",
+      dotum, sans-serif;
     resize: none;
     outline: 0 none;
     line-height: 40px;
@@ -264,8 +278,8 @@ const closeFileModal = () => {
   font-size: 14px;
   min-height: 370px;
   max-width: 860px;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "Apple SD Gothic Neo", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;
