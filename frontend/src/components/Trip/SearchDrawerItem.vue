@@ -23,26 +23,14 @@ const searchKeyword = ref(''); // 사용자의 검색
 
 const param = ref({})
 const searchList = ref([]);
-// const getTripAttraction = () => {
-//     console.log(param);
-//     listTripAttraction(
-//         param.value, // param 설정
-//         ({data}) => {
-//             searchList.value = data.response.body.items.item; // result api 결과
-//             tripSearchStore.setTotalSearchLocation(searchList.value); // pinia에 setting
-//         },
-//         (error) => {
-//             console.log(error)
-//         }
-//     )
-// }
 
 const getTripAttraction = () => {
     listTripAttraction(
         param.value,
         (response) => {
             searchList.value = response.data
-            console.log("조회 리스트 :: ", searchList);
+            tripSearchStore.setTotalSearchLocation(searchList.value);
+            console.log("조회 리스트 :: ", searchList.value);
         },
         (error) => {
             console.log(error);
@@ -166,7 +154,7 @@ const showDetailInfoModal = (data, index) => {
                             <div class = "card-div" @click = "moveMapLocation(item, index)">
                                 <div class = "card-section">
                                     <div class = "card-img">
-                                        <img v-if="item.firstimage" class = "card-image-src" :src = "item.firstimage" alt="{{ item.title }}의 원본 사진 첨부"/>
+                                        <img v-if="item.firstImage" class = "card-image-src" :src = "item.firstImage" alt="{{ item.title }}의 원본 사진 첨부"/>
                                         <img v-else class = "card-image-src" src="@/assets/img/logo/planit-fullsize-primary.png" alt = "이미지가 존재하지 않습니다."/>
                                     </div>
                                     <div class = "card-content">

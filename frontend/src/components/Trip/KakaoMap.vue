@@ -23,9 +23,9 @@ const markers = ref([]); // marker를 로드하는 함수
 const focusMarkerIdx = ref(); // markers에서 변경해줄 markerIdx (인덱스에서 접근한다.)
 
 // 마커 이미지 만들기 
-const imgSrc = "src/assets/img/map/map-marker-primary.png";
-const clickSrc = "src/assets/img/map/map-marker-point-1.png";
-const resultSrc = "src/assets/img/map/map-pin.png";
+const imgSrc = "/src/assets/img/map/map-marker-primary.png";
+const clickSrc = "/src/assets/img/map/map-marker-point-1.png";
+const resultSrc = "/src/assets/img/map/map-pin.png";
 const originMarkerImg = ref();
 const clickMarkerImg = ref();
 const resultMarkerImg = ref();
@@ -65,7 +65,7 @@ watch(
         positions.value = []; // 초기화
         tripSearchStore.searchLocationList.forEach((tripInfo) =>{
             let obj = {};
-            obj.latlng = new kakao.maps.LatLng(tripInfo.mapy, tripInfo.mapx); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
+            obj.latlng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
             obj.title = tripInfo.title;
             positions.value.push(obj);
         });
@@ -80,7 +80,7 @@ watch(
     ([focusLocation, isOpen]) => {
         // 입력받은 focus 확인
         if (focusLocation) {
-            const newCenter = new kakao.maps.LatLng(focusLocation.data.mapy, focusLocation.data.mapx);
+            const newCenter = new kakao.maps.LatLng(focusLocation.data.latitude, focusLocation.data.longitude);
             changeMarkerImg(focusLocation.index);
             adjustMapCenter(newCenter, isOpen);
         }
@@ -106,11 +106,11 @@ watch( [() => props.planResultData, kakaoMapStatus],
             targetItem[date].forEach((tripInfo, index, array) => {
 
                 // 만약 유저가 개인적으로 생성한 메모라면, 마커 생성하지 않는다.
-                if (!tripInfo.mapy || !tripInfo.mapx){
+                if (!tripInfo.latitude || !tripInfo.longitude){
                     console.log(`사용자가 등록한 일정 : ${tripInfo.title}`);
                 }else {
 
-                    const currentLatLng = new kakao.maps.LatLng(tripInfo.mapy, tripInfo.mapx); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
+                    const currentLatLng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
 
                     // 좌표들의 위치 구하기
                     positions.value.push({
@@ -120,8 +120,8 @@ watch( [() => props.planResultData, kakaoMapStatus],
 
                     if (index < array.length - 1){
                         const nextTripInfo = array[index + 1];
-                        if (nextTripInfo.mapx && nextTripInfo.mapy){
-                            const nextLatLng = new kakao.maps.LatLng(nextTripInfo.mapy, nextTripInfo.mapx);
+                        if (nextTripInfo.latitude && nextTripInfo.longitude){
+                            const nextLatLng = new kakao.maps.LatLng(nextTripInfo.latitude, nextTripInfo.longitude);
                             const obj = {
                                 path : [currentLatLng, nextLatLng],
                                 color : props?.colorDate[date]
@@ -298,19 +298,19 @@ const initMap = () => {
 };
 
 
-// // 화면이 켜지자 마자.
-// onMounted(() => {
-//     if (window.kakao && window.kakao.maps) {
-//         initMap();
-//     } else{
-//         const script = document.createElement("script");        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
-//             import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-//             }&libraries=services,clusterer`;
-//         /* global kakao */
-//         script.onload = () => kakao.maps.load(() => initMap());
-//         document.head.appendChild(script);
-//     }
-// });
+// 화면이 켜지자 마자.
+onMounted(() => {
+    if (window.kakao && window.kakao.maps) {
+        initMap();
+    } else{
+        const script = document.createElement("script");        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+            import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+            }&libraries=services,clusterer`;
+        /* global kakao */
+        script.onload = () => kakao.maps.load(() => initMap());
+        document.head.appendChild(script);
+    }
+});
 </script>
 <template>
     <div id="map"></div>
