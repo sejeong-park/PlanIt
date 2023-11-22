@@ -1,7 +1,7 @@
 <script setup set >
 import region from '@/util/region';
 import { listTripAttraction } from "@/api/tripAttraction";
-import {defineProps, ref} from 'vue'; 
+import {defineProps, ref, watch} from 'vue'; 
 import {useTripSearchStore} from '@/stores/trip';
 import {usePlanStore} from '@/stores/plan';
 import InfoModal from '@/components/Trip/item/InfoModal.vue';
@@ -21,40 +21,59 @@ const regionList = ref(region); // region.js에서 export 해온 값
 const regionResult = ref(['0']); // 사용자가 선택한 region의 값 (0은 전국 이라는 이름의 default)
 const searchKeyword = ref(''); // 사용자의 검색
 
-// 한국 관광공사 API를 이용해 리스트 불러오기
-// (크롤링 및 데이터 인입 시 수정 필요)
 const param = ref({})
 const searchList = ref([]);
+// const getTripAttraction = () => {
+//     console.log(param);
+//     listTripAttraction(
+//         param.value, // param 설정
+//         ({data}) => {
+//             searchList.value = data.response.body.items.item; // result api 결과
+//             tripSearchStore.setTotalSearchLocation(searchList.value); // pinia에 setting
+//         },
+//         (error) => {
+//             console.log(error)
+//         }
+//     )
+// }
+
 const getTripAttraction = () => {
-    console.log(param);
     listTripAttraction(
-        param.value, // param 설정
-        ({data}) => {
-            searchList.value = data.response.body.items.item; // result api 결과
-            tripSearchStore.setTotalSearchLocation(searchList.value); // pinia에 setting
+        param.value,
+        (response) => {
+            searchList.value = response.data
+            console.log("조회 리스트 :: ", searchList);
         },
         (error) => {
-            console.log(error)
+            console.log(error);
         }
     )
 }
+
 
 // 지역 설정
 const setSearchRegion = () => {
     // 지역을 설정 시, param 지정
     if (regionResult.value[0]!= '0'){
-        param.value.areaCode = regionResult.value[0];
+        param.value.sidoCode = regionResult.value[0];
         // 구군까지 지정되어있으면
-        if (regionResult.value.length > 1){
-            param.value.sigunguCode = regionResult.value[1]; 
+        if (regionResult.value[1] != 0){
+            param.value.gugun = regionResult.value[1]; 
         }
     }
 }
 
+// 검색어를 입력 받는다.
+watch(searchKeyword, () => {
+    param.value.keyword = searchKeyword;
+})
+
 // 검색 버튼을 클릭한다.
 const search = () => {
     console.log("Search 버튼 클릭");
+    console.log("param :: ", param.value);
     getTripAttraction(); // drawer의 리스트를 불러온다.
+    //param.value = null;
 }
 
 // searchList에서 조회되는 데이터 묶음
@@ -86,10 +105,6 @@ const showDetailInfoModal = (data, index) => {
     }
 }
 
-const handleOk = e => {
-    console.log(e);
-    infoOpen.value = false;
-}
 
 </script>
 
@@ -111,7 +126,7 @@ const handleOk = e => {
                     <!--@change : 값의 변경이 완료 된 후에 바뀜-->
                     <div class ="region-form">
                         <a-cascader size = "large" 
-                            v-model:value="regionResult" 
+                            v-model:value.lazy="regionResult" 
                             :bordered = "true"
                             :options="regionList" 
                             placeholder="지역 선택" 

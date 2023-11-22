@@ -35,8 +35,6 @@ function createMarkerImage(markerSize, imageOrigin) {
         imageOrigin,
         markerSize
     )
-    console.log("마커 생성 되었냐?", markerImage);
-
     return markerImage;
 }
 
