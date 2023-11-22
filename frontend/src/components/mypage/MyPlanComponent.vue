@@ -16,7 +16,6 @@ const postColors = ["#daf5f4", "#f1f5da", "#e3f5da"];
 
 const dateList = ref([]);
 const maxdate = ref("");
-const dateIndex = ref(0);
 
 onMounted(() => {
   axios.get("http://localhost:/plans/mypage", { params: { createUser } }).then((response) => {
@@ -31,9 +30,10 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = async (planKey) => {
   isFileModalOpen.value = true;
+  // console.log(planKey);
   // console.log("board : ", board.value);
   // 두번째 비동기 작업
-  const planResponse = await axios.get("http://localhost:/plans/" + planKey);
+  const planResponse = await axios.get("http://localhost:/plans/list/" + planKey);
 
   console.log("디테일 : ", planResponse.data);
 
@@ -63,15 +63,14 @@ const openFileModal = async (planKey) => {
       dateList.value.push(maxdate.value);
     }
   });
-
-  console.log("데이트리스트 ", dateList.value);
-  // console.log("planDetails :", planDetails.value);
-  // isModalOpen.value = true;
 };
 
 const closeFileModal = () => {
   isFileModalOpen.value = false;
   // isModalOpen.value = false;
+  planDetails.value = [];
+  dateList.value = [];
+  maxdate.value = 0;
 };
 </script>
 

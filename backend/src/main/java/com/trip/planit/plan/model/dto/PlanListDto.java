@@ -15,7 +15,6 @@ import lombok.ToString;
 public class PlanListDto {
 	private String planKey;
 	private String createUser;
-	private String title;
 	private Date startDate;
 	private Date endDate;
 	private Timestamp createAt;

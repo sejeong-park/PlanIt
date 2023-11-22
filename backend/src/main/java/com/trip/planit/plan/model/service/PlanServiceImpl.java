@@ -58,4 +58,10 @@ public class PlanServiceImpl implements PlanService{
 	public List<PlanListDto> findMyPlans(String createUser) throws SQLException {
 		return planMapper.selectMyPlans(createUser);
 	}
+
+	@Override
+	public List<PlanListDto> findAllPlan() throws SQLException {
+		return planMapper.selectAllPlan();
+	}
+	
 }
