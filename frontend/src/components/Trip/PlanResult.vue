@@ -3,8 +3,8 @@ import ResultByDay from "@/components/Trip/item/ResultByDay.vue";
 import { defineProps } from "vue";
 import { HomeOutlined } from "@ant-design/icons-vue";
 const props = defineProps({
-  totalData: Object,
-  colorDate: Object,
+    totalData: Object,
+    colorDate: Object,
 });
 // const data = props.totalData.scheduleList;
 // console.log("data : ", data["2023-11-22"][0].planKey);

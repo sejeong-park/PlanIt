@@ -38,6 +38,27 @@ function createMarkerImage(markerSize, imageOrigin) {
     return markerImage;
 }
 
+// kakao map 객체가 생성되기 전에 객체를 부르는 경우 때문에 init 뒤에 초기화를 묶어주었다.
+const initKakaoObj = () => {
+    originMarkerImg.value = createMarkerImage(new kakao.maps.Size(64, 64), imgSrc);
+    clickMarkerImg.value = createMarkerImage(new kakao.maps.Size(72, 72), clickSrc);
+}
+
+
+// Kakao Map 초기화
+const initMap = () => {
+    const initContainer = document.getElementById("map");
+    container.value = initContainer;
+    const options = {
+        center : new kakao.maps.LatLng(33.450701, 126.570667),
+        level : 3
+    };
+    
+    map.value = new kakao.maps.Map(container.value, options);
+    kakaoMapStatus.value = true;
+    initKakaoObj();
+};
+
 onMounted(() => {
     if (window.kakao && window.kakao.maps) {
         if (typeof kakao !== 'undefined' && kakao.maps){
@@ -57,6 +78,7 @@ onMounted(() => {
         document.head.appendChild(script);
     }
 });
+
 
 // 조회 리스트 뽑아오기
 watch(
@@ -93,72 +115,60 @@ watch(
 const resultPosition = ref({}); // date key 기준으로 묶음이 달라져야해서, object 형식으로 넣을 poistion
 watch( [() => props.planResultData, kakaoMapStatus], 
     ([data, kakaoMapStatus]) => {
-        // date를 기준으로 key-value
-        const targetItem = data.scheduleList; // 조회 정보만
-        const totalPosition = ref([]); // 전체 position에 대한 정보
-
+        if (!data) {
+            console.log("아직 결과 데이터 없음!!");
+        }
+        const targetItem = data?.scheduleList; // 조회 정보만
+        // console.log("targetItem :: ", targetItem);
+        // const totalPosition = ref([]); // 
+        console.log(targetItem);// 전체 position에 대한 정보
+        if (targetItem && typeof targetItem ==='object'){
         Object.keys(targetItem).forEach(date => {
+            console.log(targetItem[date]);
 
-            // 날짜별 일정 결과 만들기
             const polyline = []; // 폴리라인 만들기
             positions.value = []; // 일자별 일정 정보 초기화
-            
+
             targetItem[date].forEach((tripInfo, index, array) => {
+                console.log(tripInfo);
+                const currentLatLng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude);
+                
+                positions.value.push({
+                    latlng : currentLatLng,
+                    title : tripInfo.title
+                });
 
-                // 만약 유저가 개인적으로 생성한 메모라면, 마커 생성하지 않는다.
-                if (!tripInfo.latitude || !tripInfo.longitude){
-                    console.log(`사용자가 등록한 일정 : ${tripInfo.title}`);
-                }else {
-
-                    const currentLatLng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
-
-                    // 좌표들의 위치 구하기
-                    positions.value.push({
-                        latlng : currentLatLng,
-                        title : tripInfo.title
-                    }); 
-
-                    if (index < array.length - 1){
-                        const nextTripInfo = array[index + 1];
-                        if (nextTripInfo.latitude && nextTripInfo.longitude){
-                            const nextLatLng = new kakao.maps.LatLng(nextTripInfo.latitude, nextTripInfo.longitude);
-                            const obj = {
-                                path : [currentLatLng, nextLatLng],
-                                color : props?.colorDate[date]
-                            }
-                            polyline.push(obj);
+                if (index < array.lengt - 1 ){
+                    const nextTripInfo = array[index + 1];
+                    if (nextTripInfo.latitude && nextTripInfo.longitude) {
+                        const nextLatLng = new kakaoMapStatus.maps.LataLng(nextTripInfo.latitude, nextTripInfo.longitude);
+                        const object = {
+                            path : [currentLatLng, nextLatLng],
+                            color : "#F984BC"
                         }
-                    } // 탐색 종료
+                        polyline.push(object);
+                    }
                 }
-            })
-            makePolyLine(polyline); // polyLine 그리기
-            loadResultMarkers(date); // marker 그리기
-            Array.prototype.push.apply(totalPosition.value, positions.value); // 전체 포지션에 대한 결과            
-        })
+            });
+            console.log("polyline 결과 : ", polyline);
+            makePolyLine(polyline);
 
-        // 전체 포인트 기준으로 맵 이동 시키기
-        const bounds = totalPosition.value.reduce(
-            (bounds, position) => bounds.extend(position.latlng),
-            new kakao.maps.LatLngBounds()
-        );
+    })}
+    // 날짜 기준 종료
+})
 
-        map.value.setBounds(bounds);
-        
-    }
-)
-
-function makePolyLine(polyLineList){
-
-    for (var index = 0; index < polyLineList.length; index++){
+function makePolyLine(polyLineList) {
+    console.log("polyline :: ", polyLineList);
+    for (var index = 0; index < polyLineList.length; index++) {
         const item = polyLineList[index];
 
         var drawPolyline = new kakao.maps.Polyline({
-            map : map.value,
-            path : item.path,
-            strokeWeight : 7,
-            strokeColor : item.color,
-            strokeOpacity : 0.9,
-            strokeStyle : 'solid'
+            map: map.value,
+            path: item.path,
+            strokeWeight: 7,
+            strokeColor: item.color,
+            strokeOpacity: 0.9,
+            strokeStyle: "solid",
         });
     }
 }
@@ -276,41 +286,8 @@ const adjustMapCenter = (center, isOpen) => {
 };
 
 
-// kakao map 객체가 생성되기 전에 객체를 부르는 경우 때문에 init 뒤에 초기화를 묶어주었다.
-const initKakaoObj = () => {
-    originMarkerImg.value = createMarkerImage(new kakao.maps.Size(64, 64), imgSrc);
-    clickMarkerImg.value = createMarkerImage(new kakao.maps.Size(72, 72), clickSrc);
-}
 
 
-// Kakao Map 초기화
-const initMap = () => {
-    const initContainer = document.getElementById("map");
-    container.value = initContainer;
-    const options = {
-        center : new kakao.maps.LatLng(33.450701, 126.570667),
-        level : 3
-    };
-    
-    map.value = new kakao.maps.Map(container.value, options);
-    kakaoMapStatus.value = true;
-    initKakaoObj();
-};
-
-
-// 화면이 켜지자 마자.
-onMounted(() => {
-    if (window.kakao && window.kakao.maps) {
-        initMap();
-    } else{
-        const script = document.createElement("script");        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
-            import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-            }&libraries=services,clusterer`;
-        /* global kakao */
-        script.onload = () => kakao.maps.load(() => initMap());
-        document.head.appendChild(script);
-    }
-});
 </script>
 <template>
     <div id="map"></div>
