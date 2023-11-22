@@ -24,4 +24,5 @@ public interface BoardMapper {
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
 	List<BoardListDto> selectMyBoard(String createUser) throws SQLException;
+	void increaseHits(BoardListDto board) throws SQLException;
 }

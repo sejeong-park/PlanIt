@@ -33,11 +33,13 @@ const getArticleList = () => {
       params: param.value,
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       // 새로운 데이터를 받아올 때마다 articles 배열을 초기화
       articles.value = response.data.articles;
       currentPage.value = response.data.currentPage;
       totalPage.value = response.data.totalPageCount;
+
+      console.log("지금 테스트 ", articles.value);
     });
 };
 // 페이지 이동할 때 사용되는 메서드
@@ -104,16 +106,19 @@ const onPageChange = (val) => {
               class="hover-opacity"
           /></router-link>
         </div>
-        <router-link
-          :to="{
-            name: 'board-detail',
-            params: { boardId: article.boardId },
-            state: {
-              boardId: article.boardId,
-            },
-          }"
-          ><p>{{ article.title }}</p>
-        </router-link>
+        <div class="title-hits">
+          <router-link
+            :to="{
+              name: 'board-detail',
+              params: { boardId: article.boardId },
+              state: {
+                boardId: article.boardId,
+              },
+            }"
+            ><p>{{ article.title }}</p>
+          </router-link>
+          <p>조회수 : {{ article.hits }}</p>
+        </div>
       </div>
     </a-row>
     <VPageNavigation
@@ -125,6 +130,10 @@ const onPageChange = (val) => {
 </template>
 
 <style lang="scss" scoped>
+.title-hits {
+  display: flex;
+  justify-content: space-between;
+}
 .search-inputs {
   display: flex;
   margin-left: 1rem;

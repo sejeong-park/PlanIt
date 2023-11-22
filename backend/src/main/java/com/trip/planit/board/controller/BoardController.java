@@ -162,6 +162,9 @@ public class BoardController {
 		try {
 			int boardId = Integer.parseInt(boardIdVal);
 			BoardListDto board = boardService.findBoard(boardId);
+			int hit = board.getHits()+1;
+			board.setHits(hit);
+			boardService.increaseHits(board);
 			return new ResponseEntity<BoardListDto>(board, HttpStatus.OK);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -92,4 +92,9 @@
 		resultMap="boardListDto">
 		select * from boards where create_user = #{createUser}
 	</select>
+	
+	<update id="increaseHits" parameterType="boardListDto">
+		update boards set
+		hits = #{hits} where board_id= #{boardId}
+	</update>
 </mapper>

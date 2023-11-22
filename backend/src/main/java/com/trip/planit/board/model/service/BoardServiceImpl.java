@@ -105,4 +105,9 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardListDto> findMyBoard(String createUser) throws SQLException {
 		return boardMapper.selectMyBoard(createUser);
 	}
+
+	@Override
+	public void increaseHits(BoardListDto board) throws SQLException {
+		boardMapper.increaseHits(board);
+	}
 }

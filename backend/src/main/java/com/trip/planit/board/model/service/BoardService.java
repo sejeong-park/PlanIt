@@ -20,4 +20,6 @@ public interface BoardService {
 	void deleteBoard(String boardId) throws SQLException;
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
 	List<BoardListDto> findMyBoard(String createUser) throws SQLException;
+	void increaseHits(BoardListDto board) throws SQLException;
+
 }
