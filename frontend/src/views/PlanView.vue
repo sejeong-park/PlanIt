@@ -1,7 +1,7 @@
 <script setup>
 import PlanSchedule from '@/components/Plan/PlanSchedule.vue';
 import ContentInfoItem from '@/components/Plan/ContentInfoItem.vue';
-import {ref, onMounted, computed} from "vue";
+import {ref, onMounted } from "vue";
 import { listFestival } from "@/api/tripAttraction";
 import { convertDateFormat } from "@/util/dateUtil";
 
@@ -38,7 +38,7 @@ onMounted(() => {
     getFestivalList(); //  해제 시키기
     // 출력해줄 날짜 나타내기
     startStr.value = convertDateFormat(todayDate, 'YY.MM.DD');
-    endStr.value = convertDateFormat(todayDate, 'YY.MM.DD');
+    endStr.value = convertDateFormat(oneMonthLaterDate, 'YY.MM.DD');
 
     const festivalSubtitle = startStr.value + "부터 " + endStr.value + "까지의 다양한 축제 정보입니다."
     festivalHeader.value = {
@@ -68,8 +68,6 @@ onMounted(() => {
         </div>
     
     </div>
-    
-
 
 </template>
 <style scoped lang = "scss">

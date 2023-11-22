@@ -41,8 +41,6 @@ function getAllDatesBetween(startDate, endDate) {
         currentDate.setDate(currentDate.getDate() + 1); // 다음날 추가
     }
 
-    console.log(dateObj);
-
     return dateObj;
 }
 

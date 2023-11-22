@@ -8,11 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * s
- * 
- *
- */
 @Getter
 @Setter
 @ToString
@@ -24,4 +19,5 @@ public class PlanListDto {
 	private Date endDate;
 	private Timestamp createAt;
 	private Timestamp updateAt;
+	private String title;
 }

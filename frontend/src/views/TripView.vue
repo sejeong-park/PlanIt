@@ -1,9 +1,10 @@
 <script setup>
+import {ref} from "vue";
+import {useRouter} from "vue-router";
+
 import KakaoMap from '@/components/Trip/KakaoMap.vue';
 import SearchDrawerItem from '@/components/Trip/SearchDrawerItem.vue';
 import PlanDetail from "@/components/Trip/PlanDetail.vue"
-import {ref} from "vue";
-import {useRouter} from "vue-router";
 
 // drawer를 여는 함수
 const drawerOpen = ref(true); //drawer가 열리고 닫힘
@@ -13,7 +14,7 @@ const drawerWidth = '550px'; // drawer의 크기를 지정하고, 자식 컴포�
 const router = useRouter();
 function onSaved() {
     console.log("저장저장저장");
-    router.push({name : 'result'})
+    // router.push({name : 'result'})
 }
 
 </script>

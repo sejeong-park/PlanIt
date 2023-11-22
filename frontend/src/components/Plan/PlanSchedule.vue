@@ -1,32 +1,53 @@
 <script setup>
-import { ref, watch } from "vue";
-import {useRouter } from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { makePlanKey } from "@/api/plan";
+import { useUserStore } from "@/stores/user";
 import { usePlanStore } from "@/stores/plan";
+import { message } from 'ant-design-vue';
 
-const title = ref(""); // title
-const titleError = ref(false);
-const setSchedule = ref();
+const router = useRouter();
+const userStore = useUserStore();
 const planStore = usePlanStore();
 
-watch(title, () => {
-  // 확인 용
-  console.log(title.value);
-});
-
+const title = ref(""); // title
+const setSchedule = ref(null);
 const makeMyPlan = () => {
   
+  // 전체 일정 등록 Dto
+  const planRegistDto = {
+    title : title.value,
+    startDate : setSchedule.value[0],
+    endDate : setSchedule.value[1],
+    createUser : userStore.userId
+  };
+
+  // POST API 요청
+  makePlanKey(
+  planRegistDto
+  , (response) => {
+    planStore.planKey = response.data; // pinia에 저장
+    router.push({name : 'planning'}); // 결과 응답 받았을 경우, planning 페이지로 이동
+  } , (error) => {
+    if (error){
+      console.log("에러임")
+      console.log(error); 
+    }
+  });
 }
 
-// 플랜으로 이동
-const router = useRouter();
-// 버튼을 눌렀을 때 pinia에 데이터를 세팅 해준다.
-const goTrip = function () {
-  // if (title.value == '' || !setSchedule.value) {
-  //     titleError.value = true;
-  // }else {
-  planStore.setTripSchedule(setSchedule.value, title.value); // 스케줄 저장
-  // TODO :: local에서 axios 요청으로 planKey 반환 받고, router가 trip이 아닌 {planKey} 로 이어져야 한다.
-  router.push({ name: "trip" }); // trip으로 넘기기
+// Plan button 클릭 시 페이지 전환
+const makePlanIt = function () {
+
+  if (title.value.trim() === '') {
+    message.error('이번 여행을 공유할 제목을 지정해주세요');
+    return;
+  }
+  if (setSchedule.value == null) {
+    message.error('여행을 떠날 날짜를 입력해주세요.');
+    return;
+  }
+  makeMyPlan(); // plan 생성
 };
 </script>
 <template>
@@ -57,13 +78,13 @@ const goTrip = function () {
           </div>
           <!-- 이동 버튼 !! -->
           <div class="move-section">
-            <div class="goTripButton" @click="goTrip">
+            <div class="goTripButton" @click="makePlanIt">
               <a-tooltip
                 title="PlanIt 으로 일정을 설계하세요 !💫"
                 color="#526AF2"
               >
                 <template #title> </template>
-                <img class="planit-button" src="@/assets/img/logo/planit.svg" />
+                <img class="planit-button" src="@/assets/img/logo/planit.svg" alt = "plait 로고 버튼"/>
               </a-tooltip>
             </div>
           </div>

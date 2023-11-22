@@ -7,15 +7,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -73,41 +65,7 @@ public class PlanController {
 			return exceptionHandling(e);
 		}
 	}
-	/**
-	 * [
-  {
-    "attractionId": 1,
-    "content": "string1",
-    "planDate": "2023-11-09",
-    "planKey": "string",
-    "sequence": 1,
-    "title": "string1"
-  },
-{
-    "attractionId": 1,
-    "content": "string2",
-    "planDate": "2023-11-09",
-    "planKey": "string",
-    "sequence": 2,
-    "title": "string2"
-  },
-{
-    "attractionId": 1,
-    "content": "string2",
-    "planDate": "2023-11-10",
-    "planKey": "string",
-    "sequence": 2,
-    "title": "string2"
-  },
-{
-    "attractionId": 1,
-    "content": "string2",
-    "planDate": "2023-11-10",
-    "planKey": "string",
-    "sequence": 2,
-    "title": "string2"
-  }
-]
+	/*
 	 * @param planDetailDtos
 	 * @param planKey
 	 */
@@ -129,7 +87,22 @@ public class PlanController {
 			return exceptionHandling(e);
 		}
 	}
-	
+
+	@ApiOperation(value= "전체 여행 일정", notes="단일 여행 계획들을 가져온다.")
+	@ApiResponses({@ApiResponse(code=200, message="단일 계획 목록 가져오기 OK!"),
+			@ApiResponse(code=204, message="요청에 대해서 보내줄 수 있는 콘텐츠가 없습니다"),
+			@ApiResponse(code=404, message="서버로 요청받은 페이지를 찾을 수 없습니다."),
+			@ApiResponse(code=500, message="서버에 문제가 발생했습니다.")})
+	@GetMapping("/{planKey}")
+	public ResponseEntity<?> planInfo(@PathVariable String planKey) {
+		try {
+			PlanListDto planListDto = planService.findPlan(planKey);
+			return new ResponseEntity<PlanListDto>(planListDto, HttpStatus.OK);
+		}catch (SQLException e) {
+			return exceptionHandling(e);
+		}
+	}
+
 	/**
 	 * 여행 계획 상세 보기
 	 * 단일 여행 계획 수정 버튼을 눌렀을 때도 호출된다.
@@ -141,8 +114,8 @@ public class PlanController {
 		@ApiResponse(code=204, message="요청에 대해서 보내줄 수 있는 콘텐츠가 없습니다"),
 		@ApiResponse(code=404, message="서버로 요청받은 페이지를 찾을 수 없습니다."),
 		@ApiResponse(code=500, message="서버에 문제가 발생했습니다.")})
-	@GetMapping("/{planKey}")
-	public ResponseEntity<?> planDetail(@PathVariable("planKey") String planKey){
+	@GetMapping("/list/{planKey}")
+	public ResponseEntity<?> planDetail(@RequestParam String planKey){
 		try {
 			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
 			
@@ -203,7 +176,6 @@ public class PlanController {
 	public ResponseEntity<?> plans(){
 		try {
 			List<PlanListDto> list =  planService.findAllPlan();
-			System.out.println("list : " + list.toString());
 			if(list != null && !list.isEmpty()) {
 				return new ResponseEntity<List<PlanListDto>>(list, HttpStatus.OK);
 			}else {
