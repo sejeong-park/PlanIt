@@ -62,6 +62,11 @@ const logout = function () {
             <a-menu-item key="3"
               ><router-link to="/boards">게시판</router-link></a-menu-item
             >
+            <a-menu-item key="4"
+              ><router-link :to="{ name: 'plans' }"
+                >여행 계획 짜기</router-link
+              ></a-menu-item
+            >
           </div>
         </a-menu>
       </a-layout-header>
