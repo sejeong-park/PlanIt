@@ -114,12 +114,12 @@ const isFileModalOpen = ref(false);
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
-  isModalOpen.value = true;
+  // isModalOpen.value = true;
 };
 
 const closeFileModal = () => {
   isFileModalOpen.value = false;
-  isModalOpen.value = false;
+  // isModalOpen.value = false;
 };
 </script>
 

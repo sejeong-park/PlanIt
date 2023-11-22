@@ -16,7 +16,7 @@ onMounted(() => {
     response.data.forEach((data) => {
       articles.value.push(data);
     });
-    console.log(articles.value);
+    // console.log(articles.value);
   });
 });
 </script>
