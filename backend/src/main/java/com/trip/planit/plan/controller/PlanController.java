@@ -115,7 +115,7 @@ public class PlanController {
 		@ApiResponse(code=404, message="서버로 요청받은 페이지를 찾을 수 없습니다."),
 		@ApiResponse(code=500, message="서버에 문제가 발생했습니다.")})
 	@GetMapping("/list/{planKey}")
-	public ResponseEntity<?> planDetail(@RequestParam String planKey){
+	public ResponseEntity<?> planDetail(@PathVariable String planKey){
 		try {
 			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
 			

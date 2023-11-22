@@ -3,12 +3,15 @@ import KakaoMap from '@/components/Trip/KakaoMap.vue';
 import PlanResult from "@/components/Trip/PlanResult.vue";
 import {ref, onMounted} from 'vue';
 import {usePlanStore} from "@/stores/plan";
+import { useRoute } from 'vue-router';
+import {getPlanDetailList, getPlanInfo} from "@/api/plan"
 
 // API를 로컬에서 get 받아와야 한다.!!! // 임시로 전 페이지에서 저장한 내역으로 테스트 한다.
 
 const resultPlanInfo = ref(null);
 
 const planStore = usePlanStore();
+const route = useRoute();
 const colorByDate = ref({});
 
 function generateRandomDarkColor() {
@@ -25,9 +28,51 @@ const generateColorByDate = () => {
     })
 }
 
+
+// 전체 데이터 결과 가져오기
+const getResultSchedule = () => {
+    
+    // 일시 띄워주기
+    const planKey = route.params.planKey;
+    getPlanInfo(planKey,
+        (response) => {
+            planStore.setTripSchedule(response.data);
+            resultPlanInfo.value = planStore.tripScheduleInfo; // 기본 PlanInfo 저장
+        }
+    )
+    
+    // 이 컴포넌트에서 화면을 뿌리기 위해 만든 resultPlanInfo변수에 넣는다.
+    getPlanDetailList(planKey, 
+            (response) => {
+                // Date 별 그룹 화
+                const groupByDate = response.data.reduce(
+                    (acc, item) => {
+                        const date = item.planDate;
+                        if (!acc[date]) acc[date] = []; // 날짜 없으면 생성
+                        acc[date].push(item);
+                        return acc;
+                    }, {});
+                for (const date in groupByDate) {
+                    groupByDate[date].sort((a, b) => a.sequence - b.sequence);
+                }
+                console.log("결과", groupByDate);
+                resultPlanInfo.value.scheduleList = groupByDate;
+            },(error) => {
+                console.log(error);
+            }
+        )
+    
+    // resultPlanInfo.value.scheduleList = groupByDate;
+    console.log(resultPlanInfo);
+
+
+}
+
+
 onMounted(() => {
     resultPlanInfo.value = planStore.tripScheduleInfo;
     generateColorByDate();
+    getResultSchedule()
 });
 
 
