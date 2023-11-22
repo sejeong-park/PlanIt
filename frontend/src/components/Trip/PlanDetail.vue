@@ -42,11 +42,11 @@ const savePlanTotal = () => {
                 "sequence" : index + 1,
                 "title" : item.title
             }
-            if ("contentid" in item) {
-                //TODO :: attraction API 연결 후 detailResult.overview 추가 필요
-                detailResult.attractionId = item.contentid; // 만약 Attraction 추가 정보라면, 넣기
-                // detailResult.overview = item.descript~~
+            if ("contentId" in item) {
+                detailResult.attractionId = item.contentId; // 만약 Attraction 추가 정보라면, 넣기
+                detailResult.overview = item.overview;
             }
+            console.log("detailREsult!! , ", detailResult);
             scheduleDetailList.push(detailResult);
         }) 
     })

@@ -66,7 +66,6 @@ onMounted(() => {
         }else {
             setTimeout(initMap, 1000);
         }
-        console.log("kakao", kakao);
     } else {
         const script = document.createElement("script");
         script.onload = () => kakao.maps.load(initMap);
@@ -111,17 +110,13 @@ watch(
 );
 
 
-// 결과 창으로 넘어갔을 때, 카카오맵에 내가 선택한 일정의 정보를 노출시킨다.
-const resultPosition = ref({}); // date key 기준으로 묶음이 달라져야해서, object 형식으로 넣을 poistion
 watch( [() => props.planResultData, kakaoMapStatus], 
     ([data, kakaoMapStatus]) => {
         if (!data) {
             console.log("아직 결과 데이터 없음!!");
         }
         const targetItem = data?.scheduleList; // 조회 정보만
-        // console.log("targetItem :: ", targetItem);
-        // const totalPosition = ref([]); // 
-        console.log(targetItem);// 전체 position에 대한 정보
+        const totalPosition = ref([]);
         if (targetItem && typeof targetItem ==='object'){
         Object.keys(targetItem).forEach(date => {
             console.log(targetItem[date]);
@@ -130,31 +125,42 @@ watch( [() => props.planResultData, kakaoMapStatus],
             positions.value = []; // 일자별 일정 정보 초기화
 
             targetItem[date].forEach((tripInfo, index, array) => {
-                console.log(tripInfo);
-                const currentLatLng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude);
                 
-                positions.value.push({
-                    latlng : currentLatLng,
-                    title : tripInfo.title
-                });
-
-                if (index < array.lengt - 1 ){
-                    const nextTripInfo = array[index + 1];
-                    if (nextTripInfo.latitude && nextTripInfo.longitude) {
-                        const nextLatLng = new kakaoMapStatus.maps.LataLng(nextTripInfo.latitude, nextTripInfo.longitude);
-                        const object = {
-                            path : [currentLatLng, nextLatLng],
-                            color : "#F984BC"
+                if (!tripInfo.latitude || !tripInfo.longitude){
+                    console.log(`사용자가 등록한 일정 ::: ${tripInfo.title}`);
+                } else {
+                    const currentLatLng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude);
+                    positions.value.push({
+                        latlng : currentLatLng,
+                        title : tripInfo.title
+                    });
+                    
+                    if (index < array.length - 1 ){
+                        const nextTripInfo = array[index + 1];
+                        if (nextTripInfo.latitude && nextTripInfo.longitude) {
+                            console.log(nextTripInfo.latitude , nextTripInfo.longitude)
+                            const nextLatLng = new kakao.maps.LatLng(nextTripInfo.latitude, nextTripInfo.longitude);
+                            const object = {
+                                path : [currentLatLng, nextLatLng],
+                                color : "#F984BC"
+                            }
+                            polyline.push(object);
                         }
-                        polyline.push(object);
                     }
                 }
             });
-            console.log("polyline 결과 : ", polyline);
             makePolyLine(polyline);
-
+            loadResultMarkers(date);
+            Array.prototype.push.apply(totalPosition.value, positions.value); // 전체 포지션에 대한 결과
     })}
     // 날짜 기준 종료
+// 전체 포인트 기준으로 맵 이동 시키기
+    const bounds = totalPosition.value.reduce(
+            (bounds, position) => bounds.extend(position.latlng),
+            new kakao.maps.LatLngBounds()
+    );
+
+    map.value.setBounds(bounds);
 })
 
 function makePolyLine(polyLineList) {
