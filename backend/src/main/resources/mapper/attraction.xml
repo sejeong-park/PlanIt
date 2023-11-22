@@ -31,49 +31,25 @@
 		from attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} and title like
 		CONCAT('%',#{keyword},'%') limit 0,20
 	</select>
-	
-	<select id="selectSidoGugunKeyword"
-		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * 
-		from attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} 
-		and title like CONCAT('%',#{keyword},'%') 
-		and gugun_code = #{gugunCode} limit 0,20
-	</select>
 
-	<select id="selectSido"
+	<select id = "selectAttractionBySearch"
 		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * from
-		attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} limit 0,20
-	</select>
-
-	<select id="selectSidoContentTypeId"
-		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * from
-		attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} 
-		and content_type_id = #{contentTypeId} limit 0,20
-	</select>
-	
-	<select id="selectSidoGugunContentTypeId"
-		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * from
-		attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} 
-		and content_type_id = #{contentTypeId} 
-		and gugun_code = #{gugunCode} limit 0,20
-	</select>
-	
-	<select id="selectSidoGugunKeywordContentTypeId"
-		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * from
-		attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} 
-		and content_type_id = #{contentTypeId} 
-		and gugun_code = #{gugunCode} 
-		and title like CONCAT('%',#{keyword},'%') limit 0,20
-	</select>
-	
-	<select id="selectSidoGugun"
-		parameterType="attractionSearchDto" resultMap="searchResultDto">
-		select * from
-		attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} 
-		and gugun_code = #{gugunCode} limit 0,20
+		select *
+		from attraction_info info inner join attraction_description descript
+		on info.content_id = descript.content_id
+		<where>
+			<if test = "sidoCode != null">
+				AND sido_code  = #{sidoCode}
+			</if>
+		    <if test = "gugunCode != null">
+				AND gugun_code = #{gugunCode}
+			</if>
+			<if test = "keyword != null and keyword != ''">
+				And title like CONCAT('%' , #{keyword}, '%')
+			</if>
+			<if test = "contentTypeId != null">
+				AND content_type_id = #{contentTypeId}
+			</if>
+		</where>
 	</select>
 </mapper>
