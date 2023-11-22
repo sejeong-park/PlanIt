@@ -28,12 +28,11 @@ const login = function () {
         alert("로그인 성공!!");
         store.loginStatus = true;
         store.userId = userId.value;
-        console.log("userId : ", store.userId);
         const { accessToken } = response.data;
 
         axios.defaults.headers.common["Authorization"] = accessToken;
 
-        router.replace({ path: "/" });
+        router.replace({ name: "plans" });
       } else {
         alert("로그인 실패!!");
       }
@@ -79,7 +78,11 @@ watch(userPassword, () => {
         style="width: 20rem"
       >
       </a-input>
-      <div v-if="loginCheck && userPassword === ''" class="valid">
+      <div
+        v-if="loginCheck && userPassword === ''"
+        class="valid"
+        style="margin-right: 11.3rem"
+      >
         <p style="color: red">패스워드를 입력해주세요</p>
       </div>
       <div v-if="userPassword !== '' && notFoundUser" class="valid">

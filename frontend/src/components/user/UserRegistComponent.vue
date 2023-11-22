@@ -103,7 +103,7 @@ watch(email, () => {
       >
       </a-input>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid">
+      <div v-if="clickRegist" class="valid" style="margin-right: 10rem">
         <p v-if="userPassword === ''" style="color: red">
           패스워드를 입력해주세요
         </p>
@@ -121,6 +121,7 @@ watch(email, () => {
       <div
         v-if="passwordCheck !== '' && passwordCheck !== userPassword"
         class="valid"
+        style="margin-right: 12rem"
       >
         <p style="color: red">비밀번호가 일치하지 않습니다.</p>
       </div>
@@ -135,7 +136,7 @@ watch(email, () => {
       >
       </a-input>
       <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid">
+      <div v-if="clickRegist" class="valid" style="margin-right: 8.7rem">
         <p v-if="userName === ''" style="color: red">이름을 입력해주세요</p>
       </div>
 
@@ -150,7 +151,9 @@ watch(email, () => {
       </a-input>
       <!-- 에러 메시지 표시 -->
       <div v-if="clickRegist" class="valid" style="margin-right: 14rem">
-        <p v-if="email === ''" style="color: red">이메일을 입력해주세요</p>
+        <p v-if="email === ''" style="color: red; margin-left: 2.3rem">
+          이메일을 입력해주세요
+        </p>
         <p v-if="email !== '' && emailCheck !== ''" style="color: red">
           {{ emailCheck }}
         </p>
