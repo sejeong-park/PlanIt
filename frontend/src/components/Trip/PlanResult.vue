@@ -31,12 +31,11 @@ console.log("totalData : ", props.totalData.planKey);
     </div>
     <div class="result-footer">
       <a-button style="height: 50px" shape="round" size="large">
-        <HomeOutlined />
+        <a href = "/"><HomeOutlined /></a>
       </a-button>
-      <!-- <a-button type="primary" style = "width : 300px; height : 50px" shape = "round" size = "large">게시판에 내 일정 등록하기</a-button> -->
-      <router-link :to="{ name: 'board-regist', query: { planKey: props.totalData.planKey } }"
+      <a-button type="primary" style = "width : 300px; height : 50px; margin-left : 18px;" shape = "round" size = "large"><router-link :to="{ name: 'board-regist', query: { planKey: props.totalData.planKey } }"
         >게시글로 저장하기</router-link
-      >
+      ></a-button>
     </div>
   </div>
 </template>

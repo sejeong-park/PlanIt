@@ -124,7 +124,8 @@ public class BoardController {
 	public ResponseEntity<?> list(
 	        @RequestParam @ApiParam(value="게시글을 얻기위한 부가정보", required = true) Map<String, String> map) throws Exception {
 	    try {
-	        String path ="C:\\board\\upload\\";
+//	        String path ="C:\\board\\upload\\";
+			String path = "/Users/sj.park/upload/";
 	        String folder = "";
 	        BoardListPageDto boardListPageDtos = boardService.findAllBoardForPage(map);
 
@@ -222,7 +223,8 @@ public class BoardController {
 		
 		try {
 			List<BoardListDto> answerBoards = new ArrayList<BoardListDto>();
-			String path ="C:\\board\\upload\\";
+//			String path ="C:\\board\\upload\\";
+			String path = "/Users/sj.park/upload/";
 	        String folder = "";
 			List<BoardListDto> boardListDtos = boardService.findMyBoard(createUser);
 			for (BoardListDto boardListDto : boardListDtos) {

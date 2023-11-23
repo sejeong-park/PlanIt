@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { notification } from 'ant-design-vue';
 
 const router = useRouter();
 
@@ -14,6 +15,15 @@ const passwordCheck = ref("");
 const duplicateCheck = ref(false);
 const emailCheck = ref("");
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 정규표현식
+
+const openNotificationWithIcon = (type, message, description) => {
+  notification[type]({
+    message: message,
+    description : description,
+    placement : 'top',
+    });
+}
+
 
 const regist = function () {
   // console.log(userId.value, password.value, nickname.value);
@@ -45,7 +55,7 @@ const regist = function () {
       })
       .then((response) => {
         // coduplicateCheck("회원가입 성공 여부 ", response);
-        alert("회원가입에 성공하셨습니다!");
+        openNotificationWithIcon('success', '회원가입에 성공하였습니다!', '로그인을 진행해주세요.');
         userPassword.value = "";
         passwordCheck.value = "";
         router.replace({ name: "login" });

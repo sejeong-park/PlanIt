@@ -55,7 +55,7 @@ const logout = function () {
             </div> -->
             <a-menu-item key="1"
               ><router-link :to="{ name: 'plans' }"
-                >여행 계획 짜기</router-link
+                >일정 만들기</router-link
               ></a-menu-item
             >
             <a-menu-item key="2"
@@ -63,7 +63,7 @@ const logout = function () {
             >
             <a-menu-item key="3"
               ><router-link :to="{ name: 'user-mypage' }"
-                >나의 계획</router-link
+                >나의 일정</router-link
               ></a-menu-item
             >
             <a-menu-item key="4" @click="logout()">로그아웃</a-menu-item>
