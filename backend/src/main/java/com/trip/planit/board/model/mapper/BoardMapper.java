@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.trip.planit.board.model.dto.BoardListDto;
 import com.trip.planit.board.model.dto.BoardRegistDto;
 import com.trip.planit.board.model.dto.BoardUpdateDto;
+import com.trip.planit.board.model.dto.CommentDto;
 import com.trip.planit.board.model.dto.FileInfoDto;
 
 @Mapper
@@ -25,4 +26,6 @@ public interface BoardMapper {
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
 	List<BoardListDto> selectMyBoard(String createUser) throws SQLException;
 	void increaseHits(BoardListDto board) throws SQLException;
+	void insertComment(CommentDto commentDto) throws SQLException;
+	List<CommentDto> selectAllComment(int boardId) throws SQLException;
 }

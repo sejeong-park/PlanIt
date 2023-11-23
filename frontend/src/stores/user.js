@@ -6,8 +6,9 @@ export const useUserStore = defineStore(
   () => {
     const loginStatus = ref(false);
     const userId = ref("");
+    const userName = ref("");
 
-    return { loginStatus, userId };
+    return { loginStatus, userId, userName };
   },
   // { persist: { storage: localStorage } }
   { persist: { storage: sessionStorage } }

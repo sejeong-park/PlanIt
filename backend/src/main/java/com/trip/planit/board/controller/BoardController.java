@@ -41,6 +41,7 @@ import com.trip.planit.board.model.dto.BoardListDto;
 import com.trip.planit.board.model.dto.BoardListPageDto;
 import com.trip.planit.board.model.dto.BoardRegistDto;
 import com.trip.planit.board.model.dto.BoardUpdateDto;
+import com.trip.planit.board.model.dto.CommentDto;
 import com.trip.planit.board.model.dto.FileInfoDto;
 import com.trip.planit.board.model.service.BoardService;
 
@@ -240,6 +241,32 @@ public class BoardController {
 	            answerBoards.add(boardListDto);
 			}
 	        return ResponseEntity.ok(answerBoards);
+		} catch (SQLException e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@ApiOperation(value = "댓글 추가")
+	@PostMapping("/comment")
+	public void registComment(@RequestBody CommentDto commentDto){
+		try {
+			System.out.println("comment controller 호출" + commentDto);
+			
+			boardService.registComment(commentDto);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@ApiOperation(value = "댓글 추가")
+	@GetMapping("/comment/{boardId}")
+	public ResponseEntity<?> registComment(@PathVariable("boardId") String boardIdValue){
+		try {
+//			System.out.println(boardIdValue);
+			int boardId = Integer.parseInt(boardIdValue);
+			List<CommentDto> commentList = boardService.findAllComment(boardId);
+			return new ResponseEntity<List<CommentDto>>(commentList, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);
 		}

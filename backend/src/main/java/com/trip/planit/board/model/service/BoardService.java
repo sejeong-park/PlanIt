@@ -8,6 +8,7 @@ import com.trip.planit.board.model.dto.BoardListDto;
 import com.trip.planit.board.model.dto.BoardListPageDto;
 import com.trip.planit.board.model.dto.BoardRegistDto;
 import com.trip.planit.board.model.dto.BoardUpdateDto;
+import com.trip.planit.board.model.dto.CommentDto;
 import com.trip.planit.board.model.dto.FileInfoDto;
 
 public interface BoardService {
@@ -21,5 +22,6 @@ public interface BoardService {
 	void updateBoard(BoardUpdateDto boardUpdateDto) throws SQLException;
 	List<BoardListDto> findMyBoard(String createUser) throws SQLException;
 	void increaseHits(BoardListDto board) throws SQLException;
-
+	void registComment(CommentDto commentDto) throws SQLException;
+	List<CommentDto> findAllComment(int boardId) throws SQLException;
 }

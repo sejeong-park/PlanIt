@@ -12,6 +12,7 @@ import com.trip.planit.board.model.dto.BoardListDto;
 import com.trip.planit.board.model.dto.BoardListPageDto;
 import com.trip.planit.board.model.dto.BoardRegistDto;
 import com.trip.planit.board.model.dto.BoardUpdateDto;
+import com.trip.planit.board.model.dto.CommentDto;
 import com.trip.planit.board.model.dto.FileInfoDto;
 import com.trip.planit.board.model.mapper.BoardMapper;
 
@@ -109,5 +110,15 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void increaseHits(BoardListDto board) throws SQLException {
 		boardMapper.increaseHits(board);
+	}
+
+	@Override
+	public void registComment(CommentDto commentDto) throws SQLException {
+		boardMapper.insertComment(commentDto);
+	}
+
+	@Override
+	public List<CommentDto> findAllComment(int boardId) throws SQLException {
+		return boardMapper.selectAllComment(boardId);
 	}
 }

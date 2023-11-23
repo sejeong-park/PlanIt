@@ -49,6 +49,7 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser, HttpServletResponse response)
 			throws Exception {
 
+//		System.out.println(requestUser);
 		Map<String, Object> result = new HashMap<String, Object>();
 		User validUser = userService.loginUser(requestUser); // 로그인
 
@@ -79,9 +80,12 @@ public class UserController {
 			// 발급 받은 refresh token db에 저장
 			authService.setRefreshToken(new Auth(validUser.getUserId(), refreshToken));
 		}
-
+		
+		User userData = userService.findByUserId(requestUser.getUserId());
+		
 		// AccessToken은 json으로 전달
 		result.put("accessToken", accessToken);
+		result.put("userName", userData.getUserName());
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CREATED);
 	}
 

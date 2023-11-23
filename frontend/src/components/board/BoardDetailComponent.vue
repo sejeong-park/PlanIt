@@ -1,10 +1,16 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
-
+import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 
+const store = useUserStore();
+
 const router = useRouter();
+const commentDto = ref({});
+const comment = ref("");
+const commentList = ref([]);
+const userName = store.userName;
 
 // const { board } = history.state; // 이렇게 받는다.
 const { boardId } = history.state;
@@ -82,8 +88,17 @@ onMounted(async () => {
     });
 
     console.log("데이트리스트 ", dateList.value);
+
     // console.log("planDetails :", planDetails.value);
     // console.log("planRes : ", planResponse);
+
+    const commentResponse = await axios.get(
+      "http://localhost:/boards/comment/" + boardId
+    );
+
+    // console.log("commentResponse ", commentResponse);
+    commentList.value = commentResponse.data;
+    console.log(commentList.value);
   } catch (error) {
     console.log("Error : ", error);
   }
@@ -91,6 +106,19 @@ onMounted(async () => {
 // console.log(history.state);
 
 const isFileModalOpen = ref(false);
+const isCommentModalOpen = ref(false);
+
+const openCommentModal = () => {
+  if (userName === "") {
+    alert("로그인 한 유저만 댓글을 열람하거나 작성할 수 있습니다!");
+    return;
+  }
+  isCommentModalOpen.value = true;
+};
+
+const closeCommentModal = () => {
+  isCommentModalOpen.value = false;
+};
 
 const openFileModal = () => {
   isFileModalOpen.value = true;
@@ -129,10 +157,31 @@ const deleteBoard = () => {
       router.replace({ name: "board-list" });
     });
 };
+
+const addComment = () => {
+  commentDto.value = {
+    contents: comment.value,
+    userName: store.userName,
+    boardId: boardId,
+  };
+  axios
+    .post("http://localhost:/boards/comment", commentDto.value)
+    .then((response) => {
+      commentDto.value = null;
+      comment.value = "";
+    });
+};
 </script>
 
 <template>
   <div class="modify-delete-btn" :class="{ fixed: isFixed }">
+    <button
+      id="board-comment-btn"
+      @click="openCommentModal"
+      style="cursor: pointer"
+    >
+      댓글
+    </button>
     <button
       id="board-modify-btn"
       @click="openFileModal"
@@ -212,7 +261,50 @@ const deleteBoard = () => {
       </button>
     </div>
   </div>
-  <!-- modal-end -->
+  <!-- update modal-end -->
+  <!-- comment modal open -->
+  <div v-show="userName !== ''">
+    <div v-if="isCommentModalOpen" class="comment-modal">
+      <div class="content-modal">
+        <div
+          class="commentListStyle"
+          v-for="commentVal in commentList"
+          :key="createAt"
+        >
+          <span
+            >{{ commentVal.userName }} :
+            <strong>{{ commentVal.contents }}</strong>
+          </span>
+          <span>
+            생성일자 :
+            {{ commentVal.createAt }}
+          </span>
+        </div>
+        <div class="cnd">
+          <textarea
+            v-model="comment"
+            placeholder="댓글을 입력하세요"
+          ></textarea>
+          <button class="comment-btn" @click="addComment">댓글 추가</button>
+          <button
+            @click="closeCommentModal"
+            style="
+              background-color: #d9534f;
+              color: white;
+              border-radius: 3px;
+              padding: 0.65rem;
+              margin-left: 1rem;
+            "
+            class="comment-cancel-button"
+          >
+            닫기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- comment modal end -->
 
   <div class="detail-scroll" @scroll="handleScroll">
     <div class="container__Container-sc-5ea7eb67-0 sc-4d05c194-0 iLKpSA ixIhnv">
@@ -285,6 +377,42 @@ const deleteBoard = () => {
 </template>
 
 <style lang="scss" scoped>
+.content-modal {
+  max-height: 45rem;
+  overflow-y: auto;
+  position: relative; /* 수정된 부분 */
+}
+.commentListStyle {
+  display: flex;
+  flex-direction: column; /* Change the direction to column */
+  align-items: flex-start; /* Align items to the end of the container */
+  border-bottom: 1px solid rgb(228, 218, 218);
+  padding-right: 10px; /* Add padding to the right */
+  margin-top: 1rem;
+
+  span {
+    margin-right: 10px;
+    margin-top: 1rem;
+    /* Additional styles for each span within the comment */
+  }
+
+  strong {
+    font-weight: bold;
+    /* Additional styles for the comment content */
+  }
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 10px;
+  margin-top: 5rem;
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  padding: 8px; /* Padding inside the textarea */
+  resize: vertical; /* Allow vertical resizing */
+}
+
 .day-container {
   width: 47rem;
   height: 100%;
@@ -309,7 +437,14 @@ const deleteBoard = () => {
       color: var(--planit-dark);
     }
   }
-
+  .comment-cancel-button {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
   .day-schedule {
     width: 100%;
     height: auto;
@@ -349,6 +484,11 @@ const deleteBoard = () => {
       transform: translate(-50%, -50%);
       z-index: 1;
     }
+  }
+
+  .cnd {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
   }
 
   .schedule-card {
@@ -420,6 +560,52 @@ body {
   margin: 8px;
 }
 
+.comment-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(
+    255,
+    255,
+    255,
+    1
+  ); /* Adjust alpha for more transparency */
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 2;
+  border-radius: 1rem;
+  min-width: 70rem;
+  min-height: 40rem;
+
+  .modal-title {
+    text-align: center; /* 가로로 중앙에 텍스트 정렬 */
+  }
+
+  .modal-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 30%; /* 버튼 간 간격을 조절하기 위해 너비를 조정 */
+  }
+
+  .cancel-button,
+  .complete-button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .complete-button {
+    background-color: gray;
+  }
+}
+
 .modify-modal {
   position: fixed;
   top: 50%;
@@ -476,6 +662,20 @@ body {
     min-width: 5rem;
     min-height: 3rem;
     border-radius: 1rem;
+  }
+
+  .comment-btn {
+    background-color: #28a745; /* Green background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  #board-comment-btn {
+    color: white;
+    background-color: rgb(32, 141, 192);
   }
 
   #board-modify-btn {
@@ -620,5 +820,14 @@ a {
 .detail-scroll {
   overflow-y: scroll;
   max-height: 100vh; /* 화면 높이에 맞게 조절 */
+}
+
+.comment-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
 </style>

@@ -17,7 +17,21 @@
 		<result column="plan_key" property="planKey" />
 		<result column="board_id" property="boardId" />
 	</resultMap>
-
+	
+	<resultMap type="commentDto" id="commentDto">
+		<result column="board_id" property="boardId" />
+		<result column="user_name" property="userName" />
+		<result column="contents" property="contents" />
+		<result column="create_at" property="createAt" />
+	</resultMap>
+	
+	<insert id="insertComment" parameterType="commentDto">
+		insert into comments(user_name, contents, board_id, create_at) values (#{userName}, #{contents}, #{boardId}, now());
+	</insert>
+	
+	<select id="selectAllComment" parameterType="int" resultMap="commentDto">
+		select user_name, contents, create_at from comments where board_id = #{boardId}; 
+	</select>
 
 	<!--planKey, 게시글 title, create_user(유저 이름?),create_at, contents, hits -->
 	<insert id="insertBoard" parameterType="boardRegistDto">
