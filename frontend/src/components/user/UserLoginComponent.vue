@@ -104,6 +104,16 @@ watch(userPassword, () => {
 </template>
 
 <style lang="scss" scoped>
+
+.background {
+  width : 100%;
+  height : 100%;
+  background-color : blue;
+  display : flex;
+  
+
+}
+
 .login-form {
   width: 27rem;
   height: 30rem;
