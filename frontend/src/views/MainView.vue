@@ -79,7 +79,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap");
 
 /* Ant-Btn 커스텀 */
 .custom-btn {
@@ -130,17 +129,15 @@ onMounted(() => {
     justify-content: center;
     margin-left: 1rem;
     padding-top: 0.5rem;
-    font-family: "Gasoek One";
+    font-family: 'TheJamsil6ExtraBold';
     font-size: 40px;
-    letter-spacing: 3px;
     color: var(--planit-primary);
 
     span {
       color: var(--planit-point-2);
       font-weight: 900;
     }
-    text-shadow: -1px -1px 0 var(--planit-dark), 1px -1px 0 var(--planit-dark),
-      -1px 1px 0 var(--planit-dark), 3px 3px 0 var(--planit-dark);
+    text-shadow: 0px 0px 8px var(--planit-dark), 0px 4px 10px var(--color-gray700);
   }
 }
 
