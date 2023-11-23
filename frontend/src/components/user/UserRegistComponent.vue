@@ -72,143 +72,184 @@ watch(email, () => {
 
 <template>
   <div class="background">
-    <a-form class="register-form">
-      <img src="@\assets\img\PlanIt!.png" alt="logo" />
-
-      <a-label for="userId">아이디 </a-label>
-      <a-input
-        id="userId"
-        name="userId"
-        v-model:value="userId"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
-
-      <div v-if="duplicateCheck" class="valid">
-        <p style="color: red">이미 존재하는 계정입니다.</p>
+    <div class="register-form">
+      <div class = "image-section">
+        <div class = "text-overlay">Sign Up</div>
+        <img src="@\assets\img\login/join-img.svg" alt="logo" />
       </div>
-      <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid">
-        <p v-if="userId === ''" style="color: red">아이디 입력해주세요</p>
-      </div>
+      <div class = "register-form-section">
+          <a-label for="userId">아이디 </a-label>
+          <a-input
+            id="userId"
+            name="userId"
+            v-model:value="userId"
+            type="text"
+          >
+          </a-input>
+          <!-- 에러 메시지 표시 -->
+          <div class="valid">
+            <p v-if="duplicateCheck">이미 존재하는 계정입니다.</p>
+            <p v-if="clickRegist && userId === ''">아이디 입력해주세요</p>
+          </div>
+          <a-label for="userPassword">패스워드 </a-label>
+          <a-input
+            id="userPassword"
+            name="userPassword"
+            v-model:value="userPassword"
+            type="password"
+          >
+          </a-input>
+          <!-- 에러 메시지 표시 -->
+          <div class="valid">
+            <p v-if="clickRegist && userPassword === ''">
+              패스워드를 입력해주세요
+            </p>
+          </div>
 
-      <a-label for="userPassword">패스워드 </a-label>
-      <a-input
-        id="userPassword"
-        name="userPassword"
-        v-model:value="userPassword"
-        type="password"
-        style="width: 20rem"
-      >
-      </a-input>
-      <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid" style="margin-right: 10rem">
-        <p v-if="userPassword === ''" style="color: red">
-          패스워드를 입력해주세요
-        </p>
-      </div>
+          <a-label for="passwordCheck">패스워드 확인</a-label>
+          <a-input
+            id="passwordCheck"
+            name="passwordCheck"
+            v-model:value="passwordCheck"
+            type="password"
+          >
+          </a-input>
+          <div class="valid">
+            <p v-if="passwordCheck !== '' && passwordCheck !== userPassword" style="color: red">비밀번호가 일치하지 않습니다.</p>
+          </div>
 
-      <a-label for="passwordCheck">패스워드 확인</a-label>
-      <a-input
-        id="passwordCheck"
-        name="passwordCheck"
-        v-model:value="passwordCheck"
-        type="password"
-        style="width: 20rem"
-      >
-      </a-input>
-      <div
-        v-if="passwordCheck !== '' && passwordCheck !== userPassword"
-        class="valid"
-        style="margin-right: 12rem"
-      >
-        <p style="color: red">비밀번호가 일치하지 않습니다.</p>
-      </div>
+          <a-label for="userName">이름 </a-label>
+          <a-input
+            id="userName"
+            name="userName"
+            v-model:value="userName"
+            type="text"
+          >
+          </a-input>
+          <!-- 에러 메시지 표시 -->
+          <div class="valid">
+            <p v-if="clickRegist && userName === ''">이름을 입력해주세요</p>
+          </div>
 
-      <a-label for="userName">이름 </a-label>
-      <a-input
-        id="userName"
-        name="userName"
-        v-model:value="userName"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
-      <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid" style="margin-right: 8.7rem">
-        <p v-if="userName === ''" style="color: red">이름을 입력해주세요</p>
-      </div>
+          <a-label for="email">이메일</a-label>
+          <a-input
+            id="email"
+            name="email"
+            v-model:value="email"
+            type="email"
+          >
+          </a-input>
+          <!-- 에러 메시지 표시 -->
+          <div class="valid" >
+            <p v-if="clickRegist && email === ''">
+              이메일을 입력해주세요
+            </p>
+            <p v-if="clickRegist && email !== '' && emailCheck !== ''">
+              {{ emailCheck }}
+            </p>
+          </div>
 
-      <a-label for="email">이메일</a-label>
-      <a-input
-        id="email"
-        name="email"
-        v-model:value="email"
-        type="email"
-        style="width: 20rem"
-      >
-      </a-input>
-      <!-- 에러 메시지 표시 -->
-      <div v-if="clickRegist" class="valid" style="margin-right: 14rem">
-        <p v-if="email === ''" style="color: red; margin-left: 2.3rem">
-          이메일을 입력해주세요
-        </p>
-        <p v-if="email !== '' && emailCheck !== ''" style="color: red">
-          {{ emailCheck }}
-        </p>
+        <a-button type="primary" @click="regist()">회원가입</a-button>
       </div>
-
-      <a-button type="primary" @click="regist()">회원가입</a-button>
-    </a-form>
+      </div>
+      
   </div>
 </template>
 
 <style lang="scss" scoped>
+
+.background {
+  width : 100%;
+  height : 100vh;
+  display : flex;
+  justify-content: center; 
+  align-items: center;
+  padding-bottom: 5%;
+}
+
 .register-form {
-  width: 27rem;
-  height: 45rem;
+  width: 30rem;
+  height: 50rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
+
+  padding : 2rem;
+
   margin: 3rem auto; /* Center within the parent container */
-  border: 1px solid #20b2aa;
+  box-shadow : 0 0px 28px rgba(128, 128, 128, 0.25), 0 0px 10px rgba(128, 128, 128, 0.22);
   border-radius: 2rem;
 
-  a-label {
-    color: gray;
-    margin-top: 2rem;
-    text-align: left;
-  }
+}
 
-  button {
-    margin-top: 3rem;
-    border-radius: 2rem;
-    width: 20rem;
-    height: 2rem;
-  }
+.image-section {
+  width : 100%;
+  height : 25%;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  position : relative;
 
   img {
-    width: 12rem;
-    height: 9rem;
+    width: 100%;
+    height: 100%;
+    padding : 1rem;
   }
-
-  p {
-    color: gray;
-    margin-top: -0.1rem;
+  .text-overlay {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    color : var(--planit-dark);
+    font-size : 32px;
+    font-weight: bold;
   }
 }
 
-.gender {
-  display: flex;
-  align-items: center; /* 세로 중앙 정렬 */
+.register-form-section {
+  width : 100%;
+  height : 75%;
+  display : flex;
+  flex-direction: column;
+  justify-content: center;
+  padding : 1rem 3rem;
+
+  .form-detail {
+    width  :100%;
+    text-align: center;
+    justify-content: center;
+
+    padding : 0.5rem 1rem;
+  }
 }
 
+a-label {
+    margin : 0.5rem 0.5rem;
+    text-align: left;
+    color: var(--color-gray600);
+    font-size : 16px;
+    font-weight: 500;
+}
+
+p {
+  color: var(--color-gray600);;
+}
+button {
+    margin : 1rem;
+    border-radius: 2rem;
+}
 .valid {
-  margin-right: 8rem;
+  height : 100%;
+  justify-content: start;
+  align-items: center;
   p {
+    margin : 0;
+    padding : 0.3rem;
     position: absolute;
+    font-size : 16px;
+    color : red;
   }
 }
 </style>

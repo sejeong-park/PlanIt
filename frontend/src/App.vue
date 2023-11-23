@@ -14,11 +14,11 @@ import TheHeadingNavBar from "@/components/layout/TheHeadingNavBar.vue";
         },
       }"
     />
-    <!-- <HeaderComponent v-if = "$route.path !== '/'"/> -->
+
     <TheHeadingNavBar />
-    <!-- <a-row class="content"> -->
+
     <RouterView />
-    <!-- </a-row> -->
+
   </div>
 </template>
 <style scoped>

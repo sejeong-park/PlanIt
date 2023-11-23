@@ -3,12 +3,9 @@ package com.trip.planit.plan.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.trip.planit.plan.model.dto.*;
 import org.springframework.stereotype.Service;
 
-import com.trip.planit.plan.model.dto.PlanDetailDto;
-import com.trip.planit.plan.model.dto.PlanListDto;
-import com.trip.planit.plan.model.dto.PlanRegistDto;
-import com.trip.planit.plan.model.dto.PlanUpdateDetailDto;
 import com.trip.planit.plan.model.mapper.PlanMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +27,7 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
-	public List<PlanDetailDto> findPlanDetail(String planKey) throws SQLException {
+	public List<PlanDetailResponseDto> findPlanDetail(String planKey) throws SQLException {
 		return planMapper.selectPlanDetail(planKey);
 	}
 

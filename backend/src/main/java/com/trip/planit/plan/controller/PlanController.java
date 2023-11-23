@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
+import com.trip.planit.plan.model.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trip.planit.plan.model.dto.PlanDetailDto;
-import com.trip.planit.plan.model.dto.PlanListDto;
-import com.trip.planit.plan.model.dto.PlanRegistDto;
-import com.trip.planit.plan.model.dto.PlanUpdateDetailDto;
 import com.trip.planit.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
@@ -90,8 +87,8 @@ public class PlanController {
 			}
 			
 			planService.writePlanDetail(planDetailDtos);
-			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
-			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
+			List<PlanDetailResponseDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			return new ResponseEntity<List<PlanDetailResponseDto>>(planDetailDtoList, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);
 		}
@@ -126,9 +123,9 @@ public class PlanController {
 	@GetMapping("/list/{planKey}")
 	public ResponseEntity<?> planDetail(@PathVariable String planKey){
 		try {
-			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			List<PlanDetailResponseDto> planDetailDtoList = planService.findPlanDetail(planKey);
 			
-			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
+			return new ResponseEntity<List<PlanDetailResponseDto>>(planDetailDtoList, HttpStatus.OK);
 		} catch (SQLException e) {
 			return exceptionHandling(e);
 		}
@@ -165,8 +162,8 @@ public class PlanController {
 	public ResponseEntity<?> planUpdate(@PathVariable("planKey") String planKey, @RequestBody List<PlanUpdateDetailDto> updateDtos){
 		try {
 			planService.updatePlanDetail(updateDtos);
-			List<PlanDetailDto> planDetailDtoList = planService.findPlanDetail(planKey);
-			return new ResponseEntity<List<PlanDetailDto>>(planDetailDtoList, HttpStatus.OK);
+			List<PlanDetailResponseDto> planDetailDtoList = planService.findPlanDetail(planKey);
+			return new ResponseEntity<List<PlanDetailResponseDto>>(planDetailDtoList, HttpStatus.OK);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			return exceptionHandling(e);

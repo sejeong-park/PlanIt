@@ -51,6 +51,6 @@
 				AND content_type_id = #{contentTypeId}
 			</if>
 		</where>
-		limit 0,20
+		limit 0,30
 	</select>
 </mapper>
