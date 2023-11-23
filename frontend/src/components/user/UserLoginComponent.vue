@@ -52,53 +52,50 @@ watch(userPassword, () => {
 <template>
   <div class="background">
     <div class="login-form">
-      <div>
-        <img src="@\assets\img\Planit.png" alt="logo" />
+      <div class = "image-section">
+        <img src="@\assets\img\login/login-img.svg" alt="logo" />
       </div>
-
-      <a-label for="id">아이디 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userId"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
-      <div v-if="loginCheck && userId === ''" class="valid">
-        <p style="color: red">아이디를 입력해주세요</p>
-      </div>
-
-      <a-label for="id">패스워드 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userPassword"
-        type="password"
-        style="width: 20rem"
-      >
-      </a-input>
-      <div
-        v-if="loginCheck && userPassword === ''"
-        class="valid"
-        style="margin-right: 11.3rem"
-      >
-        <p style="color: red">패스워드를 입력해주세요</p>
-      </div>
-      <div v-if="userPassword !== '' && notFoundUser" class="valid">
-        <p style="color: red">
-          {{ notFoundUser }}
+      <div class = "login-form-section">
+        <!--아이디 부분-->
+        <a-label  for="id" >아이디 </a-label>
+        <a-input
+          
+          id="id"
+          name="id"
+          v-model:value="userId"
+          type="text"
+          style="width: 20rem"
+        >
+        </a-input>
+        <div class="valid">
+          <p v-if="loginCheck && userId === ''">아이디를 입력해주세요</p>
+        </div>
+        <!--패스워드 부분-->
+        <a-label  for="id">패스워드 </a-label>
+        <a-input
+          
+          id="id"
+          name="id"
+          v-model:value="userPassword"
+          type="password"
+          style="width: 20rem"
+        >
+        </a-input>
+        <div class="valid">
+          <p v-if="loginCheck && userPassword === ''">패스워드를 입력해주세요</p>
+          <p v-if="userPassword !== '' && notFoundUser" >
+            {{ notFoundUser }}
+          </p>
+        </div>
+        <a-button  type="primary" @click="login()" htmlType="submit"
+        >로그인</a-button
+        >
+        <p class = "form-detail">
+          아직 회원이 아니세요? &nbsp;&nbsp;
+          <router-link to="/users/regist">회원가입</router-link>
         </p>
       </div>
-
-      <a-button type="primary" @click="login()" htmlType="submit"
-        >로그인</a-button
-      >
-      <p>
-        아직 회원이 아니세요?<router-link to="/users/regist"
-          >회원가입</router-link
-        >
-      </p>
+    
     </div>
   </div>
 </template>
@@ -107,52 +104,88 @@ watch(userPassword, () => {
 
 .background {
   width : 100%;
-  height : 100%;
-  background-color : blue;
+  height : 100vh;
   display : flex;
-  
-
+  justify-content: center; 
+  align-items: center;
+  padding-bottom: 10%;
 }
 
 .login-form {
-  width: 27rem;
-  height: 30rem;
+  width: 30rem;
+  height: 40rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
+
+  padding : 2rem;
+
   margin: 5rem auto; /* Center within the parent container */
-  border: 1px solid #20b2aa;
+  box-shadow : 0 0px 28px rgba(128, 128, 128, 0.25), 0 0px 10px rgba(128, 128, 128, 0.22);
   border-radius: 2rem;
+}
 
-  a-label {
-    margin-top: 2rem;
-    text-align: left;
-    color: gray;
-  }
 
-  button {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    border-radius: 2rem;
-    width: 20rem;
-    height: 2rem;
-  }
+.image-section {
+  width : 100%;
+  height : 40%;
+  display : flex;
+  justify-content: center;
+  align-items: center;
 
   img {
     width: 12rem;
     height: 10rem;
   }
+}
 
-  p {
-    color: gray;
+.login-form-section {
+  width : 100%;
+  height : 60%;
+  display : flex;
+  flex-direction: column;
+  justify-content: center;
+  padding : 0 2rem;
+
+  .form-detail {
+    width  :100%;
+    text-align: center;
+    justify-content: center;
+
+    padding : 0.5rem 1rem;
   }
 }
-.valid {
-  margin-right: 10rem;
+a-label {
+    margin : 0.5rem 0.5rem;
+    text-align: left;
+    color: var(--color-gray600);
+    font-size : 16px;
+    font-weight: 500;
+  }
 
+
+p {
+  color: var(--color-gray600);;
+}
+button {
+    margin : 1rem;
+    border-radius: 2rem;
+    width: 20rem;
+    height: 2rem;
+}
+
+.valid {
+  height : 2rem;
+  justify-content: start;
+  align-items: center;
   p {
+    margin : 0;
+    padding-top : 0.5rem;
     position: absolute;
+    font-size : 16px;
+    color : red;
   }
 }
 </style>
