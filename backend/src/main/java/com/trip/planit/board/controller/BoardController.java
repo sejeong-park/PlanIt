@@ -222,7 +222,8 @@ public class BoardController {
 		
 		try {
 			List<BoardListDto> answerBoards = new ArrayList<BoardListDto>();
-			String path ="C:\\board\\upload\\";
+//			String path ="C:\\board\\upload\\";
+			String path = "/Users/sj.park/upload/";
 	        String folder = "";
 			List<BoardListDto> boardListDtos = boardService.findMyBoard(createUser);
 			for (BoardListDto boardListDto : boardListDtos) {
