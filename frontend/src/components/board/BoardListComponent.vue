@@ -58,15 +58,8 @@ const onPageChange = (val) => {
     <div class="search-container">
       <form class="search-form">
         <div class="search-inputs">
-          <input
-            type="text"
-            v-model="param.word"
-            placeholder="제목으로 검색"
-            class="searchType"
-          />
-          <button class="searchVal" type="button" @click="getArticleList">
-            검색
-          </button>
+          <input type="text" v-model="param.word" placeholder="제목으로 검색" class="searchType" />
+          <button class="searchVal" type="button" @click="getArticleList">검색</button>
         </div>
       </form>
     </div>
@@ -100,10 +93,7 @@ const onPageChange = (val) => {
                 boardId: article.boardId,
               },
             }"
-            ><img
-              src="@\assets\img\trip.jpg"
-              alt="Card Image"
-              class="hover-opacity"
+            ><img src="@\assets\img\trip.jpg" alt="Card Image" class="hover-opacity"
           /></router-link>
         </div>
         <div class="title-hits">
@@ -181,9 +171,10 @@ const onPageChange = (val) => {
   padding-left: 5rem;
 
   p {
-    font-weight: 600;
+    font-weight: 550;
     font-size: 1.25rem;
     margin-top: 2rem;
+    font-family: "Pretendard-Regular";
   }
 }
 
@@ -235,5 +226,13 @@ h2 {
 
 a {
   color: black;
+}
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 </style>
