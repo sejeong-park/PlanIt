@@ -3,7 +3,7 @@ import axios from "axios";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import Swal from "sweetalert2";
+import { notification } from 'ant-design-vue';
 
 const store = useUserStore();
 
@@ -16,6 +16,14 @@ const notFoundUser = ref("");
 
 const loginCheck = ref(false); // 로그인 버튼을 눌렀다면 true, 누르지 않았다면 false
 
+const openNotificationWithIcon = (type, message , description) => {
+  notification[type]({
+    message: message,
+    description: description,
+    placement : 'top',
+    });
+}
+
 const login = function () {
   loginCheck.value = true;
   axios
@@ -26,7 +34,7 @@ const login = function () {
     .then((response) => {
       // 로그인에 성공해서 200 status code를 응답 받았을 때
       if (response.status === 201) {
-        alert("로그인 성공!!");
+        openNotificationWithIcon('success', '로그인에 성공하였습니다', store.userId + "님 환영합니다!");
         
         store.loginStatus = true;
         store.userId = userId.value;
@@ -36,11 +44,12 @@ const login = function () {
 
         router.replace({ name: "plans" });
       } else {
-        alert("로그인 실패!!");
+        return;
       }
     })
     .catch((error) => {
       // alert("계정을 찾을 수 없습니다!!");
+      openNotificationWithIcon('error', '계정을 찾을 수 없습니다.');
       notFoundUser.value = "가입되지 않은 계정입니다.!";
       // userPassword.value = "";
     });

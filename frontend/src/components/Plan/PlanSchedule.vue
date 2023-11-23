@@ -63,7 +63,7 @@ const makePlanIt = function () {
           size="large"
           v-model:value.lazy="title"
           autofocus
-          placeholder="당신의 근사한 여행에 이름을 붙여주세요"
+          placeholder="여행일정에 Title을 붙여주세요"
         />
       </div>
       <div class="plan bottom">
@@ -142,14 +142,18 @@ const makePlanIt = function () {
 }
 
 :deep(.ant-input) {
-  padding: 0 1rem;
+  padding: 0 7.5rem;
   font-size: x-large;
   color: #EAEDF6;
+  font-weight: bold;
+  // color: var(--planit-point-1);
 }
 :deep(.ant-input::placeholder) {
   padding: 0 1rem;
   font-size: x-large;
-  color: var(--color-brightGray);
+  font-weight: 700;
+  color: var(--planit-point-1);
+  border : 3px solid 
 }
 
 :deep(.ant-picker-dropdown) {
@@ -186,7 +190,7 @@ const makePlanIt = function () {
     width: 100%;
     height: 40%;
     margin-top: 1rem;
-    padding-bottom : 0.5rem;
+    padding-bottom : 1rem;
     /* background-color: red; */
     .message {
       height: 100%;
