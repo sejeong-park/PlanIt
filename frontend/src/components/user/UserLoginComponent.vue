@@ -3,6 +3,7 @@ import axios from "axios";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import Swal from "sweetalert2";
 
 const store = useUserStore();
 
@@ -26,6 +27,7 @@ const login = function () {
       // 로그인에 성공해서 200 status code를 응답 받았을 때
       if (response.status === 201) {
         alert("로그인 성공!!");
+        
         store.loginStatus = true;
         store.userId = userId.value;
         const { accessToken } = response.data;
@@ -86,7 +88,7 @@ watch(userPassword, () => {
             {{ notFoundUser }}
           </p>
         </div>
-        <a-button  type="primary" @click="login()" htmlType="submit"
+        <a-button id = "login-btn"  type="primary" @click="login()" htmlType="submit"
         >로그인</a-button
         >
         <p class = "form-detail">
