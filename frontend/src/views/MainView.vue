@@ -41,7 +41,7 @@ onMounted(() => {
   if (typedElement.value) {
     new Typed(typedElement.value, {
       strings: [
-        "여행을 계획하는 순간부터,<br> 새로운 세계를 발견하는 모든 순간까지",
+        "여행을 계획하는 순간부터,<br> 새로운 세계를 발견하는 모든 순간",
         "당신의 여행을 위한 우주적 계획.",
         "지금 바로 PLAN IT !",
       ],
@@ -59,26 +59,17 @@ onMounted(() => {
   <div class="main-container">
     <div class="background-image" :style="currentImageStyle"></div>
     <div class="logobar">
-      <img
-        class="planit-logo"
-        src="@/assets/img/logo/planit.png"
-        alt="로고 이미지"
-      />
+      <img class="planit-logo" src="@/assets/img/logo/planit.png" alt="로고 이미지" />
       <div class="planit-name">Plan <span>I</span>t</div>
     </div>
     <div class="main-content-container">
       <div class="introduce-service" ref="typedElement"></div>
       <div class="next-service">
         <div v-show="!loginStatus">
-          <a-button ghost class="login-btn custom-btn" @click="goLogin"
-            >Sign in</a-button
-          >
+          <a-button ghost class="login-btn custom-btn" @click="goLogin">Sign in</a-button>
         </div>
         <div v-show="loginStatus">
-          <a-button
-            type="primary"
-            class="planit-btn custom-btn"
-            @click="goPlanit"
+          <a-button type="primary" class="planit-btn custom-btn" @click="goPlanit"
             >Plan It !</a-button
           >
         </div>
@@ -88,7 +79,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap");
 
 /* Ant-Btn 커스텀 */
 .custom-btn {
@@ -139,17 +129,15 @@ onMounted(() => {
     justify-content: center;
     margin-left: 1rem;
     padding-top: 0.5rem;
-    font-family: "Gasoek One";
+    font-family: 'TheJamsil6ExtraBold';
     font-size: 40px;
-    letter-spacing: 3px;
     color: var(--planit-primary);
 
     span {
       color: var(--planit-point-2);
       font-weight: 900;
     }
-    text-shadow: -1px -1px 0 var(--planit-dark), 1px -1px 0 var(--planit-dark),
-      -1px 1px 0 var(--planit-dark), 3px 3px 0 var(--planit-dark);
+    text-shadow: 0px 0px 8px var(--planit-dark), 0px 4px 10px var(--color-gray700);
   }
 }
 

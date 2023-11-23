@@ -22,6 +22,25 @@
 		<result column="content" property="content"/>
 		<result column="attraction_id" property="attractionId"/>
 	</resultMap>
+
+	<resultMap type="planDetailResponseDto" id = "planDetailResponseDto">
+		<result column="detail_id" property="detailId"/>
+		<result column="plan_key" property="planKey"/>
+		<result column="plan_date" property="planDate"/>
+		<result column="sequence" property="sequence"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="attraction_id" property="attractionId"/>
+		<result column="content_type_id" property = "contentTypeId"></result>
+		<result column="addr1" property = "addr1"></result>
+		<result column="addr2" property = "addr2"></result>
+		<result column="first_image" property = "firstImage"></result>
+		<result column="sido_code" property = "sidoCode"></result>
+		<result column="gugun_code" property = "gugunCode"></result>
+		<result column="latitude" property = "latitude"></result>
+		<result column="longitude" property = "longitude"></result>
+		<result column="overview" property = "overview"></result>
+	</resultMap>
 	<!-- 
 	<resultMap type="planUpdateDto" id="planUpdateDto">
 		<result column="plan_date" property="planDate"/>
@@ -59,8 +78,16 @@
 		select plan_key, start_date, end_date, create_at, update_at, title, create_user from trip_plans where plan_key = #{planKey};
 	</select>
 	
-	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">
-		select * from trip_details where plan_key = #{planKey}
+<!--	<select id="selectPlanDetail" parameterType="String" resultMap="planDetailDto">-->
+<!--		select * from trip_details where plan_key = #{planKey}&ndash;&gt;-->
+<!--	</select>-->
+
+	<select id = "selectPlanDetail" resultMap="planDetailResponseDto" parameterType="String">
+		select d.detail_id, d.plan_key, d.plan_date, d.sequence, d.title, d.content, d.attraction_id, d.overview,
+		       a.content_type_id, a.addr1, a.addr2, a.first_image, a.sido_code, a.gugun_code, a.latitude, a.longitude
+		from trip_details d left join attraction_info a
+		on d.attraction_id = a.content_id
+		where d.plan_key = #{planKey}
 	</select>
 	
 	
