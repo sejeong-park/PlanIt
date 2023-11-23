@@ -57,23 +57,24 @@ const initMap = () => {
 };
 
 onMounted(() => {
-  let retries = 0;
-  const maxRetries = 10;
+  // let retries = 0;
+  // const maxRetries = 10;
 
-  const tryInitializeMap = () => {
-    if (window.kakao && window.kakao.maps) {
-      initMap();
-    } else {
-      if (retries < maxRetries) {
-        setTimeout(tryInitializeMap, 1000);
-        retries++;
-      } else {
-        console.error("Kakao Maps SDK 로드 실패");
-      }
-    }
-  };
+  // const tryInitializeMap = () => {
+  //   if (window.kakao && window.kakao.maps) {
+  //     initMap();
+      
+  //   } else {
+  //     if (retries < maxRetries) {
+  //       setTimeout(tryInitializeMap, 1000);
+  //       retries++;
+  //     } else {
+  //       console.error("Kakao Maps SDK 로드 실패");
+  //     }
+  //   }
+  // };
 
-  tryInitializeMap();
+  // tryInitializeMap();
 
   if (window.kakao && window.kakao.maps) {
     if (typeof kakao !== "undefined" && kakao.maps) {

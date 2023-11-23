@@ -47,7 +47,6 @@ const removeSchedule = (date, detailIdx) => {
     }
 
 }
-
 </script>
 
 <template>

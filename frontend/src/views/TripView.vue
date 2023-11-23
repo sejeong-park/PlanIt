@@ -49,19 +49,19 @@ function onSaved() {
             -->
             <div class="map-header shadow" :class = "{'is-open' : drawerOpen}">
                 <!--Drawer 여는 토글 버튼-->
-                <a-button type="primary" danger size="large"
+                <a-button type="primary" size="large"
                         @click="drawerOpen = !drawerOpen" 
-                        style = "margin-right : 3rem;">
+                        style = "background-color : var(--planit-dark);">
                     {{ drawerOpen ? 'Close' : 'Open' }}
                 </a-button>
-                <!-- 선택 옵션 -->
-                <a-space class="item" size="middle">
+                
+                <!-- <a-space class="item" size="middle">
                     <a-button type="primary" size="large" shape="circle">A</a-button>
                     <a-button type="primary" size="large" shape="circle">B</a-button>
                     <a-button type="primary" size="large" shape="circle">C</a-button>
-                    <!--선택할 연속-->
+                    
                     <a-button type="primary" size="large" shape="circle">D</a-button>
-                </a-space>
+                </a-space> -->
             </div>
         </a-col>
         <a-col class="right-side" :span="5">
@@ -92,13 +92,16 @@ function onSaved() {
         display: flex;
         top: 0;
         left: 0;
-        margin-top: 2.5rem;
-        margin-left : 4rem; /* 왼쪽으로부터 마진값이 존재. */
+        margin-top: 2rem;
+        margin-left : 2rem;
+         /*왼쪽으로부터 마진값이 존재.*/
         z-index: 500; /* 입체적으로 위에 노출하는 방법 */
         /* 백그라운드 */
-        padding : 0.5rem 1rem;
+        padding : 3px;
         background-color : white;
-        border-radius: 15px;
+        /* padding : 0.5rem 1rem; */
+        /* background-color : white; */
+        border-radius: 10px;
 
         /* 트랜잭션 이동 */
         transition : transform 0.3s ease;
@@ -115,12 +118,12 @@ function onSaved() {
     height: 100%; /* 스크롤을 위해 100vh로 고정 */
 }
 
-.shadow {
+/* .shadow {
     -webkit-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     -moz-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     -ms-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     -o-box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     box-shadow: 0 14px 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
-}
+} */
 
 </style>

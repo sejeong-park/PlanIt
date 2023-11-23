@@ -36,6 +36,6 @@ const contentTypeId = {
 
 
 
-export {
+export default {
     contentTypeId,
 };

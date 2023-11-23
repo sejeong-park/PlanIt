@@ -17,7 +17,10 @@ const setDataInfo = () => {
     getPlanInfo(
     planKey.value
     ,(response) => {
+        console.log("명령 !!");
+        console.log("response" , response.data);
         planStore.setTripSchedule(response.data); // planStore에 데이터 저장
+        console.log("set Test" , planStore.tripScheduleInfo);
         scheduleInfo.value = planStore.tripScheduleInfo;
     }, (error) => {
         console.log("해당하는 Plan에 대한 정보가 없습니다.")/
