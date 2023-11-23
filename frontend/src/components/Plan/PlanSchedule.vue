@@ -54,7 +54,7 @@ const makePlanIt = function () {
   <div class="plan-total-container">
     <div class="plan-container">
       <div class="plan header">
-        <h1 class="message">대충 당장 떠나자는 적당한 멘트</h1>
+        <h1 class="message">완벽한 여행을 위한 우주적 계획</h1>
       </div>
       <div class="plan body">
         <a-input
@@ -93,7 +93,7 @@ const makePlanIt = function () {
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
+<style scoped lang="scss">
 /* ant-design datepicker 폼 너비 조절 */
 /* date-picker 폼 자체를 꽉차게 변경 */
 :deep(.ant-picker) {
@@ -144,12 +144,12 @@ const makePlanIt = function () {
 :deep(.ant-input) {
   padding: 0 1rem;
   font-size: x-large;
-  color: var(--color-gray900);
+  color: #EAEDF6;
 }
 :deep(.ant-input::placeholder) {
   padding: 0 1rem;
   font-size: x-large;
-  color: var(--color-gray700);
+  color: var(--color-brightGray);
 }
 
 :deep(.ant-picker-dropdown) {
@@ -163,13 +163,14 @@ const makePlanIt = function () {
 .plan-total-container {
   width: 100%;
   height: 100%;
-  background-color: pink;
   border-radius: 50px;
   box-shadow: var(--shadow-inset);
   display: flex;
   align-items: center;
   justify-content: center;
   /* 배경 이미지 */
+  background-image: url('/src/assets/img/etc/space-background-realistic-starry-night-cosmos-shining-stars-milky-way-stardust-color-galaxy.jpeg');
+  background-size: cover; /* 이미지 크기를 div에 맞춤 */
 }
 
 .plan-container {
@@ -185,6 +186,7 @@ const makePlanIt = function () {
     width: 100%;
     height: 40%;
     margin-top: 1rem;
+    padding-bottom : 0.5rem;
     /* background-color: red; */
     .message {
       height: 100%;
@@ -193,7 +195,7 @@ const makePlanIt = function () {
       /* 폰트 */
       font-family: "JalnanGothic";
       font-size: xx-large;
-      color: var(--planit-dark);
+      color: white;
 
       /* 글짜를 바닥에 붙이기 */
       display: flex;

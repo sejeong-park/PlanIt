@@ -12,15 +12,15 @@ console.log("컴포넌트입니다.");
 </script>
 
 <template>
-  <div class="item-container">
-    <div class="item-header">
-      <div class="item-title">
-        {{ props.resultHeader?.title }}
+    <div class="item-container">
+        <div class="item-header">
+          <div class="item-title">
+            {{ props.resultHeader?.title }}
+          </div>
+          <div class="item-subtitle">
+            {{ props.resultHeader?.subtitle }}
+          </div>
       </div>
-      <div class="item-subtitle">
-        {{ props.resultHeader?.subtitle }}
-      </div>
-    </div>
     <div class="item-body">
       <a-list item-layout="horizontal" :data-source="resultList">
         <template #renderItem="{ item, index }">
@@ -35,17 +35,15 @@ console.log("컴포넌트입니다.");
                   {{ item.title }}
                 </div>
                 <div class="card-description">
-                  <!-- TODO :: 위치 아이콘 추가하기-->
                   <p>
-                    {{ item.addr1 }} <br />
-                    {{ item.addr2 }}
+                    {{ item.info1 }}
                   </p>
-                  <!-- TODO :: 시간 아이콘 추가하기 -->
-                  <p>{{ item.eventstartdate }} ~ {{ item.eventenddate }}</p>
+                  <p> {{ item.info2 }}</p>
                 </div>
               </div>
               <div class="card-image">
-                <a-image class="card-image-source" :src="item.firstimage" />
+                <img v-if="item.image" class = "card-image-src" :src = "item.image" alt="{{ item.title }}의 원본 사진 첨부"/>
+                <img v-else class = "card-image-src" src="@/assets/img/logo/planit-fullsize.png" alt = "이미지가 존재하지 않습니다."/>
               </div>
             </div>
           </a-list-item>
@@ -77,7 +75,7 @@ console.log("컴포넌트입니다.");
       margin-bottom: 1rem;
 
       /* 폰트 스타일 */
-      font-size: 30px;
+      font-size: 25px;
       font-weight: bold;
       letter-spacing: 0.05rem;
     }
@@ -131,9 +129,9 @@ console.log("컴포넌트입니다.");
     height: auto;
 
     .card-title {
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       /* 폰트 정하기 */
-      font-size: x-large;
+      font-size: 22px;
       font-weight: bold;
     }
     .card-description {
@@ -141,18 +139,29 @@ console.log("컴포넌트입니다.");
       color: var(--color-gray700);
       font-weight: 600;
       letter-spacing: 0.05px;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+      padding-right : 0.5rem;
     }
   }
 
   .card-image {
     width: 30%;
     height: 8rem;
-    /* overflow : 100%; */
+    margin-right : 1rem;
+    display : flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 
-    .card-image-source {
-      /* width : 100%;
-                height : 100%; */
-      object-fit: cover;
+    .card-image-src {
+      width : 100%;
+      height : 100%;
+      object-fit : cover; /* div 채우면서 비율 유지 */
+      border-radius: 20px;
+      box-shadow: 0 0 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     }
   }
 }
