@@ -64,7 +64,6 @@ watch(userPassword, () => {
           name="id"
           v-model:value="userId"
           type="text"
-          style="width: 20rem"
         >
         </a-input>
         <div class="valid">
@@ -78,7 +77,6 @@ watch(userPassword, () => {
           name="id"
           v-model:value="userPassword"
           type="password"
-          style="width: 20rem"
         >
         </a-input>
         <div class="valid">
@@ -147,7 +145,7 @@ watch(userPassword, () => {
   display : flex;
   flex-direction: column;
   justify-content: center;
-  padding : 0 2rem;
+  padding : 0 3rem;
 
   .form-detail {
     width  :100%;
@@ -172,7 +170,6 @@ p {
 button {
     margin : 1rem;
     border-radius: 2rem;
-    width: 20rem;
     height: 2rem;
 }
 
