@@ -3,6 +3,7 @@ import axios from "axios";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import Swal from "sweetalert2";
 
 const store = useUserStore();
 
@@ -26,6 +27,7 @@ const login = function () {
       // 로그인에 성공해서 200 status code를 응답 받았을 때
       if (response.status === 201) {
         alert("로그인 성공!!");
+        
         store.loginStatus = true;
         store.userId = userId.value;
         const { accessToken } = response.data;
@@ -52,97 +54,147 @@ watch(userPassword, () => {
 <template>
   <div class="background">
     <div class="login-form">
-      <div>
-        <img src="@\assets\img\Planit.png" alt="logo" />
+      <div class = "image-section">
+        <div class = "text-overlay">Login</div>
+        <img src="@\assets\img\login/login-img.svg" alt="logo" />
       </div>
-
-      <a-label for="id">아이디 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userId"
-        type="text"
-        style="width: 20rem"
-      >
-      </a-input>
-      <div v-if="loginCheck && userId === ''" class="valid">
-        <p style="color: red">아이디를 입력해주세요</p>
-      </div>
-
-      <a-label for="id">패스워드 </a-label>
-      <a-input
-        id="id"
-        name="id"
-        v-model:value="userPassword"
-        type="password"
-        style="width: 20rem"
-      >
-      </a-input>
-      <div
-        v-if="loginCheck && userPassword === ''"
-        class="valid"
-        style="margin-right: 11.3rem"
-      >
-        <p style="color: red">패스워드를 입력해주세요</p>
-      </div>
-      <div v-if="userPassword !== '' && notFoundUser" class="valid">
-        <p style="color: red">
-          {{ notFoundUser }}
+      <div class = "login-form-section">
+        <!--아이디 부분-->
+        <a-label  for="id" >아이디 </a-label>
+        <a-input
+          
+          id="id"
+          name="id"
+          v-model:value="userId"
+          type="text"
+        >
+        </a-input>
+        <div class="valid">
+          <p v-if="loginCheck && userId === ''">아이디를 입력해주세요</p>
+        </div>
+        <!--패스워드 부분-->
+        <a-label  for="id">패스워드 </a-label>
+        <a-input
+          
+          id="id"
+          name="id"
+          v-model:value="userPassword"
+          type="password"
+        >
+        </a-input>
+        <div class="valid">
+          <p v-if="loginCheck && userPassword === ''">패스워드를 입력해주세요</p>
+          <p v-if="userPassword !== '' && notFoundUser" >
+            {{ notFoundUser }}
+          </p>
+        </div>
+        <a-button id = "login-btn"  type="primary" @click="login()" htmlType="submit"
+        >로그인</a-button
+        >
+        <p class = "form-detail">
+          아직 회원이 아니세요? &nbsp;&nbsp;
+          <router-link to="/users/regist">회원가입</router-link>
         </p>
       </div>
-
-      <a-button type="primary" @click="login()" htmlType="submit"
-        >로그인</a-button
-      >
-      <p>
-        아직 회원이 아니세요?<router-link to="/users/regist"
-          >회원가입</router-link
-        >
-      </p>
+    
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+
+.background {
+  width : 100%;
+  height : 100vh;
+  display : flex;
+  justify-content: center; 
+  align-items: center;
+  padding-bottom: 10%;
+}
+
 .login-form {
-  width: 27rem;
-  height: 30rem;
+  width: 30rem;
+  height: 40rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
+
+  padding : 2rem;
+
   margin: 5rem auto; /* Center within the parent container */
-  border: 1px solid #20b2aa;
+  box-shadow : 0 0px 28px rgba(128, 128, 128, 0.25), 0 0px 10px rgba(128, 128, 128, 0.22);
   border-radius: 2rem;
+}
 
-  a-label {
-    margin-top: 2rem;
-    text-align: left;
-    color: gray;
-  }
 
-  button {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    border-radius: 2rem;
-    width: 20rem;
-    height: 2rem;
-  }
-
+.image-section {
+  width : 100%;
+  height : 40%;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  position : relative;
   img {
     width: 12rem;
     height: 10rem;
   }
-
-  p {
-    color: gray;
+  .text-overlay {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    color : var(--planit-dark);
+    font-size : 32px;
+    font-weight: bold;
   }
 }
-.valid {
-  margin-right: 10rem;
 
+.login-form-section {
+  width : 100%;
+  height : 60%;
+  display : flex;
+  flex-direction: column;
+  justify-content: center;
+  padding : 0 3rem;
+
+  .form-detail {
+    width  :100%;
+    text-align: center;
+    justify-content: center;
+
+    padding : 0.5rem 1rem;
+  }
+}
+a-label {
+    margin : 0.5rem 0.5rem;
+    text-align: left;
+    color: var(--color-gray600);
+    font-size : 16px;
+    font-weight: 500;
+  }
+
+
+p {
+  color: var(--color-gray600);;
+}
+button {
+    margin : 1rem;
+    border-radius: 2rem;
+    height: 2rem;
+}
+
+.valid {
+  height : 2rem;
+  justify-content: start;
+  align-items: center;
   p {
+    margin : 0;
+    padding-top : 0.5rem;
     position: absolute;
+    font-size : 16px;
+    color : red;
   }
 }
 </style>
