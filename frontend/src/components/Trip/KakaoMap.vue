@@ -43,6 +43,7 @@ const initKakaoObj = () => {
 
 // Kakao Map 초기화
 const initMap = () => {
+  console.log("init map");
   const initContainer = document.getElementById("map");
   container.value = initContainer;
   const options = {
@@ -56,6 +57,24 @@ const initMap = () => {
 };
 
 onMounted(() => {
+  let retries = 0;
+  const maxRetries = 10;
+
+  const tryInitializeMap = () => {
+    if (window.kakao && window.kakao.maps) {
+      initMap();
+    } else {
+      if (retries < maxRetries) {
+        setTimeout(tryInitializeMap, 1000);
+        retries++;
+      } else {
+        console.error("Kakao Maps SDK 로드 실패");
+      }
+    }
+  };
+
+  tryInitializeMap();
+
   if (window.kakao && window.kakao.maps) {
     if (typeof kakao !== "undefined" && kakao.maps) {
       initMap();
@@ -69,7 +88,7 @@ onMounted(() => {
       import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
     }&libraries=services,clusterer`;
     /* global kakao */
-    script.onload = () => kakao.maps.load(() => initMap());
+    // script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
 });
@@ -78,12 +97,15 @@ onMounted(() => {
 watch(
   () => tripSearchStore.searchLocationList,
   () => {
+    // tripSearchStore.
     positions.value = []; // 초기화
     tripSearchStore.searchLocationList.forEach((tripInfo) => {
       let obj = {};
       obj.latlng = new kakao.maps.LatLng(tripInfo.latitude, tripInfo.longitude); // (mapy, mapx) 좌표 이다. -> 이거 찾는데 하루 날림 ㅋ,
       obj.title = tripInfo.title;
       positions.value.push(obj);
+      //   console.log("obj ", obj);
+      console.log("tripInfo : ", tripInfo);
     });
     loadSearchMarkers(); // 마커 로딩하기
   },

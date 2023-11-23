@@ -7,20 +7,20 @@ const props = defineProps({
   resultList: Array,
 }); // resultList라는 명칭으로
 
-console.log("컴포넌트입니다.");
+// console.log("컴포넌트입니다.");
 // console.log(resultList);
 </script>
 
 <template>
-    <div class="item-container">
-        <div class="item-header">
-          <div class="item-title">
-            {{ props.resultHeader?.title }}
-          </div>
-          <div class="item-subtitle">
-            {{ props.resultHeader?.subtitle }}
-          </div>
+  <div class="item-container">
+    <div class="item-header">
+      <div class="item-title">
+        {{ props.resultHeader?.title }}
       </div>
+      <div class="item-subtitle">
+        {{ props.resultHeader?.subtitle }}
+      </div>
+    </div>
     <div class="item-body">
       <a-list item-layout="horizontal" :data-source="resultList">
         <template #renderItem="{ item, index }">
@@ -38,12 +38,22 @@ console.log("컴포넌트입니다.");
                   <p>
                     {{ item.info1 }}
                   </p>
-                  <p> {{ item.info2 }}</p>
+                  <p>{{ item.info2 }}</p>
                 </div>
               </div>
               <div class="card-image">
-                <img v-if="item.image" class = "card-image-src" :src = "item.image" alt="{{ item.title }}의 원본 사진 첨부"/>
-                <img v-else class = "card-image-src" src="@/assets/img/logo/planit-fullsize.png" alt = "이미지가 존재하지 않습니다."/>
+                <img
+                  v-if="item.image"
+                  class="card-image-src"
+                  :src="item.image"
+                  alt="{{ item.title }}의 원본 사진 첨부"
+                />
+                <img
+                  v-else
+                  class="card-image-src"
+                  src="@/assets/img/logo/planit-fullsize.png"
+                  alt="이미지가 존재하지 않습니다."
+                />
               </div>
             </div>
           </a-list-item>
@@ -143,23 +153,23 @@ console.log("컴포넌트입니다.");
       p {
         margin-bottom: 0.5rem;
       }
-      padding-right : 0.5rem;
+      padding-right: 0.5rem;
     }
   }
 
   .card-image {
     width: 30%;
     height: 8rem;
-    margin-right : 1rem;
-    display : flex;
+    margin-right: 1rem;
+    display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
 
     .card-image-src {
-      width : 100%;
-      height : 100%;
-      object-fit : cover; /* div 채우면서 비율 유지 */
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* div 채우면서 비율 유지 */
       border-radius: 20px;
       box-shadow: 0 0 28px rgba(128, 128, 128, 0.25), 0 10px 10px rgba(128, 128, 128, 0.22);
     }
