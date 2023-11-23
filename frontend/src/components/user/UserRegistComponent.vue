@@ -74,6 +74,7 @@ watch(email, () => {
   <div class="background">
     <div class="register-form">
       <div class = "image-section">
+        <div class = "text-overlay">Sign Up</div>
         <img src="@\assets\img\login/join-img.svg" alt="logo" />
       </div>
       <div class = "register-form-section">
@@ -189,11 +190,21 @@ watch(email, () => {
   display : flex;
   justify-content: center;
   align-items: center;
+  position : relative;
 
   img {
     width: 100%;
     height: 100%;
     padding : 1rem;
+  }
+  .text-overlay {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    color : var(--planit-dark);
+    font-size : 32px;
+    font-weight: bold;
   }
 }
 

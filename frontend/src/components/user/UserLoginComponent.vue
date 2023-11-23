@@ -53,6 +53,7 @@ watch(userPassword, () => {
   <div class="background">
     <div class="login-form">
       <div class = "image-section">
+        <div class = "text-overlay">Login</div>
         <img src="@\assets\img\login/login-img.svg" alt="logo" />
       </div>
       <div class = "login-form-section">
@@ -132,10 +133,19 @@ watch(userPassword, () => {
   display : flex;
   justify-content: center;
   align-items: center;
-
+  position : relative;
   img {
     width: 12rem;
     height: 10rem;
+  }
+  .text-overlay {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    color : var(--planit-dark);
+    font-size : 32px;
+    font-weight: bold;
   }
 }
 
