@@ -3,8 +3,6 @@ import axios from "axios";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import Swal from "sweetalert2";
-
 const store = useUserStore();
 
 const userId = ref("");
