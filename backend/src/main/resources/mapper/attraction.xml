@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.trip.planit.attraction.model.mapper.AttractionMapper">
+
+	<resultMap type="attractionSearchResultDto"
+		id="searchResultDto">
+		<result column="title" property="title" />
+		<result column="content_type_id" property="contentTypeId" />
+		<result column="content_id" property="contentId" />
+		<result column="addr1" property="addr1" />
+		<result column="addr2" property="addr2" />
+		<result column="zipcode" property="zipcode" />
+		<result column="tel" property="tel" />
+		<result column="first_image" property="firstImage" />
+		<result column="first_image2" property="firstImage2" />
+		<result column="readcount" property="readcount" />
+		<result column="sido_code" property="sidoCode" />
+		<result column="gugun_code" property="gugunCode" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="mlevel" property="mlevel" />
+		<result column="overview" property="overview" />
+	</resultMap>
+
+
+	<select id="selectSidoKeyword"
+		parameterType="attractionSearchDto" resultMap="searchResultDto">
+		select * 
+		from attraction_info a inner join attraction_description b on a.content_id = b.content_id where sido_code = #{sidoCode} and title like
+		CONCAT('%',#{keyword},'%') limit 0,20
+	</select>
+
+	<select id = "selectAttractionBySearch"
+		parameterType="attractionSearchDto" resultMap="searchResultDto">
+		select *
+		from attraction_info info inner join attraction_description descript
+		on info.content_id = descript.content_id
+		<where>
+			<if test = "sidoCode != null">
+				AND sido_code  = #{sidoCode}
+			</if>
+		    <if test = "gugunCode != null">
+				AND gugun_code = #{gugunCode}
+			</if>
+			<if test = "keyword != null and keyword != ''">
+				And title like CONCAT('%' , #{keyword}, '%')
+			</if>
+			<if test = "contentTypeId != null">
+				AND content_type_id = #{contentTypeId}
+			</if>
+		</where>
+		limit 0,30
+	</select>
+</mapper>
