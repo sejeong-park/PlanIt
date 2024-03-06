@@ -45,9 +45,9 @@
 
 ## 👨‍👩‍👧‍👦 구성원
 
-| [![정필모](https://github.com/itsmo1031.png)](https://github.com/itsmo1031) | [![김병현](https://github.com/byunghyunkim0.png)](https://github.com/itsmo1031) | [![김성수](https://github.com/ksungsu.png)](https://github.com/ksungsu) | [![김현지](https://github.com/hjjj99.png)](https://github.com/hjjj99) | [![박세정](https://github.com/sejeong-park.png)](https://github.com/sejeong-park) | [![전은평](https://github.com/eunpyeong114.png)](https://github.com/eunpyeong114) |
-| :-------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
-|                   [👑정필모](https://github.com/itsmo1031)                   |                   [김병현](https://github.com/byunghyunkim0)                    |                  [김성수](https://github.com/ksungsu)                   |                  [김현지](https://github.com/hjjj99)                  |                     [박세정](https://github.com/sejeong-park)                     |                     [전은평](https://github.com/eunpyeong114)                     |
+| ![image](https://github.com/sejeong-park/PlanIt/assets/90013342/70467aea-927b-4c3a-8919-e36361aee2fe) |  [![박세정](https://github.com/sejeong-park.png)](https://github.com/sejeong-park) 
+| :-------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| [김성수](https://github.com/ksungsuu) | [박세정](https://github.com/sejeong-park) |                    
 
 ---
 
@@ -55,35 +55,48 @@
 
 ### 김성수
 
-- **FullStack**
+- **Backend**
   - Swagger 셋업
-  - Spring Security 적용
-    - OAuth2.0 모듈 적용
-  - 카카오 소셜 로그인 적용
-    - JWT 적용
   - User API 작성
-    - 회원 가입/로그인/로그아웃/수정
-  - Feed API 작성
+    	- 나의 게시판 조회
+  - Plan API 작성
+    	- 나의 여행 계획 조회/계획 등록/계획 상세 등록
+  - Board API 작성
+    	- CRUD/썸네일 미리보기/게시판 썸네일
   - File Upload API 작성
+  - Attraction API 작성
+  	- 명소 검색에 따른 명소 리스트
+- **Frontend**
+  - User 페이지 작성
+  - Header layout 작성
+  - 게시판 페이지 작성
+  - 마이페이지 작성
 - **ETC**
-  - UCC 제작
-  - 최종 발표 프레젠테이션 제작
+  - 시연 영상 제작
+  - 최종 발표 프레젠테이션 제작 및 발표
+  - DB 스키마 생성 및 수정
 
 ### 박세정
 
-- **FullStack**
-  - Redis 운영 총괄
-  - Waitroom(대기방) API 작성
-  - Player API 작성
-  - Gameroom(문답방) API 작성
-    - 마니또-마니띠 매칭 로직 작성
-  - Question API 작성
-    - 데일리 질문 생성 로직 작성
+- **Backend**
   - User API 작성
-    - 회원별 방 목록 조회
+	- 회원 가입/로그인/로그아웃
+  - Plan API 작성
+    	- 부분 수정 및 보완
+  - Attraction API 작성
+    	- 부분 수정 및 보완
+
+- **Frontend**
+  - 메인페이지 작성
+  - 카카오 지도
+  - 여행 계획 작성하기 페이지 작성
+  	- 여행 명소 선택하기
+   	- 명소 별로 상세 계획 작성하기 
+  	- 동선 보여주기 
 - **ETC**
   - Notion 문서 작성 총괄
-  - 최종 발표
+  - ERD 설계 및 DB 스키마 작성 및 수정
+  - 최종 발표 프레젠테이션 수정 보완
 
 ---
 
@@ -108,17 +121,7 @@
 ### Frontend
 
 <p>
-	<img src="https://img.shields.io/badge/Nuxt.js-00DC82?style=flat-square&logo=Nuxt.js&logoColor=white">
-  <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=TailwindCSS&logoColor=white"/>
-  <img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=flat-square&logo=shadcnui&logoColor=white
-  "/>
-  <img src="https://img.shields.io/badge/node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat-square&logo=pwa&logoColor=white">
-  <img src="https://img.shields.io/badge/yarn-2C8EBB?style=flat-square&logo=yarn&logoColor=white">
-  <img src="https://img.shields.io/badge/dotenv-ECD53F?style=flat-square&logo=dotenv&logoColor=white">
-  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white">
-  <img src="https://img.shields.io/badge/editorconfig-FEFEFE?style=flat-square&logo=editorconfig&logoColor=black">
+	<img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D">
 </p>
 
 ### Backend
@@ -127,36 +130,20 @@
 	<img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=OpenJDK&logoColor=white"/>
   <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=gradle&logoColor=white">
 	<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
-	<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white">
-  <img src="https://img.shields.io/badge/editorconfig-FEFEFE?style=flat-square&logo=editorconfig&logoColor=black">
+
 </p>
 
 ### Database
 
 <p>
-  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white"/>
+	<img src="https://shields.io/badge/MySQL-lightgrey?logo=mysql&style=plastic&logoColor=white&labelColor=blue"/>
+
 </p>
 
-### DevOps
-
-<p>
-  <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white">
-  <img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat-square&logo=gitlab&logoColor=white">
-	<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white"/>
-	<img src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white"/>
-	<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Portainer-13BEF9?style=flat-square&logo=portainer&logoColor=white">
-	<img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white"/>
-  <img src="https://img.shields.io/badge/NGINX_Proxy_Manager-F15833?style=flat-square&logo=nginxproxymanager&logoColor=white">
-</p>
 
 ### Communication
 
 <p>
-	<img src="https://img.shields.io/badge/figma-F24E1E?style=flat-square&logo=figma&logoColor=white">
-	<img src="https://img.shields.io/badge/jira-0052CC?style=flat-square&logo=jira&logoColor=white">
 	<img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=white">
 	<img src="https://img.shields.io/badge/Mattermost-0058CC?style=flat-square&logo=mattermost&logoColor=white">
 </p>
@@ -165,12 +152,9 @@
 
 ## 📝 프로젝트 산출물
 
-- [Notion](https://ssafy-s10-a809.notion.site/Oomool-WIKI-e152fb257b3e45a1bbdb6fc3c569bbdd?pvs=4)
+- [Notion](https://www.notion.so/PlanIt-0e83123f17514755a3d251dfc8deb7c1)
 
-### 시스템 아키텍처
-
-![System Architecture](./assets/system_architecture.png)
 
 ### E-R Diagram
 
-![ERD](./assets/erd.png)
+![image](https://github.com/sejeong-park/PlanIt/assets/90013342/94bf1d1a-c918-4c22-a30c-11641d3d9c3c)
