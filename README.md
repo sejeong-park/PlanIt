@@ -1,92 +1,176 @@
-# finalEnjoyTrip
+# PlanIt
 
-깃랩 테스트
+> 삼성 청년 소프트웨어 아카데미(SSAFY) 10기 1학기 관통 프로젝트
 
-## Getting started
+![image](https://github.com/sejeong-park/PlanIt/assets/90013342/6dcb6159-bad0-49fe-9aab-26b53faad958)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## ✨ 프로젝트 개요
 
-## Add your files
+🏷 **프로젝트 이름: PlanIt**
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+🗓️ **프로젝트 기간: 2023.11.03 ~ 2023.11.22 (3주)**
 
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/mblaqsj1015/finalenjoytrip.git
-git branch -M master
-git push -uf origin master
-```
+👥 **구성원: 👑박세정, 김성수**
 
-## Integrate with your tools
+---
 
-- [ ] [Set up project integrations](https://lab.ssafy.com/mblaqsj1015/finalenjoytrip/-/settings/integrations)
+## 🌃 기획 의도
 
-## Collaborate with your team
+> '국내 여행 계획을 여럿이서 쉽고 편하게 짤 수 없을까?'
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+시간 내서 가는 여행인 만큼 인기 있고 검증된 명소로 여행을 가고 싶은 마음은 모두가 같겠죠?
 
-## Test and Deploy
+또, 여행 계획을 짜는데 시간이 너무 오래 걸려도 지쳐버리기 일 쑤입니다.
 
-Use the built-in continuous integration in GitLab.
+그래서, 저희는 이러한 불편함을 개선하고자 PlanIt을 만들었습니다.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+모두 **PlanIt**에 놀러와서 쉽고 편하게 여행 계획을 세워보세요!
 
-***
+---
 
-# Editing this README
+## 💎 서비스 소개
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- 시와 도를 입력하면 카카오 지도로 **해당 지역의 여행 명소 상세 정보를 제공**합니다.
+- **사용자는 여러 명소를 선택하여 여행 동선을 계획**할 수 있습니다.
+- **선택한 명소별로 상세 계획을 메모**할 수 있습니다.
+- **나의 여행 계획을 전체 사용자와 공유**할 수 있습니다.
+---
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 🎯 서비스 대상
 
-## Name
-Choose a self-explaining name for your project.
+- 쉽고 편하게 여행 계획을 세우고 공유하고 싶은 사람 누구나
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+---
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## 👨‍👩‍👧‍👦 구성원
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+| [![정필모](https://github.com/itsmo1031.png)](https://github.com/itsmo1031) | [![김병현](https://github.com/byunghyunkim0.png)](https://github.com/itsmo1031) | [![김성수](https://github.com/ksungsu.png)](https://github.com/ksungsu) | [![김현지](https://github.com/hjjj99.png)](https://github.com/hjjj99) | [![박세정](https://github.com/sejeong-park.png)](https://github.com/sejeong-park) | [![전은평](https://github.com/eunpyeong114.png)](https://github.com/eunpyeong114) |
+| :-------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+|                   [👑정필모](https://github.com/itsmo1031)                   |                   [김병현](https://github.com/byunghyunkim0)                    |                  [김성수](https://github.com/ksungsu)                   |                  [김현지](https://github.com/hjjj99)                  |                     [박세정](https://github.com/sejeong-park)                     |                     [전은평](https://github.com/eunpyeong114)                     |
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+---
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 👩‍💻 역할
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### 김성수
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+- **FullStack**
+  - Swagger 셋업
+  - Spring Security 적용
+    - OAuth2.0 모듈 적용
+  - 카카오 소셜 로그인 적용
+    - JWT 적용
+  - User API 작성
+    - 회원 가입/로그인/로그아웃/수정
+  - Feed API 작성
+  - File Upload API 작성
+- **ETC**
+  - UCC 제작
+  - 최종 발표 프레젠테이션 제작
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### 박세정
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- **FullStack**
+  - Redis 운영 총괄
+  - Waitroom(대기방) API 작성
+  - Player API 작성
+  - Gameroom(문답방) API 작성
+    - 마니또-마니띠 매칭 로직 작성
+  - Question API 작성
+    - 데일리 질문 생성 로직 작성
+  - User API 작성
+    - 회원별 방 목록 조회
+- **ETC**
+  - Notion 문서 작성 총괄
+  - 최종 발표
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+---
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## 🌈 서비스 화면 소개
 
-## License
-For open source projects, say how it is licensed.
+| ![Main Page](./assets/screen/main.gif) | ![Wait Room](./assets/screen/waitroom.gif) | ![Game Start](./assets/screen/game_start.gif) |
+| :------------------------------------: | :----------------------------------------: | :-------------------------------------------: |
+|                홈 화면                 |                대기방 생성                 |                   게임 시작                   |
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+| ![Enter Waitroom](./assets/screen/waitroom_enter.gif) | ![Enter Room](./assets/screen/room.gif) | ![Write Feed](./assets/screen/write_feed.gif) |
+| :---------------------------------------------------: | :-------------------------------------: | :-------------------------------------------: |
+|                      대기방 입장                      |                 방 입장                 |                   피드 작성                   |
+
+| ![Predict Success](./assets/screen/predict_success.gif) | ![Enter Room](./assets/screen/predict_failed.gif) | ![Write Feed](./assets/screen/result.gif) |
+| :-----------------------------------------------------: | :-----------------------------------------------: | :---------------------------------------: |
+|                        예측 성공                        |                     예측 실패                     |         결과 확인 및 이미지 저장          |
+
+---
+
+## 🛠 기술 스택
+
+### Frontend
+
+<p>
+	<img src="https://img.shields.io/badge/Nuxt.js-00DC82?style=flat-square&logo=Nuxt.js&logoColor=white">
+  <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=TailwindCSS&logoColor=white"/>
+  <img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=flat-square&logo=shadcnui&logoColor=white
+  "/>
+  <img src="https://img.shields.io/badge/node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat-square&logo=pwa&logoColor=white">
+  <img src="https://img.shields.io/badge/yarn-2C8EBB?style=flat-square&logo=yarn&logoColor=white">
+  <img src="https://img.shields.io/badge/dotenv-ECD53F?style=flat-square&logo=dotenv&logoColor=white">
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white">
+  <img src="https://img.shields.io/badge/editorconfig-FEFEFE?style=flat-square&logo=editorconfig&logoColor=black">
+</p>
+
+### Backend
+
+<p>
+	<img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=OpenJDK&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=gradle&logoColor=white">
+	<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
+	<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white">
+  <img src="https://img.shields.io/badge/editorconfig-FEFEFE?style=flat-square&logo=editorconfig&logoColor=black">
+</p>
+
+### Database
+
+<p>
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white"/>
+</p>
+
+### DevOps
+
+<p>
+  <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white">
+  <img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat-square&logo=gitlab&logoColor=white">
+	<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white"/>
+	<img src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white"/>
+	<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Portainer-13BEF9?style=flat-square&logo=portainer&logoColor=white">
+	<img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white"/>
+  <img src="https://img.shields.io/badge/NGINX_Proxy_Manager-F15833?style=flat-square&logo=nginxproxymanager&logoColor=white">
+</p>
+
+### Communication
+
+<p>
+	<img src="https://img.shields.io/badge/figma-F24E1E?style=flat-square&logo=figma&logoColor=white">
+	<img src="https://img.shields.io/badge/jira-0052CC?style=flat-square&logo=jira&logoColor=white">
+	<img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=white">
+	<img src="https://img.shields.io/badge/Mattermost-0058CC?style=flat-square&logo=mattermost&logoColor=white">
+</p>
+
+---
+
+## 📝 프로젝트 산출물
+
+- [Notion](https://ssafy-s10-a809.notion.site/Oomool-WIKI-e152fb257b3e45a1bbdb6fc3c569bbdd?pvs=4)
+
+### 시스템 아키텍처
+
+![System Architecture](./assets/system_architecture.png)
+
+### E-R Diagram
+
+![ERD](./assets/erd.png)
